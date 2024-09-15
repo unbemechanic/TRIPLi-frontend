@@ -264,12 +264,12 @@ export const Table = styled.table`
 export const TableRow = styled.tr`
     border-bottom: 1px solid gray;
     display: grid;
-    justify-content: space-evenly;
-    /* grid-template-columns: ${(props)=>props.$caravan? 'repeat(8, 1fr)':(props)=>props.$camping? '1fr 1fr 8fr ':'0.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr '} ; */
-    grid-template-columns: ${(props)=> props.$camping ? "20px 90px 90px 70px 90px 120px 100px 100px 100px 100px " :(props)=> props.$campingTable ? "20px 90px 90px 70px 90px 45px 45px 100px 100px 100px 100px" :(props)=> props.$user ? '25px 200px 300px 200px' :'25px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'} ;
-    /* grid-template-columns: repeat(12, 1fr); */
-
+    justify-content: space-between;
+    grid-template-columns: ${(props)=> props.$camping ? "20px 90px 90px 70px 90px 120px 100px 100px 100px 100px " :(props)=> props.$campingTable ? "20px 90px 90px 70px 90px 45px 45px 100px 100px 100px 100px" :(props)=> props.$user ? '25px 200px 300px 200px' :'30px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'} ;
+    cursor: pointer;
     align-items: center;
+    padding-right: 80px;
+    padding-left: 10px;
     
     th{
         padding: 10px;

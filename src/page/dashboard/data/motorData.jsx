@@ -22,7 +22,6 @@ import MotorAddModal from "../modal";
 import UpdateIcon from "@mui/icons-material/Update";
 import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { useParams } from 'react-router-dom'
 
 const MotorData = () => {
   const token = localStorage.getItem('token')
@@ -54,7 +53,6 @@ const MotorData = () => {
 
   const fetchData = async () => {
     try {
-      // console.log("checking if token is alright",token)
       const response = await fetch("http://localhost:5500/motor", {
         headers:{
           Authorization: `Bearer ${token}`
@@ -147,12 +145,15 @@ const MotorData = () => {
   };
 
  
-
   const handleEdit = async (id) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5500/motor/${id}`,
-        {
+      const res = await fetch(`http://localhost:5500/motor/${id}`,{
+        method:'PUT',
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
           newName,
           newCompany,
           newLicense,
@@ -162,14 +163,15 @@ const MotorData = () => {
           newDate,
           newRating,
           newLocation,
-        }
-      );
+        })
+      })
+      console.log(newName)
       setNewName("");
       fetchData();
     } catch (error) {
       console.error("error editing");
     }
-  };
+  }
 
   const handleDelete = async (id) => {
     try {
@@ -182,6 +184,7 @@ const MotorData = () => {
         });
         if (response.ok) {
             console.log('Data deleted successfully');
+            fetchData();
         } else {
             console.error('Failed to delete data');
         }
@@ -263,7 +266,7 @@ const MotorData = () => {
             </TableRow>
             {filteredData.map((value, index) => {
               return (
-                <TableRow key={value._id}>
+                <TableRow key={value._id} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}}>
                   {update[index] ? (
                     <>
                       <td>{index + 1}</td>

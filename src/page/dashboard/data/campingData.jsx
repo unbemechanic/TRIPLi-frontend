@@ -23,8 +23,9 @@ import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 
 const CampingData = () => {
+  const token = localStorage.getItem('token')
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
   const [name, setName] = useState();
   const [company, setCompany] = useState();
   const [license, setLicense] = useState();
@@ -45,60 +46,70 @@ const CampingData = () => {
   const [newLocation, setNewLocation] = useState();
   const [update, setUpdate] = useState(Array(data.length).fill(false));
 
-  useEffect(() => {
-    fetchData();
-  });
-
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5500/camping");
-      setData(response.data);
-      setFilteredData(response.data);
+      const response = await fetch("http://localhost:5500/camping", {
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if(!response.ok){
+        throw new Error("Error fetching data 'frontend'")
+      }
+      const motor = await response.json();
+      setData(motor)
+      setFilteredData(motor)
+      console.log(motor) 
+      
     } catch (error) {
       console.log("failed to fetch data", error);
     }
   };
+  useEffect(() => {
+    fetchData();
+  }, [token]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (name !== "") {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(name !== ''){
       try {
-        const response = await axios.post("http://localhost:5500/camping", {
-          name,
-          company,
-          cost,
-          rating,
-          passanger,
-          type,
-          date,
-          location,
-          license,
-        });
-        console.log(response.data);
+        const res = await fetch("http://localhost:5500/camping", {
+          method:'POST',
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            name,
+            company,
+            cost,
+            rating,
+            passanger,
+            type,
+            date,
+            location,
+            license
+          })
+        })
         fetchData();
         setName("");
-        setCompany("");
-        setcost("");
-        setLocation("");
-        setPassanger("");
-        setType("");
-        setDate("");
-        setLicense("");
-        setRating("");
       } catch (error) {
         console.error("failure", error);
+        
       }
     }
-  };
+  }
 
-  const hangleChange = (setter) => (e) => {
-    setter(e.target.value);
-  };
-  const handleEdit = async (oldname) => {
+  
+  const handleEdit = async (id) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5500/camping/${oldname}`,
-        {
+      const res = await fetch(`http://localhost:5500/camping/${id}`,{
+        method:'PUT',
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
           newName,
           newCompany,
           newLicense,
@@ -108,24 +119,21 @@ const CampingData = () => {
           newDate,
           newRating,
           newLocation,
-        }
-      );
+        })
+      })
+      if(res.ok){
+        console.log('done')
+      }else{
+        console.log('failed res is not ok')
+      }
+      console.log(newName)
       setNewName("");
       fetchData();
     } catch (error) {
       console.error("error editing");
     }
-  };
+  }
 
-  const handleDelete = async (name) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5500/camping/${name}`
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const handleClick = (index) => {
     const newEditMode = [...update];
     newEditMode[index] = !newEditMode[index];
@@ -134,6 +142,25 @@ const CampingData = () => {
   const handleChange = (setter) => (e) => {
     setter(e.target.value);
   };
+  const handleDelete = async (id)=> {
+    try {
+      const res = await fetch(`http://localhost:5500/camping/${id}`,{
+        method:'DELETE',
+        headers:{
+          "Content-Type":"application/json",
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      });;
+      if (res.ok) {
+        console.log('Data deleted successfully');
+        fetchData();
+    } else {
+        console.error('Failed to delete data');
+    }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   //filter//
   const handleSearch = (query) => {
@@ -141,6 +168,9 @@ const CampingData = () => {
         const filtered = Array.isArray(data) ? data.filter((place)=> {
             return place.name && typeof place.name === "string" && place.name.toLowerCase().includes(query.toLowerCase())
         }):[];
+        setFilteredData(filtered)
+    }else{
+      setFilteredData(data)
     }
   }
   return (
@@ -201,9 +231,9 @@ const CampingData = () => {
               <th>Longitude</th>
               <th>Edit/Delete</th>
             </TableRow>
-            {data.map((value, index) => {
+            {filteredData.map((value, index) => {
               return (
-                <TableRow key={index} $campingTable>
+                <TableRow key={index} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}} $campingTable>
                   {update[index] ? (
                     <>
                       <td>{index + 1}</td>
@@ -215,7 +245,7 @@ const CampingData = () => {
                           type="text"
                           name="name"
                           onChange={(e) => setNewName(e.target.value)}
-                          value={value.name}
+                  placeholder={value.name}
                         />
                       </td>
                       <td>
@@ -223,7 +253,7 @@ const CampingData = () => {
                           type="text"
                           name="company"
                           onChange={(e) => setNewCompany(e.target.value)}
-                          value={value.company}
+                          placeholder={value.company}
                         />
                       </td>
                       <td>
@@ -231,7 +261,7 @@ const CampingData = () => {
                           type="text"
                           name="license"
                           onChange={(e) => setNewLicense(e.target.value)}
-                          value={value.license}
+                          placeholder={value.license}
                         />
                       </td>
                       <td>
@@ -239,7 +269,7 @@ const CampingData = () => {
                           type="text"
                           name="passanger"
                           onChange={(e) => setNewPassanger(e.target.value)}
-                          value={value.passanger}
+                          placeholder={value.passanger}
                         />
                       </td>
                       <td>
@@ -247,7 +277,7 @@ const CampingData = () => {
                           type="number"
                           name="cost"
                           onChange={(e) => setNewcost(e.target.value)}
-                          value={value.cost}
+                          placeholder={value.cost}
                         />
                       </td>
                       <td>
@@ -255,7 +285,7 @@ const CampingData = () => {
                           type="text"
                           name="type"
                           onChange={(e) => setNewType(e.target.value)}
-                          value={value.type}
+                          placeholder={value.type}
                         />
                       </td>
                      
@@ -264,7 +294,7 @@ const CampingData = () => {
                           type="number"
                           name="rating"
                           onChange={(e) => setNewRating(e.target.value)}
-                          value={value.rating}
+                          placeholder={value.rating}
                         />
                       </td>
                       <td>
@@ -272,13 +302,13 @@ const CampingData = () => {
                           type="text"
                           name="location"
                           onChange={(e) => setNewLocation(e.target.value)}
-                          value={value.location}
+                          placeholder={value.location}
                         />
                       </td>
                       <td>
                         <UpdateButton
                           onClick={(e) => {
-                            handleEdit(value.name);
+                            handleEdit(value._id);
                             handleClick(index);
                           }}
                         >
@@ -307,7 +337,7 @@ const CampingData = () => {
                           <EditIcon sx={{ fill: "white" }} />
                         </EditButtonDiv>
                         <DeleteButtonDiv
-                          onClick={() => handleDelete(value.name)}
+                          onClick={() => handleDelete(value._id)}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>

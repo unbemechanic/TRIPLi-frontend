@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -18,12 +17,15 @@ import {
   UpdateInputs,
 } from "../style";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
-import { CaravanAddModal } from "../modal";
-import UpdateIcon from "@mui/icons-material/Update";
+import MotorAddModal from "../modal";
 import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 
-const CaravanData = () => {
+const MotorData = () => {
+  const token = localStorage.getItem('token')
+
+  console.log(token, 'this is token')
+ 
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
   const [name, setName] = useState();
@@ -32,7 +34,7 @@ const CaravanData = () => {
   const [passanger, setPassanger] = useState();
   const [cost, setcost] = useState();
   const [type, setType] = useState();
-  const [date, setDate] = useState();
+  const [date, setDate] = useState('');
   const [rating, setRating] = useState();
   const [location, setLocation] = useState();
   const [newName, setNewName] = useState();
@@ -46,26 +48,48 @@ const CaravanData = () => {
   const [newLocation, setNewLocation] = useState();
   const [update, setUpdate] = useState(Array(data.length).fill(false));
 
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5500/caravan");
-      setData(response.data);
-      setFilteredData(response.data)
+      // console.log("checking if token is alright",token)
+      const response = await fetch("http://localhost:5500/caravan", {
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if(!response.ok){
+        throw new Error("Error fetching data 'frontend'")
+      }
+      const motor = await response.json();
+      setData(motor)
+      setFilteredData(motor)
+      console.log(motor) 
+      
     } catch (error) {
       console.log("failed to fetch data", error);
     }
   };
-
   useEffect(() => {
-    fetchData();
-  }, []);
-  
+    fetchData()
+  }, [token]);
 
+
+
+   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (name !== "") {
+    if (name !== '') {
+      if(!token){
+        console.log('no token in the 84')
+      }
       try {
-        const response = await axios.post("http://localhost:5500/caravan", {
+        const response = await fetch("http://localhost:5500/caravan", {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+          body: JSON.stringify({
           name,
           company,
           cost,
@@ -75,9 +99,12 @@ const CaravanData = () => {
           date,
           location,
           license,
+        })
         });
-        const caravan = await response.json()
-        console.log(response.data);
+        const motor = await response.json();
+        console.log(motor)
+        if(response.ok){
+        console.log(motor);
         fetchData();
         setName("");
         setCompany("");
@@ -88,55 +115,14 @@ const CaravanData = () => {
         setDate("");
         setLicense("");
         setRating("");
+        }
       } catch (error) {
         console.error("failure", error);
       }
     }
   };
+
   
-  
-
-  const handleChange = (setter) => (e) =>{
-    setter(e.targe.value)
-  }
-  const handleEdit = async (oldname) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:5500/caravan/${oldname}`,
-        {
-          newName,
-          newCompany,
-          newLicense,
-          newPassanger,
-          newCost,
-          newType,
-          newDate,
-          newRating,
-          newLocation,
-        }
-      );
-      setNewName("");
-      fetchData();
-    } catch (error) {
-      console.error("error editing");
-    }
-  };
-
-  const handleDelete = async (name) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5500/caravan/${name}`
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleClick = (index) => {
-    const newEditMode = [...update];
-    newEditMode[index] = !newEditMode[index];
-    setUpdate(newEditMode);
-  };
-
   //filter
   const handleSearch = (query) => {
     if(query && typeof query === "string"){
@@ -153,11 +139,79 @@ const CaravanData = () => {
   };
   //filter ends
 
+  const handleChange = (setter) => (event) => {
+    setter(event.target.value);
+  };
+
+
+  const handleEdit = async (id) => {
+    try {
+        const res = await fetch(`http://localhost:5500/caravan/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                newName,
+                newCompany,
+                newLicense,
+                newPassanger,
+                newCost,
+                newType,
+                newDate,
+                newRating,
+                newLocation
+            })
+        });
+
+        if (!res.ok) {
+            throw new Error(`Failed to edit data: ${res.statusText}`);
+        }
+
+        setNewName("");
+        fetchData();
+    } catch (error) {
+        console.error("Error editing:", error);
+    }
+};
+
+
+  const handleDelete = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:5500/caravan/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+        });
+        if (response.ok) {
+            console.log('Data deleted successfully');
+            fetchData();
+        } else {
+            console.error('Failed to delete data');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+  const handleClick = (index) => {
+    const newEditMode = [...update];
+    newEditMode[index] = !newEditMode[index];
+    setUpdate(newEditMode);
+  };
+  const handleChangeNewName = (e) => {
+    setNewName(e.target.value);
+  };
+
+
   return (
     <div>
       <DataList className="tablet">
-      <DataControl>
-          <h2>Caravan list</h2>
+        <DataControl>
+          <h2>Cravan list</h2>
           <InputsDiv>
             <Input
               type="text"
@@ -169,7 +223,7 @@ const CaravanData = () => {
           <FilterButton>
             <SortOutlinedIcon /> Filter
           </FilterButton>
-          <CaravanAddModal
+          <MotorAddModal
             onSubmit={handleSubmit}
             names = {{
               name,
@@ -216,7 +270,7 @@ const CaravanData = () => {
             </TableRow>
             {filteredData.map((value, index) => {
               return (
-                <TableRow key={index}>
+                <TableRow key={value._id} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}}>
                   {update[index] ? (
                     <>
                       <td>{index + 1}</td>
@@ -227,8 +281,8 @@ const CaravanData = () => {
                         <UpdateInputs
                           type="text"
                           name="name"
-                          onChange={(e) => setNewName(e.target.value)}
-                          value={value.name}
+                          onChange={handleChangeNewName}
+                          placeholder={value.name}
                         />
                       </td>
                       <td>
@@ -236,7 +290,7 @@ const CaravanData = () => {
                           type="text"
                           name="company"
                           onChange={(e) => setNewCompany(e.target.value)}
-                          value={value.company}
+                          placeholder={value.company}
                         />
                       </td>
                       <td>
@@ -244,7 +298,7 @@ const CaravanData = () => {
                           type="text"
                           name="license"
                           onChange={(e) => setNewLicense(e.target.value)}
-                          value={value.license}
+                          placeholder={value.license}
                         />
                       </td>
                       <td>
@@ -252,7 +306,7 @@ const CaravanData = () => {
                           type="text"
                           name="passanger"
                           onChange={(e) => setNewPassanger(e.target.value)}
-                          value={value.passanger}
+                          placeholder={value.passanger}
                         />
                       </td>
                       <td>
@@ -260,7 +314,7 @@ const CaravanData = () => {
                           type="number"
                           name="cost"
                           onChange={(e) => setNewcost(e.target.value)}
-                          value={value.cost}
+                          placeholder={value.cost}
                         />
                       </td>
                       <td>
@@ -268,7 +322,7 @@ const CaravanData = () => {
                           type="text"
                           name="type"
                           onChange={(e) => setNewType(e.target.value)}
-                          value={value.type}
+                          placeholder={value.type}
                         />
                       </td>
                       <td>
@@ -276,7 +330,7 @@ const CaravanData = () => {
                           type="date"
                           name="date"
                           onChange={(e) => setNewDate(e.target.value)}
-                          value={value.date}
+                          placeholder={value.date}
                         />
                       </td>
                       <td>
@@ -284,7 +338,7 @@ const CaravanData = () => {
                           type="number"
                           name="rating"
                           onChange={(e) => setNewRating(e.target.value)}
-                          value={value.rating}
+                          placeholder={value.rating}
                         />
                       </td>
                       <td>
@@ -292,13 +346,13 @@ const CaravanData = () => {
                           type="text"
                           name="location"
                           onChange={(e) => setNewLocation(e.target.value)}
-                          value={value.location}
+                          placeholder={value.location}
                         />
                       </td>
                       <td>
                         <UpdateButton
                           onClick={(e) => {
-                            handleEdit(value.name);
+                            handleEdit(value._id);
                             handleClick(index);
                           }}
                         >
@@ -323,11 +377,16 @@ const CaravanData = () => {
                       <td>{value.rating}</td>
                       <td>{value.location}</td>
                       <td style={{ display: "flex", gap: "10px" }}>
-                        <EditButtonDiv onClick={() => handleClick(index)}>
+                        <EditButtonDiv
+                          onClick={() => {
+                            handleClick(index);
+                            setNewName(value.name);
+                          }}
+                        >
                           <EditIcon sx={{ fill: "white" }} />
                         </EditButtonDiv>
                         <DeleteButtonDiv
-                          onClick={() => handleDelete(value.name)}
+                          onClick={() => {handleDelete(value._id); console.log("id hsould be deleted",value._id)}}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>
@@ -344,4 +403,4 @@ const CaravanData = () => {
   );
 };
 
-export default CaravanData;
+export default MotorData;
