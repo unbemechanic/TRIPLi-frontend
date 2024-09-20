@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { AddDataButton, ModalImg, ModalInputs } from "./style";
 import ImageIcon from "@mui/icons-material/Image";
@@ -32,7 +31,7 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
     type,
     date,
     location,
-    rating
+    rating,
   } = names;
   const {
     onClick,
@@ -168,22 +167,21 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
   );
 }
 
-
 export function CaravanAddModal({ onSubmit, names = {}, handlers = {} }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const {
-    name = '',
-    company = '',
-    license = '',
-    cost = '',
-    passanger = '',
-    type = '',
-    date = '',
-    location = '',
-    rating = '',
+    name = "",
+    company = "",
+    license = "",
+    cost = "",
+    passanger = "",
+    type = "",
+    date = "",
+    location = "",
+    rating = "",
   } = names;
 
   const {
@@ -619,8 +617,7 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { name, company, license, cost, passanger, type, date, location } =
-    names;
+  const { name, city, contact, from, to, website, latitude, longitude } = names;
   const {
     onClick,
     onCompany,
@@ -674,12 +671,12 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
               placeholder="City"
               name="company"
               onChange={onCompany}
-              value={company}
+              value={city}
             />
             <ModalInputs
               type="text"
               placeholder="Contact number"
-              value={type}
+              value={contact}
               onChange={onType}
             />
             <div
@@ -694,14 +691,14 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
                 placeholder="From"
                 name="license"
                 onChange={onLicense}
-                value={license}
+                value={from}
               />
               <ModalInputs
                 type="text"
                 placeholder="To"
                 name="passanger"
                 onChange={onPassanger}
-                value={passanger}
+                value={to}
               />
             </div>
             <ModalInputs
@@ -709,7 +706,7 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
               placeholder="Website"
               name="website"
               onChange={onDate}
-              value={date}
+              value={website}
             />
             <div
               style={{
@@ -722,7 +719,7 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
                 type="text"
                 placeholder="Latitude"
                 name="location"
-                value={location}
+                value={latitude}
                 onChange={onLocation}
               />
               <ModalInputs
@@ -730,7 +727,7 @@ export function CampingAddModal({ onSubmit, names, handlers }) {
                 placeholder="Longitude"
                 name="cost"
                 onChange={onCost}
-                value={cost}
+                value={longitude}
               />
             </div>
             <ModalInputs

@@ -49,7 +49,7 @@ const Navbar = () => {
     }}>
         <IndentedDiv>
             <Header>
-                <Link style={{textDecoration:'none'}} to='/main'><DirectH $name>Camper</DirectH></Link>
+                <Link style={{textDecoration:'none'}} to='/'><DirectH $name>Camper</DirectH></Link>
                 <DirectContainer>
                     <SLink to="/motor"><DirectH>Motor<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="gray"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></DirectH></SLink>
                     

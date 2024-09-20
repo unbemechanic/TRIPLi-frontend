@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Backgrounds, Seperated } from '..//..//style';
 import { BackgroundImg, CarDesName, CarSpec, CarSpecDesc, CarSpecInfo, CarSpecTitle, Home, HomeButton, MainContainer } from '../motor/documentStyle.';
@@ -8,17 +8,32 @@ import { tuning } from '../data/tuning';
 import { usedCar } from '../data/usedCars';
 
 const UsedCarDetailComponent = () => {
-    const data = usedCar.maindata;
+  const [data, setData] = useState([])
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5500/used-car");
+      if (!response.ok) {
+        throw new Error("Error fetching data 'frontend'");
+      }
+      const motor = await response.json();
+      setData(motor);
+      // console.log(motor);
+    } catch (error) {
+      console.log("failed to fetch data", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
     let {id} = useParams();
-    const separatedData = data.filter((value)=> value.id === parseInt(id));
-    console.log(separatedData)
+    const separatedData = data.filter((value)=> value._id == id);
   return (
     <div style={{backgroundColor:'#fafafa'}}>
-        {separatedData.map((value)=>{
+       {separatedData.map((value)=>{
             return <Seperated key={value.id}>
               <div>
               <Home>
-                  <h1>{value.used.name}</h1>
+                  <h1>{value.name}</h1>
                   <HomeButton>
                   <Button variant="contained">ADD TO CART</Button>
                   <Button sx={{color:'white', border:' 1px solid white'}} variant="outlined">COMPARE</Button>
@@ -27,20 +42,20 @@ const UsedCarDetailComponent = () => {
                 <MainContainer>
                   <CarSpec style={{marginBottom:'80px'}}>
                     <img style={{maxWidth:'600px'
-                    }} src={value.used.image}/>
+                    }} src={value.photo}/>
                     <CarSpecInfo>
                       <CarDesName $title>
-                          <h2>{value.used.name}</h2><CarSpecTitle>{value.used.price} Won</CarSpecTitle>
+                          <h2>{value.name}</h2><CarSpecTitle>{value.cost} Won</CarSpecTitle>
                       </CarDesName>
                       <div>
                         <CarSpecDesc>
-                        <div>Company</div><div>{value.used.company}</div>
+                        <div>Company</div><div>{value.company}</div>
                         </CarSpecDesc>
                         <CarSpecDesc>
-                        <div>People</div>{value.used.people}
+                        <div>People</div>{value.passanger}
                         </CarSpecDesc>
                         <CarSpecDesc>
-                        <div>Licence type</div>{value.used.license}
+                        <div>Licence type</div>{value.license}
                         </CarSpecDesc>
                       </div>
                     </CarSpecInfo>

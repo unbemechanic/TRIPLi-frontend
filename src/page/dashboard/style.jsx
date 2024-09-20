@@ -73,6 +73,7 @@ export const DeleteButtonDiv = styled.div`
     border-radius: 5px;
     padding: 3px 10px;
     cursor: pointer;
+
 `
 
 
@@ -204,7 +205,7 @@ export const InputsDiv = styled.div`
     align-items: center;
     /* background-color: lime; */
     height: 34px;
-    width: 300px;
+    /* width: 600px; */
     justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
@@ -234,7 +235,7 @@ export const Input = styled.input`
 `
 export const DataControl = styled.div`
     display: grid;
-    grid-template-columns: 6fr 2fr 1fr 1fr;
+    grid-template-columns: ${(props)=> props.$userlist ? '8fr 4fr 1fr':'6fr 2fr 1fr 1fr'};
     margin-top: 10px;
 `
 export const DataList = styled.div`
@@ -248,6 +249,7 @@ export const DataList = styled.div`
     background-color: white;
     /* margin-top: 120px; */
     margin-right: 20px;
+    width: ${(props)=> props.$userlist ? 'fit-content':''};
 `
 export const TableHead = styled.th`
     background-color: lime;
@@ -264,12 +266,15 @@ export const Table = styled.table`
 export const TableRow = styled.tr`
     border-bottom: 1px solid gray;
     display: grid;
-    justify-content: space-between;
-    grid-template-columns: ${(props)=> props.$camping ? "20px 90px 90px 70px 90px 120px 100px 100px 100px 100px " :(props)=> props.$campingTable ? "20px 90px 90px 70px 90px 45px 45px 100px 100px 100px 100px" :(props)=> props.$user ? '25px 200px 300px 200px' :'30px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'} ;
+    grid-template-columns: ${(props)=> props.$camping ? "20px 90px 90px 70px 90px 120px 100px 100px 100px 100px " :(props)=> props.$campingTable ? "20px 90px 90px 70px 90px 45px 45px 100px 100px 100px 100px" :(props)=> props.$user ? '25px 200px 200px 300px 200px' :'30px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'};
     cursor: pointer;
+    justify-content: space-between;
     align-items: center;
     padding-right: 80px;
     padding-left: 10px;
+    &:hover{
+        opacity: 0.8;
+    }
     
     th{
         padding: 10px;

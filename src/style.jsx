@@ -574,3 +574,17 @@ export const LogInInputs = styled.input`
     border-radius: 5px;
     border: 1px solid black;
 `
+export const FilterLabel = styled.label`
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+    input{
+        width: 20px;
+    }
+`
+export const FilterCheckbox = styled.input.attrs({type: 'checkbox'})`
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+`

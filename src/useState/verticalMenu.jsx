@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { caravan } from '../page/data/caravan';
 import { tuning } from '../page/data/tuning';
 import { usedCar } from '../page/data/usedCars';
+import Img from '..//assets/caravan-8.png'
+
 
 // style
 export const Star = styled(StarIcon)`
@@ -22,6 +24,7 @@ export const SLinkV = styled(Link)`
   margin: 20px 0;
   box-sizing: border-box;
   margin-inline: auto;
+  background-color: white;
   &:hover{
     transform: scale(1.02);
   }
@@ -116,17 +119,16 @@ export const Buttons = styled.button`
 `
 
 export const VerticalMenuComponent = ({filter}) => {
-  const data = campcar.maindata;
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
       {filter.map((value)=>{
         return(
-          <SLinkV to={`/motor/${value.id}`} key={value.id}>
-            <img src={value.car.photo}/>
+          <SLinkV to={`/motor/${value._id}`} key={value.id}>
+            <img src={value?.photo || Img}/>
             <ButtonFunction>
               <PriceDescription>
-                <h3>{value.car.name}</h3><h2>{value.car.cost}</h2>
-                <h5>{value.car.company}</h5><p><Star/>{value.car.rating}</p>
+                <h3>{value.name}</h3><h2>{value.cost}</h2>
+                <h5>{value.company}</h5><p><Star/>{value.rate}</p>
               </PriceDescription>
               <ButtonSec>
                 <BLink to={`/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
@@ -142,21 +144,20 @@ export const VerticalMenuComponent = ({filter}) => {
 
 export default VerticalMenuComponent
 
-export const VerticalMenuCaravanComponent = () => {
-  const data = caravan.maindata;
+export const VerticalMenuCaravanComponent = ({filter}) => {
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
-      {data.map((value)=>{
+    {filter.map((value)=>{
         return(
-          <SLinkV to={`/caravan/${value.id}`} key={value.id}>
-            <img src={value.caravan.image}/>
+          <SLinkV to={`/caravan/${value._id}`} key={value.id}>
+            <img src={value?.photo || Img}/>
             <ButtonFunction>
               <PriceDescription>
-                <h3>{value.caravan.name}</h3><h2>{value.caravan.price}</h2>
-                <h5>{value.caravan.company}</h5><p><Star/>{value.caravan.rating}</p>
+                <h3>{value.name}</h3><h2>{value.cost}</h2>
+                <h5>{value.company}</h5><p><Star/>{value.rate}</p>
               </PriceDescription>
               <ButtonSec>
-                <BLink to={`/caravan/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
+                <BLink to={`/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
                 <BLink><Buttons>Compare</Buttons></BLink>
               </ButtonSec>
             </ButtonFunction>
@@ -166,21 +167,20 @@ export const VerticalMenuCaravanComponent = () => {
     </div>
   )
 }
-export const VerticalMenuTuningComponent = () => {
-  const data = tuning.maindata;
+export const VerticalMenuTuningComponent = ({filter}) => {
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
-      {data.map((value)=>{
+      {filter.map((value)=>{
         return(
-          <SLinkV to={`/tuning/${value.id}`} key={value.id}>
-            <img src={value.tuning.image}/>
+          <SLinkV to={`/tuning/${value._id}`} key={value._id}>
+            <img src={value?.photo || Img}/>
             <ButtonFunction>
               <PriceDescription>
-                <h3>{value.tuning.name}</h3><h2>{value.tuning.price}</h2>
-                <h5>{value.tuning.company}</h5><p><Star/>{value.tuning.rating}</p>
+                <h3>{value.name}</h3><h2>{value.cost}</h2>
+                <h5>{value.company}</h5><p><Star/>{value.rate}</p>
               </PriceDescription>
               <ButtonSec>
-                <BLink to={`/tuning/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
+                <BLink to={`/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
                 <BLink><Buttons>Compare</Buttons></BLink>
               </ButtonSec>
             </ButtonFunction>
@@ -190,21 +190,20 @@ export const VerticalMenuTuningComponent = () => {
     </div>
   )
 }
-export const VerticalMenuUsedCarComponent = () => {
-  const data = usedCar.maindata;
+export const VerticalMenuUsedCarComponent = ({filter}) => {
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
-      {data.map((value)=>{
+      {filter.map((value)=>{
         return(
-          <SLinkV to={`/usedCar/${value.id}`} key={value.id}>
-            <img src={value.used.image}/>
+          <SLinkV to={`/usedCar/${value._id}`} key={value._id}>
+            <img src={value?.photo || Img}/>
             <ButtonFunction>
               <PriceDescription>
-                <h3>{value.used.name}</h3><h2>{value.used.price}</h2>
-                <h5>{value.used.company}</h5><p><Star/>{value.used.rating}</p>
+                <h3>{value.name}</h3><h2>{value.cost}</h2>
+                <h5>{value.company}</h5><p><Star/>{value.rate}</p>
               </PriceDescription>
               <ButtonSec>
-                <BLink to={`/usedCar/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
+                <BLink to={`/cart/${value.id}`}><Buttons>Order</Buttons></BLink>
                 <BLink><Buttons>Compare</Buttons></BLink>
               </ButtonSec>
             </ButtonFunction>

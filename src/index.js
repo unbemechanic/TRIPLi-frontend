@@ -37,9 +37,9 @@ root.render(
     <Navbar/>
     <ScrollToTop/>
     <Routes>
-      <Route path='/' element={<Login/>}/>
+      <Route path='/login' element={<Login/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
-      <Route path='/main' element={<MainComponent/>}/>
+      <Route path='/' element={<MainComponent/>}/>
       <Route path='/motor' element={<MotorComponent/>}/>
       <Route path="/motor/:id" element={<DocumentsComponent/>} />
       <Route path="/caravan" element={<CaravanComponent/>} />

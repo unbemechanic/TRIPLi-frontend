@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // import { BoxingCars, Heading, StylingBoxes } from '../../style'
 import { campcar } from '../page/data/mockdata'
@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { caravan } from '../page/data/caravan';
 import { tuning } from '../page/data/tuning';
 import { usedCar } from '../page/data/usedCars';
+import Img from '..//assets/caravan-8.png'
 
 // style
 export const Star = styled(StarIcon)`
@@ -150,11 +151,13 @@ export const Container = styled.div`
 
 
 const GridMenuComponent = ({filter}) => {
+  const [data, setData] =useState([])
+
 
   return (
     <Container>
       {/* <input type="text" onChange={handleChange} placeholder='Type to search'/> */}
-      {filter.map((value)=>{
+   {/*    {filter.map((value)=>{
         return(
           <div key={value.id}>
             <SLink to={`/motor/${value.id}`}>
@@ -171,55 +174,18 @@ const GridMenuComponent = ({filter}) => {
             </SLink>
           </div>
         )
-      })}
-    </Container>
-  )
-}
-
-export default GridMenuComponent
-
-
-export const GridMenuCaravanComponent = () => {
-  const data = caravan.maindata;
-  return (
-    <Container>
-      {data.map((value)=>{
+      })} */}
+      {filter.map((value)=>{
         return(
           <div key={value.id}>
-            <SLink to={`/caravan/${value.id}`}>
-              <img src={value.caravan.image}/>
+            <SLink to={`/motor/${value._id}`}>
+              <img src={value?.photo || Img}/>
               <FunctionButtons>
-                <h3>{value.caravan.name}</h3>
-                <Rating>{value.caravan.company}<p><Star/>{value.caravan.rating}</p></Rating>
-                <h1>{value.caravan.price}W</h1>
+                <h3>{value.name}</h3>
+                <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
+                <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/caravan/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Link><Buttons>Compare</Buttons></Link>
-                </div>
-              </FunctionButtons>
-            </SLink>
-          </div>
-        )
-      })}
-    </Container>
-  )
-}
-
-export const GridMenuTuningComponent = () => {
-  const data = tuning.maindata;
-  return (
-    <Container>
-      {data.map((value)=>{
-        return(
-          <div key={value.id}>
-            <SLink to={`/tuning/${value.id}`}>
-              <img src={value.tuning.image}/>
-              <FunctionButtons>
-                <h3>{value.tuning.name}</h3>
-                <Rating>{value.tuning.company}<p><Star/>{value.tuning.rating}</p></Rating>
-                <h1>{value.tuning.price}W</h1>
-                <div>
-                  <Link to={`/tuning/cart/${value.id}`}><Buttons>Order</Buttons></Link>
+                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
                   <Buttons>Compare</Buttons>
                 </div>
               </FunctionButtons>
@@ -230,22 +196,74 @@ export const GridMenuTuningComponent = () => {
     </Container>
   )
 }
-export const GridMenuUsedCarComponent = () => {
-  const data = usedCar.maindata;
-  
+
+export default GridMenuComponent
+
+
+export const GridMenuCaravanComponent = ({filter}) => {
+  const data = caravan.maindata;
   return (
     <Container>
-      {data.map((value)=>{
+      {filter.map((value)=>{
         return(
           <div key={value.id}>
-            <SLink to={`/usedCar/${value.id}`}>
-              <img src={value.used.image}/>
+            <SLink to={`/caravan/${value._id}`}>
+              <img src={value?.photo || Img}/>
               <FunctionButtons>
-                <h3>{value.used.name}</h3>
-                <Rating>{value.used.company}<p><Star/>{value.used.rating}</p></Rating>
-                <h1>{value.used.price}W</h1>
+                <h3>{value.name}</h3>
+                <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
+                <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/usedCar/cart/${value.id}`}><Buttons>Order</Buttons></Link>
+                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
+                  <Buttons>Compare</Buttons>
+                </div>
+              </FunctionButtons>
+            </SLink>
+          </div>
+        )
+      })}
+    </Container>
+  )
+}
+
+export const GridMenuTuningComponent = ({filter}) => {
+  return (
+    <Container>
+       {filter.map((value)=>{
+        return(
+          <div key={value.id}>
+            <SLink to={`/tuning/${value._id}`}>
+              <img src={value?.photo || Img}/>
+              <FunctionButtons>
+                <h3>{value.name}</h3>
+                <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
+                <h1>{value.cost}W</h1>
+                <div>
+                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
+                  <Buttons>Compare</Buttons>
+                </div>
+              </FunctionButtons>
+            </SLink>
+          </div>
+        )
+      })}
+    </Container>
+  )
+}
+export const GridMenuUsedCarComponent = ({filter}) => {
+  return (
+    <Container>
+      {filter.map((value)=>{
+        return(
+          <div key={value.id}>
+            <SLink to={`/usedCar/${value._id}`}>
+              <img src={value?.photo || Img}/>
+              <FunctionButtons>
+                <h3>{value.name}</h3>
+                <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
+                <h1>{value.cost}W</h1>
+                <div>
+                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
                   <Buttons>Compare</Buttons>
                 </div>
               </FunctionButtons>

@@ -8,6 +8,9 @@ import {
   DeleteButtonDiv,
   EditButtonDiv,
   FileInput,
+  FilterButton,
+  Input,
+  InputsDiv,
   ScrollSec,
   Table,
   TableRow,
@@ -15,155 +18,125 @@ import {
   UpdateInputs,
 } from "../style";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
-import { CaravanAddModal } from "../modal";
+import MotorAddModal, { UserAddModal } from "../modal";
 import UpdateIcon from "@mui/icons-material/Update";
 import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
+import SearchIcon from "@mui/icons-material/Search";
 
 const UserData = () => {
+  const token = localStorage.getItem('token')
   const [data, setData] = useState([]);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [newName, setNewName] = useState();
-  const [newEmail, setNewEmail] = useState();
-  
-  const [update, setUpdate] = useState(Array(data.length).fill(false));
-
-  useEffect(() => {
-    fetchData();
-  });
+  const [filteredData, setFilteredData] = useState(data);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5500/sign-up");
-      setData(response.data);
+      // console.log("checking if token is alright",token)
+      const response = await fetch("http://localhost:5500/sign-up", {
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if(!response.ok){
+        throw new Error("Error fetching data 'frontend'")
+      }
+      const user = await response.json();
+      setData(user)
+      setFilteredData(user)
+      console.log(user) 
+      
     } catch (error) {
       console.log("failed to fetch data", error);
     }
   };
+  useEffect(() => {
+    fetchData()
+  }, [token]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (name !== "") {
-      try {
-        const response = await axios.post("http://localhost:5500/user", {
-          name,
-          email
+  //filter
+  const handleSearch = (query) => {
+    if(query && typeof query === "string"){
+      const filtered = Array.isArray(data) ? data.filter((user) => {
+       return user.name && typeof user.name === "string" && user.name.toLowerCase().includes(query.toLowerCase()); 
+      }) : [];
+    setFilteredData(filtered);
+    console.log("search is working", filtered);
+    }else{
+      setFilteredData(data)
+      console.log('query is not filtering')
+    }
+    
+  };
+  //filter ends
+
+  const handleDelete = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:5500/user/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
         });
-        console.log(response.data);
-        fetchData();
-        setName("");
-        setEmail("")
-      } catch (error) {
-        console.error("failure", error);
-      }
-    }
-  };
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-    console.log("name is clicked");
-  };
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-    console.log("name is clicked");
-  };
-  
-  const handleEdit = async (oldname) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:5500/sign-up/${oldname}`,
-        {
-          newName,
-          newEmail
+        if (response.ok) {
+            console.log('Data deleted successfully');
+            fetchData();
+        } else {
+            const errorData = await response.json();
+            console.error('Failed to delete data:', errorData.message || response.statusText);
         }
-      );
-      setNewName("");
-      fetchData();
     } catch (error) {
-      console.error("error editing");
+        console.error('Error:', error);
     }
-  };
-
-  const handleDelete = async (name) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5500/user/${name}`
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleClick = (index) => {
-    const newEditMode = [...update];
-    newEditMode[index] = !newEditMode[index];
-    setUpdate(newEditMode);
-  };
+};
 
   return (
     <div>
-      <DataList className="tablet">
-        <DataControl>
-          <b>User list</b>
+      <DataList $userlist className="tablet">
+        <DataControl $userlist>
+          <h2>User list</h2>
+          <InputsDiv>
+            <Input
+              type="text"
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Type to search..."
+            />
+            <SearchIcon />
+          </InputsDiv>
+          <FilterButton>
+            <SortOutlinedIcon /> Filter
+          </FilterButton>
         </DataControl>
         <ScrollSec>
           <Table>
-            <TableRow>
-              <th style={{display:'flex'}}>No.</th>
-              <th>User</th>
+            <TableRow $user
+              style={{ position: "sticky", top: "0", backgroundColor: "white" }}
+            >
+              <th /* style={{paddingRight:'70px'}} */>No.</th>
+              <th>User image</th>
+              <th>Username</th>
               <th>Email</th>
-              <th>Edit/Delete</th>
+              <th>Delete</th>
             </TableRow>
-            {data.map((value, index) => {
+            {filteredData.map((value, index) => {
               return (
-                <TableRow  key={index}>
-                  {update[index] ? (
+                <TableRow $user key={value._id} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}}>
                     <>
-                      <td>1</td>
+                      <td style={{ paddingLeft: "10px" }}>{index + 1}</td>
                       <td>
-                        <UpdateInputs
-                          type="text"
-                          name="name"
-                          onChange={(e) => setNewName(e.target.value)}
-                          placeholder={value.name}
-                        />
+                        {/* <img src={value.photo} alt="" width={50}/> */}
+                        <div>User photo</div>
                       </td>
-                      <td>
-                        <UpdateInputs
-                          type="text"
-                          name="company"
-                          onChange={(e) => setNewEmail(e.target.value)}
-                          value={value.company}
-                        />
-                      </td>
-                      <td>
-                        <UpdateButton
-                          onClick={(e) => {
-                            handleEdit(value.name);
-                            handleClick(index);
-                          }}
-                        >
-                          <SaveAsOutlinedIcon />
-                        </UpdateButton>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td style={{ display:'flex', marginLeft:'-100px' }}>{index + 1}</td>
-                   
                       <td>{value.name}</td>
-                      <td>{value.email || "no data"}</td>
-                      <td style={{ display: "flex", gap: "10px" }}>
-                        <EditButtonDiv onClick={() => handleClick(index)}>
-                          <EditIcon sx={{ fill: "white" }} />
-                        </EditButtonDiv>
+                      <td style={{display:'flex',boxSizing:'border-box', marginLeft:'90px'}}>{value.email || "no data"}</td>
+                      <td style={{ display: "flex", gap: "10px", justifyContent:'center' }}>
                         <DeleteButtonDiv
-                          onClick={() => handleDelete(value.name)}
+                          onClick={() => {handleDelete(value._id); console.log("id hsould be deleted",value._id)}}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>
                       </td>
                     </>
-                  )}
                 </TableRow>
               );
             })}
