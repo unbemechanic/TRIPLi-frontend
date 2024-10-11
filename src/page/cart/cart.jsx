@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { campcar } from '../data/mockdata'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import { caravan } from '../data/caravan';
 import { tuning } from '../data/tuning';
 import { usedCar } from '../data/usedCars';
 import {RemoveScroll} from 'react-remove-scroll';
+import useWindowSize from '../../components/windowSize';
 
 
 // style
@@ -18,6 +19,7 @@ export const Container = styled.div`
     max-width: 1300px;
     margin-inline: auto;
     margin-top: 35px;
+    gap: ${(props) => props.$cart ? '20px':''};
     h1{
         border-bottom: 2px solid #FF7A00;
         padding-inline: 5px;
@@ -33,6 +35,7 @@ export const ImgContainer = styled.div`
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
     height: 500px;
+    overflow: hidden;
     @media (max-width: 700px){
         width: 80%;
         margin-inline: auto;
@@ -45,7 +48,7 @@ export const ImgContainer = styled.div`
         
     }
     img{
-        height: 91%;
+        height: 100%;
         width: 100%;
         @media (max-width: 700px){
         width: 100%;
@@ -59,8 +62,11 @@ export const Wraper = styled.div`
     display: flex;
     margin-top: 30px;
     grid-gap: 35px;
+    overflow: hidden;
+    
     @media (max-width: 1300px) {
         flex-direction: column;
+        overflow-x: scroll;
     }
 `
 export const DesWraper = styled.div`
@@ -68,8 +74,9 @@ export const DesWraper = styled.div`
     flex-direction: column;
     width: 300px;
     height: 700px;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-bottom: 50px;
+    position: relative;
     @media (max-width: 1300px){
         width: 700px;
         overflow-y: hidden;
@@ -155,25 +162,62 @@ export const DesWraper = styled.div`
 `
 
 const CartMotorComponent = () => {
-    const data = campcar.maindata;
+    const [data, setData] = useState([]);
+    const [moveUp, setMoveUp] = useState(false);
+    const scrollRef = useRef(null);
+    const windowSize = useWindowSize();
+    const wideWindow = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({ top: window.innerHeight - 500, behavior: 'smooth' });
+        }
+    };
+    const smallWindow = () => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    };
+    const handleClick = () => {
+        if(windowSize.width > 1300){
+            wideWindow()
+        }else{
+            smallWindow()
+        }
+    }
+   
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5500/motor");
+        if (!response.ok) {
+          throw new Error("Error fetching data 'frontend'");
+        }
+        const motor = await response.json();
+        // const combinedData = [...motor, ...mock]
+        setData(motor);
+      } catch (error) {
+        throw new Error("failed to fetch data", error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
     let {id} = useParams();
-    const cartData = data.filter((value)=> value.id == id)
+    const separatedData = data.filter((item)=> item._id == id);
+
+    
    return (
     <Container>
-        <h1>Cart</h1>
-        {cartData.map((value)=>{
+        <h1>My Orders</h1>
+        {separatedData.map((value)=>{
             return(
                 <Wraper key={value.id}>
                     <ImgContainer>
-                    <img src={value.car.photo}/>
-                    <p>Purchase price: <b>{value.car.cost} W</b></p>
+                    <img src={value.image}/>
+                    {/* <p>Purchase price: <b>{value.cost} W</b></p> */}
                     </ImgContainer>
-                    <DesWraper className='scrollable'>
-                        <h2>{value.car.name}<h3>{value.car.cost}</h3></h2>
+                    <DesWraper className='scrollable' ref={scrollRef}>
+                        <h2>{value.name}<h3>{value.cost} Won</h3></h2>
                         
                         <h5>Description</h5>
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptas sit delectus illum cumque cupiditate, explicabo pariatur aut consequuntur laborum ad esse eius assumenda tenetur similique placeat, corporis architecto recusandae.</p>
-                        <button>Continue to payment</button>
+                        <button className={`button-payment ${moveUp ? 'move-up' :''}`}style={{cursor:'pointer'}} onClick={handleClick}>Continue to payment</button>
                         <h2>Enter Account Details</h2>
                         <legend>First name</legend>
                         <input type="text" placeholder='First name' />
@@ -196,7 +240,7 @@ const CartMotorComponent = () => {
                         <input type="number" placeholder='CVV' />
                         <legend>Zip-code</legend>
                         <input type="number" placeholder='Zip-code' />
-                        <button>Place Order</button>
+                        <button style={{cursor:'pointer'}} onClick={() => alert('Sorry this is demo website! You can not purchase (')}>Place Order</button>
                     </DesWraper>
                     <div>
                     </div>
@@ -208,28 +252,64 @@ const CartMotorComponent = () => {
 }
 
 export default CartMotorComponent
-
 export const CartCaravanComponent = () => {
-    const data = caravan.maindata;
+    const [data, setData] = useState([]);
+    const [moveUp, setMoveUp] = useState(false);
+    const scrollRef = useRef(null);
+    const windowSize = useWindowSize();
+    const wideWindow = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({ top: window.innerHeight - 500, behavior: 'smooth' });
+        }
+    };
+    const smallWindow = () => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    };
+    const handleClick = () => {
+        if(windowSize.width > 1300){
+            wideWindow()
+        }else{
+            smallWindow()
+        }
+    }
+   
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5500/caravan");
+        if (!response.ok) {
+          throw new Error("Error fetching data 'frontend'");
+        }
+        const motor = await response.json();
+        // const combinedData = [...motor, ...mock]
+        setData(motor);
+
+      } catch (error) {
+        console.log("failed to fetch data", error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
     let {id} = useParams();
-    const cartData = data.filter((value)=> value.id == id)
+    const separatedData = data.filter((item)=> item._id == id);
+
+    
    return (
     <Container>
-        <h1>Cart</h1>
-        {cartData.map((value)=>{
+        <h1>My Orders</h1>
+        {separatedData.map((value)=>{
             return(
-                <Wraper key={value.id}>
+                <Wraper key={value._id}>
                     <ImgContainer>
-                    <img src={value.caravan.image}/>
-                    <p>Purchase price: <b>{value.caravan.price} W</b></p>
+                    <img src={value.image}/>
+                    {/* <p>Purchase price: <b>{value.cost} W</b></p> */}
                     </ImgContainer>
-                    <RemoveScroll>
-                    <DesWraper className='scrollable'>
-                        <h2>{value.caravan.name}</h2>
-                        <h3>{value.caravan.price}</h3>
+                    <DesWraper className='scrollable' ref={scrollRef}>
+                        <h2>{value.name}<h3>{value.cost} Won</h3></h2>
+                        
                         <h5>Description</h5>
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptas sit delectus illum cumque cupiditate, explicabo pariatur aut consequuntur laborum ad esse eius assumenda tenetur similique placeat, corporis architecto recusandae.</p>
-                        <button>Continue to payment</button>
+                        <button className={`button-payment ${moveUp ? 'move-up' :''}`}style={{cursor:'pointer'}} onClick={handleClick}>Continue to payment</button>
                         <h2>Enter Account Details</h2>
                         <legend>First name</legend>
                         <input type="text" placeholder='First name' />
@@ -252,11 +332,9 @@ export const CartCaravanComponent = () => {
                         <input type="number" placeholder='CVV' />
                         <legend>Zip-code</legend>
                         <input type="number" placeholder='Zip-code' />
-                        <button>Place Order</button>
+                        <button style={{cursor:'pointer'}} onClick={() => alert('Sorry this is demo website! You can not purchase (')}>Place Order</button>
                     </DesWraper>
-                    </RemoveScroll>
                     <div>
-
                     </div>
                 </Wraper>
             )
@@ -265,26 +343,62 @@ export const CartCaravanComponent = () => {
   )
 }
 export const CartTuningComponent = () => {
-    const data = tuning.maindata;
+    const [data, setData] = useState([]);
+    const [moveUp, setMoveUp] = useState(false);
+    const scrollRef = useRef(null);
+    const windowSize = useWindowSize();
+    const wideWindow = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({ top: window.innerHeight - 500, behavior: 'smooth' });
+        }
+    };
+    const smallWindow = () => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    };
+    const handleClick = () => {
+        if(windowSize.width > 1300){
+            wideWindow()
+        }else{
+            smallWindow()
+        }
+    }
+   
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5500/tuning");
+        if (!response.ok) {
+          throw new Error("Error fetching data 'frontend'");
+        }
+        const motor = await response.json();
+        // const combinedData = [...motor, ...mock]
+        setData(motor);
+      } catch (error) {
+        console.log("failed to fetch data", error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
     let {id} = useParams();
-    const cartData = data.filter((value)=> value.id == id)
+    const separatedData = data.filter((item)=> item._id == id);
+
+    
    return (
     <Container>
-        <h1>Cart</h1>
-        {cartData.map((value)=>{
+        <h1>My Orders</h1>
+        {separatedData.map((value)=>{
             return(
-                <Wraper key={value.id}>
+                <Wraper key={value._id}>
                     <ImgContainer>
-                    <img src={value.tuning.image}/>
-                    <p>Purchase price: <b>{value.tuning.price} W</b></p>
+                    <img src={value.image}/>
+                    {/* <p>Purchase price: <b>{value.cost} W</b></p> */}
                     </ImgContainer>
-                    <RemoveScroll>
-                    <DesWraper className='scrollable'>
-                        <h2>{value.tuning.name}</h2>
-                        <h3>{value.tuning.price}</h3>
+                    <DesWraper className='scrollable' ref={scrollRef}>
+                        <h2>{value.name}<h3>{value.cost} Won</h3></h2>
+                        
                         <h5>Description</h5>
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptas sit delectus illum cumque cupiditate, explicabo pariatur aut consequuntur laborum ad esse eius assumenda tenetur similique placeat, corporis architecto recusandae.</p>
-                        <button>Continue to payment</button>
+                        <button className={`button-payment ${moveUp ? 'move-up' :''}`}style={{cursor:'pointer'}} onClick={handleClick}>Continue to payment</button>
                         <h2>Enter Account Details</h2>
                         <legend>First name</legend>
                         <input type="text" placeholder='First name' />
@@ -307,11 +421,9 @@ export const CartTuningComponent = () => {
                         <input type="number" placeholder='CVV' />
                         <legend>Zip-code</legend>
                         <input type="number" placeholder='Zip-code' />
-                        <button>Place Order</button>
+                        <button style={{cursor:'pointer'}} onClick={() => alert('Sorry this is demo website! You can not purchase (')}>Place Order</button>
                     </DesWraper>
-                    </RemoveScroll>
                     <div>
-
                     </div>
                 </Wraper>
             )
@@ -320,26 +432,62 @@ export const CartTuningComponent = () => {
   )
 }
 export const CartUsedCarComponent = () => {
-    const data = usedCar.maindata;
+    const [data, setData] = useState([]);
+    const [moveUp, setMoveUp] = useState(false);
+    const scrollRef = useRef(null);
+    const windowSize = useWindowSize();
+    const wideWindow = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({ top: window.innerHeight - 500, behavior: 'smooth' });
+        }
+    };
+    const smallWindow = () => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    };
+    const handleClick = () => {
+        if(windowSize.width > 1300){
+            wideWindow()
+        }else{
+            smallWindow()
+        }
+    }
+   
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5500/used-car");
+        if (!response.ok) {
+          throw new Error("Error fetching data 'frontend'");
+        }
+        const motor = await response.json();
+        // const combinedData = [...motor, ...mock]
+        setData(motor);
+      } catch (error) {
+        console.log("failed to fetch data", error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
     let {id} = useParams();
-    const cartData = data.filter((value)=> value.id == id)
+    const separatedData = data.filter((item)=> item._id == id);
+
+    
    return (
     <Container>
-        <h1>Cart</h1>
-        {cartData.map((value)=>{
+        <h1>My Orders</h1>
+        {separatedData.map((value)=>{
             return(
-                <Wraper key={value.id}>
+                <Wraper key={value._id}>
                     <ImgContainer>
-                    <img src={value.used.image}/>
-                    <p>Purchase price: <b>{value.used.price} W</b></p>
+                    <img src={value.image}/>
+                    {/* <p>Purchase price: <b>{value.cost} W</b></p> */}
                     </ImgContainer>
-                    <RemoveScroll>
-                    <DesWraper className='scrollable'>
-                        <h2>{value.used.name}</h2>
-                        <h3>{value.used.price}</h3>
+                    <DesWraper className='scrollable' ref={scrollRef}>
+                        <h2>{value.name}<h3>{value.cost} Won</h3></h2>
+                        
                         <h5>Description</h5>
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptas sit delectus illum cumque cupiditate, explicabo pariatur aut consequuntur laborum ad esse eius assumenda tenetur similique placeat, corporis architecto recusandae.</p>
-                        <button>Continue to payment</button>
+                        <button className={`button-payment ${moveUp ? 'move-up' :''}`}style={{cursor:'pointer'}} onClick={handleClick}>Continue to payment</button>
                         <h2>Enter Account Details</h2>
                         <legend>First name</legend>
                         <input type="text" placeholder='First name' />
@@ -362,11 +510,9 @@ export const CartUsedCarComponent = () => {
                         <input type="number" placeholder='CVV' />
                         <legend>Zip-code</legend>
                         <input type="number" placeholder='Zip-code' />
-                        <button>Place Order</button>
+                        <button style={{cursor:'pointer'}} onClick={() => alert('Sorry this is demo website! You can not purchase (')}>Place Order</button>
                     </DesWraper>
-                    </RemoveScroll>
                     <div>
-
                     </div>
                 </Wraper>
             )
@@ -374,3 +520,8 @@ export const CartUsedCarComponent = () => {
     </Container>
   )
 }
+
+
+
+
+

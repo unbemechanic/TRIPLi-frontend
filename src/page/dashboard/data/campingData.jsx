@@ -56,7 +56,6 @@ const CampingData = () => {
       const motor = await response.json();
       setData(motor);
       setFilteredData(motor);
-      console.log(motor);
     } catch (error) {
       console.log("failed to fetch data", error);
     }
@@ -89,8 +88,6 @@ const CampingData = () => {
         if (res.ok) {
           fetchData();
           setName("");
-        }else{
-          console.log('res is not ok')
         }
       } catch (error) {
         console.error("failure", error);
@@ -117,12 +114,6 @@ const CampingData = () => {
           newLongitude,
         }),
       });
-      if (res.ok) {
-        console.log("done");
-      } else {
-        console.log("failed res is not ok");
-      }
-      console.log(newName);
       setNewName("");
       fetchData();
     } catch (error) {
@@ -148,11 +139,8 @@ const CampingData = () => {
         },
       });
       if (res.ok) {
-        console.log("Data deleted successfully");
         fetchData();
-      } else {
-        console.error("Failed to delete data");
-      }
+      } 
     } catch (error) {
       console.error("Error:", error);
     }

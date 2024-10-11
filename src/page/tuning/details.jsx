@@ -16,7 +16,6 @@ const TuningDetailComponent = () => {
       }
       const motor = await response.json();
       setData(motor);
-      // console.log(motor);
     } catch (error) {
       console.log("failed to fetch data", error);
     }

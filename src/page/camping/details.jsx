@@ -35,7 +35,6 @@ const CampingDetailComponent = () => {
     const data = campingPlace.maindata;
     let {id} = useParams();
     const separatedData = data.filter((value)=> value.id === parseInt(id));
-    console.log(separatedData)
   return (
     <CampingMainDiv >
       <CampSwiper/>

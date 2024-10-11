@@ -9,6 +9,8 @@ import { caravan } from '../page/data/caravan';
 import { tuning } from '../page/data/tuning';
 import { usedCar } from '../page/data/usedCars';
 import Img from '..//assets/caravan-8.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../redux/cart/cart';
 
 // style
 export const Star = styled(StarIcon)`
@@ -70,7 +72,7 @@ export const Buttons = styled.button`
   border-radius: 10px;
   color: #006DAB;
   font-weight: 600;
-  padding: 10px 20px ;
+  padding: 10px 15px ;
   background-color: inherit;
   margin-right: 10px;
   &:hover{
@@ -148,45 +150,34 @@ export const Container = styled.div`
         width: 70%;
     }
 `
+export const CarImg = styled.div`
+  
+`
 
 
 const GridMenuComponent = ({filter}) => {
-  const [data, setData] =useState([])
-
-
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch()
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({
+      productId: id,
+      quantity: 1,
+    }))
+  }
   return (
     <Container>
-      {/* <input type="text" onChange={handleChange} placeholder='Type to search'/> */}
-   {/*    {filter.map((value)=>{
-        return(
-          <div key={value.id}>
-            <SLink to={`/motor/${value.id}`}>
-              <img src={value.car.photo}/>
-              <FunctionButtons>
-                <h3>{value.car.name}</h3>
-                <Rating>{value.car.company}<p><Star/>{value.car.rating}</p></Rating>
-                <h1>{value.car.cost}W</h1>
-                <div>
-                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Buttons>Compare</Buttons>
-                </div>
-              </FunctionButtons>
-            </SLink>
-          </div>
-        )
-      })} */}
       {filter.map((value)=>{
         return(
           <div key={value.id}>
             <SLink to={`/motor/${value._id}`}>
-              <img src={value?.photo || Img}/>
+              <img src={ value.image || value.photo ||Img}/>
               <FunctionButtons>
                 <h3>{value.name}</h3>
                 <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
                 <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Buttons>Compare</Buttons>
+                  <Link to={`/cart/${value._id}`}><Buttons>Order</Buttons></Link>
+                  <Buttons onClick={(e)=> {handleAddToCart(value._id); e.preventDefault(); e.stopPropagation(); }}>Add to Cart</Buttons>
                 </div>
               </FunctionButtons>
             </SLink>
@@ -201,21 +192,28 @@ export default GridMenuComponent
 
 
 export const GridMenuCaravanComponent = ({filter}) => {
-  const data = caravan.maindata;
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch()
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({
+      productId: id,
+      quantity: 1,
+    }))
+  }
   return (
     <Container>
       {filter.map((value)=>{
         return(
           <div key={value.id}>
             <SLink to={`/caravan/${value._id}`}>
-              <img src={value?.photo || Img}/>
+              <img src={value?.image || value?.photo} style={{maxWidth:'100%', objectFit:'cover', objectPosition:'center'}}/>
               <FunctionButtons>
                 <h3>{value.name}</h3>
                 <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
                 <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Buttons>Compare</Buttons>
+                <Link to={`/caravan/cart/${value._id}`}><Buttons>Order</Buttons></Link>
+                <Buttons onClick={(e)=> {handleAddToCart(value._id); e.preventDefault(); e.stopPropagation(); }}>Add to Cart</Buttons>
                 </div>
               </FunctionButtons>
             </SLink>
@@ -227,20 +225,28 @@ export const GridMenuCaravanComponent = ({filter}) => {
 }
 
 export const GridMenuTuningComponent = ({filter}) => {
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch()
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({
+      productId: id,
+      quantity: 1,
+    }))
+  }
   return (
     <Container>
        {filter.map((value)=>{
         return(
           <div key={value.id}>
             <SLink to={`/tuning/${value._id}`}>
-              <img src={value?.photo || Img}/>
+              <img src={value?.photo || value?.image}/>
               <FunctionButtons>
                 <h3>{value.name}</h3>
                 <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
                 <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Buttons>Compare</Buttons>
+                <Link to={`/tuning/cart/${value._id}`}><Buttons>Order</Buttons></Link>
+                <Buttons onClick={(e)=> {handleAddToCart(value._id); e.preventDefault(); e.stopPropagation(); }}>Add to Cart</Buttons>
                 </div>
               </FunctionButtons>
             </SLink>
@@ -251,20 +257,28 @@ export const GridMenuTuningComponent = ({filter}) => {
   )
 }
 export const GridMenuUsedCarComponent = ({filter}) => {
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch()
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({
+      productId: id,
+      quantity: 1,
+    }))
+  }
   return (
     <Container>
       {filter.map((value)=>{
         return(
           <div key={value.id}>
             <SLink to={`/usedCar/${value._id}`}>
-              <img src={value?.photo || Img}/>
+              <img src={value?.photo || value?.image}/>
               <FunctionButtons>
                 <h3>{value.name}</h3>
                 <Rating>{value.company}<p><Star/>{value.rate}</p></Rating>
                 <h1>{value.cost}W</h1>
                 <div>
-                  <Link to={`/cart/${value.id}`}><Buttons>Order</Buttons></Link>
-                  <Buttons>Compare</Buttons>
+                <Link to={`/usedCar/cart/${value._id}`}><Buttons>Order</Buttons></Link>
+                <Buttons onClick={(e)=> {handleAddToCart(value._id); e.preventDefault(); e.stopPropagation(); }}>Add to Cart</Buttons>
                 </div>
               </FunctionButtons>
             </SLink>

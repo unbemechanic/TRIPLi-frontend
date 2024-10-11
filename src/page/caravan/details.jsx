@@ -17,9 +17,8 @@ const CaravanDetailComponent = () => {
       const motor = await response.json();
       // const combinedData = [...motor, ...mock]
       setData(motor);
-      // console.log(motor);
     } catch (error) {
-      console.log("failed to fetch data", error);
+      throw new Error('fetching error caravan!!!')
     }
   };
   useEffect(() => {
@@ -27,7 +26,6 @@ const CaravanDetailComponent = () => {
   }, []);
     let {id} = useParams();
     const separatedData = data.filter((value)=> value._id == id);
-    console.log(separatedData)
   return (
     <div style={{backgroundColor:'#fafafa'}}>
          {separatedData.map((value)=>{

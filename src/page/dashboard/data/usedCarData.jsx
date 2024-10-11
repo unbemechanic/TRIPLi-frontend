@@ -25,9 +25,6 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const MotorData = () => {
   const token = localStorage.getItem('token')
-
-  console.log(token, 'this is token')
- 
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
   const [name, setName] = useState();
@@ -53,7 +50,6 @@ const MotorData = () => {
 
   const fetchData = async () => {
     try {
-      // console.log("checking if token is alright",token)
       const response = await fetch("http://localhost:5500/used-car", {
         headers:{
           Authorization: `Bearer ${token}`
@@ -65,8 +61,6 @@ const MotorData = () => {
       const motor = await response.json();
       setData(motor)
       setFilteredData(motor)
-      console.log(motor) 
-      
     } catch (error) {
       console.log("failed to fetch data", error);
     }
@@ -81,9 +75,6 @@ const MotorData = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (name !== '') {
-      if(!token){
-        console.log('no token in the 84')
-      }
       try {
         const response = await fetch("http://localhost:5500/used-car", {
           method:"POST",
@@ -104,9 +95,7 @@ const MotorData = () => {
         })
         });
         const motor = await response.json();
-        console.log(motor)
         if(response.ok){
-        console.log(motor);
         fetchData();
         setName("");
         setCompany("");
@@ -132,10 +121,8 @@ const MotorData = () => {
        return motor.name && typeof motor.name === "string" && motor.name.toLowerCase().includes(query.toLowerCase()); 
       }) : [];
     setFilteredData(filtered);
-    console.log("search is working", filtered);
     }else{
       setFilteredData(data)
-      console.log('query is not filtering')
     }
     
   };
@@ -184,10 +171,7 @@ const MotorData = () => {
             },
         });
         if (response.ok) {
-            console.log('Data deleted successfully');
             fetchData();
-        } else {
-            console.error('Failed to delete data');
         }
     } catch (error) {
         console.error('Error:', error);
@@ -383,7 +367,7 @@ const MotorData = () => {
                           <EditIcon sx={{ fill: "white" }} />
                         </EditButtonDiv>
                         <DeleteButtonDiv
-                          onClick={() => {handleDelete(value._id); console.log("id hsould be deleted",value._id)}}
+                          onClick={() => {handleDelete(value._id);}}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>

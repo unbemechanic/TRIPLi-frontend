@@ -1,5 +1,4 @@
 import React from "react";
-import App from "./App";
 import MultiCarouselComponent from "./multiCarousel";
 import { BlogsContainer, MainSecDiv, VideoDiv } from "./styles";
 import BlogsImg1 from '..//..//assets/blogs-img-1.png'
@@ -9,6 +8,7 @@ import BlogsImg4 from '..//..//assets/blogs-img-4.png'
 import BlogsImg5 from '..//..//assets/blogs-img-5.png'
 import BlogsImg6 from '..//..//assets/blogs-img-6.png'
 import VideoModal, { VideoModal2, VideoModal3, VideoModal4, VideoModal5, VideoModal6, VideoModal7, VideoModal8 } from "./modal";
+import App from "./App";
 
 
 

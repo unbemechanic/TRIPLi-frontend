@@ -8,6 +8,7 @@ import { Backdrop, TextField } from '@mui/material';
 import { LongDash, SignBackground, SignContainer, SignInnerDiv, SignOr, SignTypography, SocialIcon, SocialIcons } from '../style';
 import SizeCheckboxes from './checkbox';
 import { SLink } from '../page/linkStyle';
+import zIndex from '@mui/material/styles/zIndex';
 
 const style = {
   position: 'absolute',
@@ -26,7 +27,7 @@ export default function BasicModalSide() {
   return (
     <div>
       <div onClick={handleOpen}>Sign in</div>
-      <Modal style={{/* backgroundColor:'rgba(200, 200, 207, 0.671)', */ backdropFilter:'blur(8px)'}}
+      <Modal style={{/* backgroundColor:'rgba(200, 200, 207, 0.671)', */ backdropFilter:'blur(8px)', zIndex:'99999'}}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"

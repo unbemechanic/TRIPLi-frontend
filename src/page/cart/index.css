@@ -26,3 +26,11 @@
         width: 600px;
     }
 }
+.button-payment {
+    transition: transform 0.5s ease-in-out;
+
+}
+
+.move-up {
+    transform: translateY(-200%);
+}

@@ -8,11 +8,18 @@ import { DisNavMenu, DisNavMenu2, MenuButton } from "../style";
 import { Link } from "react-router-dom";
 import { SLink } from "../page/linkStyle";
 import BasicModalSide from "./signModal -side";
+import { useDispatch } from "react-redux";
+import { deleteUserFailure, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess } from "../redux/user/userSlice";
+import SignOut from "../components/signOut";
+
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = React.useState({
     right: false,
   });
+  // const [data, setData ] = React.useState()
+  const dispatch = useDispatch();
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -28,7 +35,7 @@ export default function SwipeableTemporaryDrawer() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250}}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -111,14 +118,8 @@ export default function SwipeableTemporaryDrawer() {
           }
         </SLink>
         <SLink to="/camping">{<DisNavMenu2>Camping Place</DisNavMenu2>}</SLink>
-        {
-          <DisNavMenu2>
-            <BasicModalSide />
-          </DisNavMenu2>
-        }
-        {<DisNavMenu2>My Orders</DisNavMenu2>}
-        {<DisNavMenu2>Log out</DisNavMenu2>}
-        {<DisNavMenu2>Setting</DisNavMenu2>}
+        
+        {<DisNavMenu2 onClick={SignOut}>Log out</DisNavMenu2>}
       </List>
     </Box>
   );
@@ -133,6 +134,7 @@ export default function SwipeableTemporaryDrawer() {
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
+            sx={{zIndex:'9999999'}}
           >
             {list(anchor)}
           </SwipeableDrawer>

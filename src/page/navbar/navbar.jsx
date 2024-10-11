@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DirectContainer, DirectH, Header, IndentedDiv, NavDisSec, NavDisSecLang } from '../../style'
 import SwipeableTemporaryDrawer from '../../materials/navbarMenu'
 import { Link } from 'react-router-dom'
@@ -10,6 +10,8 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useSelector } from 'react-redux'
+import { createGlobalStyle } from 'styled-components'
 
 // cart style
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -18,13 +20,17 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
       top: -8,
       border: `2px solid #FF7A00`,
       padding: '0 4px',
-      backgroundColor:'#FF7A00'
+      backgroundColor:'#FF7A00',
+      height:'25px',
+      width:'25px',
+      borderRadius:'50%'
     },
 }));
 const CartIcon = styled(ShoppingCartIcon)`
 
   @media (max-width: 1300px){
     margin-left: 50px;
+
   }
 `
 
@@ -32,20 +38,41 @@ const CartIcon = styled(ShoppingCartIcon)`
 
 // cart
 function CustomizedCart() {
+  const [ totalQuantity, setTotalQuantity ] = useState(0);
+  const carts = useSelector(store => store.cart.items);
+  useEffect(() => {
+    let total = 0;
+    carts.forEach(item => total += item.quantity)
+    setTotalQuantity(total);
+  }, [carts])
     return (
-      <IconButton sx={{color:'#006DAB',width:'40px',boxSizing:'border-box'}} aria-label="cart">
-          <CartIcon />
-        <StyledBadge badgeContent={6} color="secondary">
-        </StyledBadge>
-      </IconButton>
+      <IconButton sx={{ color: '#006DAB', width: '20px', boxSizing: 'border-box' }} aria-label="cart">
+      <CartIcon />
+      {totalQuantity > 0 ? (
+        <StyledBadge badgeContent={totalQuantity} color="secondary" />
+      ) : null}
+    </IconButton>
+
     );
   }
 
 
 const Navbar = () => {
+  const { currentUser } = useSelector(state => state.user)
+  const [under1300, setUnder1300] = useState(false);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 1300px)');
+        const handleMediaQueryChange = (event) => setUnder1300(event.matches);
+    
+        handleMediaQueryChange(mediaQuery); // Check initial size
+        mediaQuery.addEventListener('change', handleMediaQueryChange);
+    
+        // Clean up the event listener on component unmount
+        return () => mediaQuery.removeEventListener('change', handleMediaQueryChange)
+  })
   return (
     <div style={{
-        backgroundColor: 'white', position:'sticky',top:'0', width:'100vw', zIndex:'999'
+        backgroundColor: 'white', position:'sticky',top:'0', width:'100vw', zIndex:'9988'
     }}>
         <IndentedDiv>
             <Header>
@@ -60,9 +87,13 @@ const Navbar = () => {
                 </DirectContainer>
                 <SwipeableTemporaryDrawer/>
                 <NavDisSecLang>
-                    <Link to='/cart'><CustomizedCart/></Link>
+                    {currentUser ? <Link to='/cart' style={{marginRight:'0px',  width:'50px', position: under1300 ? 'absolute':'unset', right:'110px'}}><CustomizedCart/></Link> :''}
+                    {currentUser ? 
+                    <Link style={{ position: under1300 ? 'absolute':'unset', right:'60px'}} to={'/profile'}><img src={currentUser.avatar} alt='profile' style={{height:'35px', borderRadius:'50%', marginRight:'20px', width:'35px'}}/></Link>
+                  :
+                  <Link to={'/login'} style={{color:'black', textDecoration:'none'}}>Sign in</Link>}
+                    
                     <NavDisSec>
-                    <BasicModal/>
                         <label for="lang">
                             <select id="lang" name='lang'>
                                 <option value="English">En</option>

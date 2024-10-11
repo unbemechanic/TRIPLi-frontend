@@ -49,6 +49,7 @@ const MultiCarouselComponent = () => {
   containerClass="carousel-container"
   dotListClass="custom-dot-list-style"
   itemClass="carousel-item-padding-40-px"
+
 >
   <div style={{display:"flex", flexDirection:'column', alignItems:"center", gap:'10px'}}>
     <RecomendedImgDivs src={RecomendedImg} />

@@ -16,6 +16,8 @@ import TuningHomeImg from '..//src/assets/tuning-header-7.jpg'
 import UsedCarHomeImg from '..//src/assets/used-header.jpg'
 import HomeImg from '..//src/assets/home.jpg'
 import CartImg1 from '..//./src/assets/img-11.webp'
+import GoogleIcon from '../src/assets/google.png'
+
 
 
 export const IndentedDiv = styled.div`
@@ -143,9 +145,8 @@ export const SocialIcons = styled.div`
 
 `
 export const SocialIcon = styled.div`
-    height: 40px;
-        width: 40px;
-        background-color: ${(props)=>props.$n ? '#039600': (props)=>props.$g ? '#BC0000':'#FFC700'};
+    
+        /* background-color: ${(props)=>props.$n ? '#039600': (props)=>props.$g ? '#BC0000':'#FFC700'}; */
         border-radius: 50%;
         font-size: 25px;
         font-weight: 900;
@@ -153,10 +154,17 @@ export const SocialIcon = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        background-image: url(GoogleIcon);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 40px;
+        width: 40px;
+
 `
 
 export const SignTypography = styled.div`
-    color: rgba(55, 55, 55, 0.80);
+    color: rgba(255, 255, 255, 0.8);
     font-family: "Open Sans";
     font-size: 14px;
     font-style: normal;
@@ -179,6 +187,7 @@ export const Header = styled.div`
 export const NavDisSecLang = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     :nth-child(1){
         @media (max-width: 1300px){
             margin-right: 50px;
@@ -364,7 +373,7 @@ export const DisNavMenu2 = styled.div`
     align-items: center;
     font-family: Montserrat;
     margin-right: 110px;
-
+    cursor: pointer;
 `
 
 export const SelectBox = styled.select`   
@@ -481,9 +490,38 @@ export const Backgrounds = styled.div`
             box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
         }
 `
+
+export const MainSidebarWrapper = styled.div`
+    @media (max-width: 1430px) {
+        display: ${props => (props.sidebar ?  "fixed": "none")};
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #21212175;
+        z-index: 99;
+        position: fixed;
+
+    }
+`
+
 export const MainSideBar = styled.div`
-    @media(max-width: 1430px){
-        display: none;
+    width: 400px;
+    padding-right: 50px;
+    box-sizing: border-box;
+    z-index: 999;
+    overflow-y: auto;
+    scrollbar-width: none;
+    @media(max-width: 1600px){
+        display: ${props => (props.sidebar ?  "block": "none")};
+        background-color: ${props => (props.sidebar ?  "white": "inherit")};
+        /* display: none; */
+        position: fixed;
+        top: 100px;
+        left: 0px;
+        bottom: 0px;
+        padding-left: 20px;
     }
 `
 

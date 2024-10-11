@@ -19,7 +19,6 @@ const DocumentsComponent = () => {
         const motor = await response.json();
         // const combinedData = [...motor, ...mock]
         setData(motor);
-        // console.log(motor);
       } catch (error) {
         console.log("failed to fetch data", error);
       }
@@ -29,7 +28,6 @@ const DocumentsComponent = () => {
     }, []);
     let {id} = useParams();
     const separatedData = data.filter((item)=> item._id == id);
-    console.log(`id is ${id}}, separated data is ${separatedData}`)
   return (
     <div style={{backgroundColor:'#ffffff'}}>
         {separatedData.map((value)=>{

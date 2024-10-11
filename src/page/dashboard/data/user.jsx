@@ -30,7 +30,6 @@ const UserData = () => {
 
   const fetchData = async () => {
     try {
-      // console.log("checking if token is alright",token)
       const response = await fetch("http://localhost:5500/sign-up", {
         headers:{
           Authorization: `Bearer ${token}`
@@ -42,8 +41,6 @@ const UserData = () => {
       const user = await response.json();
       setData(user)
       setFilteredData(user)
-      console.log(user) 
-      
     } catch (error) {
       console.log("failed to fetch data", error);
     }
@@ -59,10 +56,8 @@ const UserData = () => {
        return user.name && typeof user.name === "string" && user.name.toLowerCase().includes(query.toLowerCase()); 
       }) : [];
     setFilteredData(filtered);
-    console.log("search is working", filtered);
     }else{
       setFilteredData(data)
-      console.log('query is not filtering')
     }
     
   };
@@ -79,11 +74,9 @@ const UserData = () => {
         });
 
         if (response.ok) {
-            console.log('Data deleted successfully');
             fetchData();
         } else {
             const errorData = await response.json();
-            console.error('Failed to delete data:', errorData.message || response.statusText);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -131,7 +124,7 @@ const UserData = () => {
                       <td style={{display:'flex',boxSizing:'border-box', marginLeft:'90px'}}>{value.email || "no data"}</td>
                       <td style={{ display: "flex", gap: "10px", justifyContent:'center' }}>
                         <DeleteButtonDiv
-                          onClick={() => {handleDelete(value._id); console.log("id hsould be deleted",value._id)}}
+                          onClick={() => {handleDelete(value._id);}}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>

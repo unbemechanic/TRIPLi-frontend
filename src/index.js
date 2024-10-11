@@ -1,4 +1,6 @@
 import React from 'react';
+import { Provider } from 'react-redux'
+
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import RoutesComponent from './routes';
@@ -28,12 +30,19 @@ import OverFLow from './overFlow/overFlow';
 import NavCart from './page/cart/navCart';
 import Login from './login';
 import Dashboard from './page/dashboard/dashboard';
+import  { store, persistor } from './redux/store.js';
+import { PersistGate } from 'redux-persist/integration/react';
+import Profile from './page/profile.jsx';
 
-
+store.subscribe(() => {
+  // console.log('State after dispatch: ', store.getState());
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
+  <Provider store={store}>
+  <PersistGate loading={null} persistor={persistor}>
+    <BrowserRouter>
     <Navbar/>
     <ScrollToTop/>
     <Routes>
@@ -58,7 +67,10 @@ root.render(
       <Route path='/maping' element={<Maping/>}/>
       <Route path='/overflow' element={<OverFLow/>}/>
       <Route path='/cart' element={<NavCart/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     <Footer/>
-  </BrowserRouter>
+    </BrowserRouter>
+  </PersistGate>
+  </Provider>
 );

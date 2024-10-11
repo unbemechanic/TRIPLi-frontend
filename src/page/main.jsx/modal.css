@@ -53,3 +53,27 @@ body.active-modal {
     border-radius: 20px;
     height: 290px;
 }
+.custom-dot-list-style{
+    z-index: 2;
+}
+.carouselContainer .custom-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    border: 1px solid rgba(0, 0, 0, 0.431);
+    background-color: #ffffff80;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+  
+  .carouselContainer .custom-arrow-left {
+    left: 50px;
+    
+  }
+  
+  .carouselContainer .custom-arrow-right {
+    right: 50px;
+  }

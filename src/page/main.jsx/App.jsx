@@ -1,13 +1,8 @@
 import React from 'react'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { campcar } from '../data/mockdata';
-import HomeImg from '..//..//assets/carousel-img.png'
-import HomeImg2 from '..//..//assets/carousel-img2.webp'
 import './styles.css'
 import { MainCarouselImg } from '../../style';
-import styled from 'styled-components';
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 
 
 
@@ -42,9 +37,9 @@ const App = () => {
   autoPlaySpeed={1000}
   keyBoardControl={true}
   customTransition="all .5"
-  transitionDuration={500}
+  transitionDuration={100}
   containerClass="carouselContainer"
-  // removeArrowOnDeviceType={["tablet", "mobile"]}
+  removeArrowOnDeviceType={["tablet", "mobile"]}
   dotListClass="custom-dot-list-style"
   itemClass="carousel-item-padding-40-px"
 >

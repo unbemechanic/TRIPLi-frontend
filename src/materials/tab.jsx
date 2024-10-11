@@ -16,7 +16,6 @@ import { ContactMaping } from '../maping';
 export default function UnstyledTabsIntroduction() {
     const { id } = useParams();
     const CarList = campcar.maindata.slice(0, 7)
-    console.log(CarList)
 
   return (
     <Tabs defaultValue={0}>
