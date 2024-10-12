@@ -33,7 +33,7 @@ const RegisterComponent = () => {
             setName('')
             setEmail('')
             setPassword('')
-            navigate('/login')
+            navigate('camper.inomjonov.site/login')
         } catch (error) {
             console.error('failure', error)
         }  
