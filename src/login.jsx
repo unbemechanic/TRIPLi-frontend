@@ -83,7 +83,7 @@ const Login = () => {
     dispatch(signInStart())
     if (email !== "") {
       try {
-        const response = await fetch("https://176.124.209.238:5500/log-in", {
+        const response = await fetch("http://176.124.209.238:5500/log-in", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
