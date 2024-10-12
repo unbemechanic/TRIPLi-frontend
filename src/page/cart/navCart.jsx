@@ -21,7 +21,7 @@ const NavCart = () => {
   const fetchAllData = async (setData) => {
     try {
       const [motorResponse, caravanResponse, tuningResponse, usedCarResponse] = await Promise.all([
-        fetch("http://localhost:5500/motor"),
+        fetch("http://176.124.209.238:5500/motor"),
         fetch("http://localhost:5500/caravan"),
         fetch("http://localhost:5500/tuning"),
         fetch("http://localhost:5500/used-car")

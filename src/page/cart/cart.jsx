@@ -184,7 +184,7 @@ const CartMotorComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5500/motor");
+        const response = await fetch("https://176.124.209.238:5500/motor");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }
@@ -275,7 +275,7 @@ export const CartCaravanComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5500/caravan");
+        const response = await fetch("https://176.124.209.238:5500/caravan");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }
@@ -365,7 +365,7 @@ export const CartTuningComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5500/tuning");
+        const response = await fetch("https://176.124.209.238:5500/tuning");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }
@@ -454,7 +454,7 @@ export const CartUsedCarComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5500/used-car");
+        const response = await fetch("https://176.124.209.238:5500/used-car");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }

@@ -54,7 +54,7 @@ const MotorComponent = () => {
   const [active, setActive] = useState(true);
   const fetchData = async (setData) => {
     try {
-      const response = await fetch("http://localhost:5500/motor");
+      const response = await fetch("http://176.124.209.238:5500/motor");
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

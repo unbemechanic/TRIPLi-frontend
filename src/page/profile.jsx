@@ -56,7 +56,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const response = await fetch(`http://localhost:5500/update/${currentUser._id}`, {
+      const response = await fetch(`https://176.124.209.238:5500/update/${currentUser._id}`, {
         method:'POST',
         headers: {
           'Content-Type':'application/json'

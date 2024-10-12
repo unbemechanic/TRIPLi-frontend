@@ -10,7 +10,7 @@ const TuningDetailComponent = () => {
   const [data, setData] = useState([])
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5500/tuning");
+      const response = await fetch("https://176.124.209.238:5500/tuning");
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }
