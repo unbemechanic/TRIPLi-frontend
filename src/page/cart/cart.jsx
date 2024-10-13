@@ -7,6 +7,7 @@ import { tuning } from '../data/tuning';
 import { usedCar } from '../data/usedCars';
 import {RemoveScroll} from 'react-remove-scroll';
 import useWindowSize from '../../components/windowSize';
+import { API } from '../../address/address';
 
 
 // style
@@ -454,7 +455,7 @@ export const CartUsedCarComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("https://176.124.209.238:5500/used-car");
+        const response = await fetch(`${API}/used-car`);
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }

@@ -9,6 +9,7 @@ import styled from "styled-components";
 import CarImg from "..//..//assets/caravan-1.png";
 import { useDispatch, useSelector } from "react-redux";
 import { changeQuantity } from "../../redux/cart/cart";
+import { API } from "../../address/address";
 
 const NavCart = () => {
   const carts = useSelector((store) => store.cart.items);
@@ -21,10 +22,10 @@ const NavCart = () => {
   const fetchAllData = async (setData) => {
     try {
       const [motorResponse, caravanResponse, tuningResponse, usedCarResponse] = await Promise.all([
-        fetch("http://176.124.209.238:5500/motor"),
-        fetch("http://localhost:5500/caravan"),
-        fetch("http://localhost:5500/tuning"),
-        fetch("http://localhost:5500/used-car")
+        fetch(`${API}/motor`),
+        fetch(`${API}/caravan`),
+        fetch(`${API}/tuning`),
+        fetch(`${API}/used-car`)
       ]);
   
       if (!motorResponse.ok || !caravanResponse.ok || !tuningResponse.ok || !usedCarResponse.ok) {

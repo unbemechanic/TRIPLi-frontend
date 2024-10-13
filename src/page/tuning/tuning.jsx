@@ -40,6 +40,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "..//..//materials/mui.css";
+import { API } from "../../address/address";
 
 
 
@@ -56,7 +57,7 @@ const MotorComponent = () => {
   const [active, setActive] = useState(true)
   const fetchData = async (setData) => {
     try {
-      const response = await fetch("https://176.124.209.238:5500/tuning");
+      const response = await fetch(`${API}/tuning`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

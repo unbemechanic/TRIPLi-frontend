@@ -5,12 +5,13 @@ import { BackgroundImg, CarDesName, CarSpec, CarSpecDesc, CarSpecInfo, CarSpecTi
 import { Button } from '@mui/material';
 import BasicTabs from '../../materials/tab';
 import { tuning } from '../data/tuning';
+import { API } from '../../address/address';
 
 const TuningDetailComponent = () => {
   const [data, setData] = useState([])
   const fetchData = async () => {
     try {
-      const response = await fetch("https://176.124.209.238:5500/tuning");
+      const response = await fetch(`${API}/tuning`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

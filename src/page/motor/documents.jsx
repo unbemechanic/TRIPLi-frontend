@@ -6,13 +6,14 @@ import { BackgroundImg, CarDesName, CarSpec, CarSpecDesc, CarSpecInfo, CarSpecTi
 import { Button } from '@mui/material';
 import BasicTabs from '../../materials/tab';
 import '..//..//..//src/'
+import { API } from '../../address/address';
 
 const DocumentsComponent = () => {
     // const mock = campcar.maindata.map(item => item.car);
     const [data, setData] = useState([])
     const fetchData = async () => {
       try {
-        const response = await fetch("http://176.124.209.238:5500/motor");
+        const response = await fetch(`${API}/motor`);
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }

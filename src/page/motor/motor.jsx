@@ -40,6 +40,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "..//..//materials/mui.css";
+import { API } from "../../address/address";
 
 const MotorComponent = () => {
   const mock = campcar.maindata.map((item) => item.car);
@@ -54,7 +55,7 @@ const MotorComponent = () => {
   const [active, setActive] = useState(true);
   const fetchData = async (setData) => {
     try {
-      const response = await fetch("https://api-camper.inomjonov.site/motor");
+      const response = await fetch(`${API}/motor`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

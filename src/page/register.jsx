@@ -6,6 +6,7 @@ import { SLink } from './linkStyle'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { API } from '../address/address'
 
 const RegisterComponent = () => {
     const [data, setData] = useState([]);
@@ -18,7 +19,7 @@ const RegisterComponent = () => {
         event.preventDefault();
         if(name !== ''){
           try {
-            const response = await fetch("https://176.124.209.238:5500/sign-up", {
+            const response = await fetch(`${API}/sign-up`, {
                 method: 'POST',
                 headers:{
                     'Content-Type':'application/json'

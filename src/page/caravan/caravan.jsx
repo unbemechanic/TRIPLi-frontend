@@ -41,6 +41,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "..//..//materials/mui.css";
+import { API } from "../../address/address";
 
 
 
@@ -57,7 +58,7 @@ const CaravanComponent = () => {
   const [active, setActive] = useState(true)
   const fetchData = async (setData) => {
     try {
-      const response = await fetch("http://localhost:5500/caravan");
+      const response = await fetch(`${API}/caravan`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

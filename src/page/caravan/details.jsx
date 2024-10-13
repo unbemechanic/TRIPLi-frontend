@@ -5,12 +5,13 @@ import { BackgroundImg, CarDesName, CarSpec, CarSpecDesc, CarSpecInfo, CarSpecTi
 import { Button } from '@mui/material';
 import BasicTabs from '../../materials/tab';
 import { caravan } from '../data/caravan';
+import { API } from '../../address/address';
 
 const CaravanDetailComponent = () => {
   const [data, setData] = useState([])
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5500/caravan");
+      const response = await fetch(`${API}/caravan`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

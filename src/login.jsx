@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "./redux/user/userSlice";
 import OAuth from "./components/OAuth";
+import { API } from "./address/address";
 
 const Container = styled.div`
   width: 100%;
@@ -83,7 +84,7 @@ const Login = () => {
     dispatch(signInStart())
     if (email !== "") {
       try {
-        const response = await fetch("https://176.124.209.238:5500/log-in", {
+        const response = await fetch(`${API}/log-in`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

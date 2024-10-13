@@ -6,12 +6,13 @@ import { Button } from '@mui/material';
 import BasicTabs from '../../materials/tab';
 import { tuning } from '../data/tuning';
 import { usedCar } from '../data/usedCars';
+import { API } from '../../address/address';
 
 const UsedCarDetailComponent = () => {
   const [data, setData] = useState([])
   const fetchData = async () => {
     try {
-      const response = await fetch("https://176.124.209.238:5500/used-car");
+      const response = await fetch(`${API}/used-car`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }
