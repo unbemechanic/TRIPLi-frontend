@@ -28,7 +28,7 @@ const OAuth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider); // this works as a popup sign in
 
-      const response = await fetch("http://localhost:5500/auth", {
+      const response = await fetch("https://api-camper.inomjonov.site/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

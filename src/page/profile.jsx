@@ -56,7 +56,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const response = await fetch(`${API}/update/${currentUser._id}`, {
+      const response = await fetch(`https://api-camper.inomjonov.site/update/${currentUser._id}`, {
         method:'POST',
         headers: {
           'Content-Type':'application/json'
