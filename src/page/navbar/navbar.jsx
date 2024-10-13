@@ -91,7 +91,7 @@ const Navbar = () => {
                     {currentUser ? 
                     <Link style={{ position: under1300 ? 'absolute':'unset', right:'60px'}} to={'/profile'}><img src={currentUser.avatar} alt='profile' style={{height:'35px', borderRadius:'50%', marginRight:'20px', width:'35px'}}/></Link>
                   :
-                  <Link to={'/login'} style={{color:'black', textDecoration:'none'}}>Sign in</Link>}
+                  <Link to={'/login'} style={{color:'black', textDecoration:'none', backgroundColor:'#3bcbe460', padding:'5px 10px', borderRadius:'7px', marginRight:'10px', border:'1px solid #3bcbe4a5'}}>Sign in</Link>}
                     
                     <NavDisSec>
                         <label for="lang">

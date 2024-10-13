@@ -18,7 +18,7 @@ const RegisterComponent = () => {
         event.preventDefault();
         if(name !== ''){
           try {
-            const response = await fetch("http://176.124.209.238:5500/sign-up", {
+            const response = await fetch("https://176.124.209.238:5500/sign-up", {
                 method: 'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -27,13 +27,13 @@ const RegisterComponent = () => {
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
+              }else{
+                const data = await response.json();
+                setName('')
+                setEmail('')
+                setPassword('')
+                navigate('/login')
               }
-        
-              const data = await response.json();
-            setName('')
-            setEmail('')
-            setPassword('')
-            navigate('camper.inomjonov.site/login')
         } catch (error) {
             console.error('failure', error)
         }  
