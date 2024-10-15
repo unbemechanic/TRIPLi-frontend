@@ -84,7 +84,7 @@ const Login = () => {
     dispatch(signInStart())
     if (email !== "") {
       try {
-        const response = await fetch(`${API}/log-in`, {
+        const response = await fetch(`https://api-camper.inomjonov.site/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

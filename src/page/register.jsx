@@ -19,7 +19,7 @@ const RegisterComponent = () => {
         event.preventDefault();
         if(name !== ''){
           try {
-            const response = await fetch(`${API}/sign-up`, {
+            const response = await fetch(`https://api-camper.inomjonov.site/sign-up`, {
                 method: 'POST',
                 headers:{
                     'Content-Type':'application/json'

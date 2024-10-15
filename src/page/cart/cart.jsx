@@ -276,7 +276,7 @@ export const CartCaravanComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("https://176.124.209.238:5500/caravan");
+        const response = await fetch("https://api-camper.inomjonov.site/caravan");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }
@@ -366,7 +366,7 @@ export const CartTuningComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch("https://176.124.209.238:5500/tuning");
+        const response = await fetch("https://api-camper.inomjonov.site/tuning");
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }
@@ -455,7 +455,7 @@ export const CartUsedCarComponent = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch(`${API}/used-car`);
+        const response = await fetch(`https://api-camper.inomjonov.site/used-car`);
         if (!response.ok) {
           throw new Error("Error fetching data 'frontend'");
         }

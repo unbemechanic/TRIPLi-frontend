@@ -55,7 +55,7 @@ const MotorComponent = () => {
   const [active, setActive] = useState(true);
   const fetchData = async (setData) => {
     try {
-      const response = await fetch(`${API}/motor`);
+      const response = await fetch(`https://api-camper.inomjonov.site/motor`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }
