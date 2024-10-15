@@ -113,6 +113,7 @@ const Login = () => {
         } else {
           setError("An error occurred. Please try again.");
           alert("An error occurred. Please try again.");
+          console.error("Login error is ",error)
         }
       }
     }
