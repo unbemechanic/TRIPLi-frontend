@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Motor",
+        "url": "/motor"
+    },
+    {
+        "title": "Caravan",
+        "url": "/caravan"
+    },
+    {
+        "title": "Tuning",
+        "url": "/tuning"
+    },
+    {
+        "title": "Used Car",
+        "url": "/usedCar"
+    },
+    {
+        "title": "Camping Places",
+        "url": "/camping"
+    }
+    
+]

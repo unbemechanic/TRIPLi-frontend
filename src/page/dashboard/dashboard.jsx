@@ -46,6 +46,7 @@ const Dashboard = () => {
   const toggleHandle = () => {
     setToggle(!toggle)
   }
+  
   const logOutToken = async () => {
     localStorage.removeItem("token")
     alert('Token has been removed')

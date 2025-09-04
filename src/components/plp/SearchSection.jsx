@@ -1,0 +1,56 @@
+import React from "react";
+import { Menu as MenuIcon } from "@mui/icons-material"; // adjust import if different
+import {
+  FilterSec,
+  InputSearch,
+  WindowStyle,
+  ListIconStyle,
+} from "../../useState/useState"; // adjust path to your styled-components
+import {
+  HorizontalFilter,
+  VerticalFilterInput,
+} from "../../useState/stylesUse";
+
+function FilterHeader({
+  filteredData,
+  isSmallScreen,
+  handleOpen,
+  searchTerm,
+  setSearchTerm,
+  horizontalMenuHandle,
+  verticalMenuHandle,
+}) {
+  return (
+    <HorizontalFilter>
+      <div>
+        <b>Item</b> <b style={{ color: "#006Dab" }}>{filteredData.length}</b>{" "}
+        {isSmallScreen && (
+          <MenuIcon
+            sx={{ cursor: "pointer", display: "block" }}
+            onClick={handleOpen}
+          />
+        )}
+      </div>
+
+      <FilterSec>
+        <div>
+          <VerticalFilterInput $inputs>
+            <InputSearch
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Type to search"
+            />
+          </VerticalFilterInput>
+        </div>
+
+        <VerticalFilterInput $menu>
+          <WindowStyle onClick={horizontalMenuHandle} />
+          <ListIconStyle onClick={verticalMenuHandle} />
+        </VerticalFilterInput>
+      </FilterSec>
+    </HorizontalFilter>
+  );
+}
+
+export default FilterHeader;

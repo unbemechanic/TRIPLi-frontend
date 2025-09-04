@@ -1,1 +1,1 @@
-export const API = 'https://api-camper.inomjonov.site'
+export const API = "http://localhost:5500";

@@ -24,18 +24,20 @@ import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 
 const MotorData = () => {
-  const token = localStorage.getItem('token')
-  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const [data, setData] = useState({
+    name: "",
+    company: "",
+    license: "",
+    passanger: "",
+    cost: "",
+    type: "",
+    date: "",
+    rating: "",
+    location: "",
+  });
   const [filteredData, setFilteredData] = useState(data);
-  const [name, setName] = useState();
-  const [company, setCompany] = useState();
-  const [license, setLicense] = useState();
-  const [passanger, setPassanger] = useState();
-  const [cost, setcost] = useState();
-  const [type, setType] = useState();
-  const [date, setDate] = useState('');
-  const [rating, setRating] = useState();
-  const [location, setLocation] = useState();
+
   const [newName, setNewName] = useState();
   const [newCompany, setNewCompany] = useState();
   const [newLicense, setNewLicense] = useState();
@@ -47,65 +49,42 @@ const MotorData = () => {
   const [newLocation, setNewLocation] = useState();
   const [update, setUpdate] = useState(Array(data.length).fill(false));
 
-
   const fetchData = async () => {
     try {
       const response = await fetch("http://176.124.209.238:5500/motor", {
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      if(!response.ok){
-        throw new Error("Error fetching data 'frontend'")
+      if (!response.ok) {
+        throw new Error("Error fetching data 'frontend'");
       }
       const motor = await response.json();
-      setData(motor)
-      setFilteredData(motor)
+      setData(motor);
+      setFilteredData(motor);
     } catch (error) {
       console.log("failed to fetch data", error);
     }
   };
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, [token]);
 
-
-
-   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (name !== '') {
+    if (data.name !== "") {
       try {
         const response = await fetch("http://localhost:5500/motor", {
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json",
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
-          body: JSON.stringify({
-          name,
-          company,
-          cost,
-          rating,
-          passanger,
-          type,
-          date,
-          location,
-          license,
-        })
+          body: JSON.stringify(data),
         });
         const motor = await response.json();
-        if(response.ok){
-        fetchData();
-        setName("");
-        setCompany("");
-        setcost("");
-        setLocation("");
-        setPassanger("");
-        setType("");
-        setDate("");
-        setLicense("");
-        setRating("");
+        if (response.ok) {
+          fetchData();
         }
       } catch (error) {
         console.error("failure", error);
@@ -113,33 +92,36 @@ const MotorData = () => {
     }
   };
 
-  
   //filter
   const handleSearch = (query) => {
-    if(query && typeof query === "string"){
-      const filtered = Array.isArray(data) ? data.filter((motor) => {
-       return motor.name && typeof motor.name === "string" && motor.name.toLowerCase().includes(query.toLowerCase()); 
-      }) : [];
-    setFilteredData(filtered);
-    }else{
-      setFilteredData(data)
+    if (query && typeof query === "string") {
+      const filtered = Array.isArray(data)
+        ? data.filter((motor) => {
+            return (
+              motor.name &&
+              typeof motor.name === "string" &&
+              motor.name.toLowerCase().includes(query.toLowerCase())
+            );
+          })
+        : [];
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
     }
-    
   };
   //filter ends
 
-  const handleChange = (setter) => (event) => {
-    setter(event.target.value);
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
- 
   const handleEdit = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5500/motor/${id}`,{
-        method:'PUT',
-        headers:{
-          "Content-Type":"application/json",
-          Authorization:`Bearer ${localStorage.getItem('token')}`
+      const res = await fetch(`http://localhost:5500/motor/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           newName,
@@ -151,31 +133,31 @@ const MotorData = () => {
           newDate,
           newRating,
           newLocation,
-        })
-      })
+        }),
+      });
       setNewName("");
       fetchData();
     } catch (error) {
       console.error("error editing");
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
-        const response = await fetch(`http://localhost:5500/motor/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-        });
-        if (response.ok) {
-            fetchData();
-        } 
+      const response = await fetch(`http://localhost:5500/motor/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        fetchData();
+      }
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-};
+  };
 
   const handleClick = (index) => {
     const newEditMode = [...update];
@@ -185,7 +167,6 @@ const MotorData = () => {
   const handleChangeNewName = (e) => {
     setNewName(e.target.value);
   };
-
 
   return (
     <div>
@@ -205,28 +186,9 @@ const MotorData = () => {
           </FilterButton>
           <MotorAddModal
             onSubmit={handleSubmit}
-            names = {{
-              name,
-              company,
-              license,
-              cost,
-              passanger,
-              type,
-              date,
-              location,
-              rating
-            }}
-            handlers = {{
-              onClick: handleChange(setName),
-              onCompany: handleChange(setCompany),
-              onLicense: handleChange(setLicense),
-              onPassanger: handleChange(setPassanger),
-              onCost: handleChange(setcost),
-              onDate: handleChange(setDate),
-              onType: handleChange(setType),
-              onRating: handleChange(setRating),
-              onLocation: handleChange(setLocation)
-
+            data={data}
+            handlers={{
+              onClick: handleChange,
             }}
           />
         </DataControl>
@@ -250,7 +212,12 @@ const MotorData = () => {
             </TableRow>
             {filteredData.map((value, index) => {
               return (
-                <TableRow key={value._id} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}}>
+                <TableRow
+                  key={value._id}
+                  style={{
+                    backgroundColor: index % 2 === 0 ? "#d8d8d836" : "white",
+                  }}
+                >
                   {update[index] ? (
                     <>
                       <td>{index + 1}</td>
@@ -366,7 +333,9 @@ const MotorData = () => {
                           <EditIcon sx={{ fill: "white" }} />
                         </EditButtonDiv>
                         <DeleteButtonDiv
-                          onClick={() => {handleDelete(value._id);}}
+                          onClick={() => {
+                            handleDelete(value._id);
+                          }}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>

@@ -18,32 +18,10 @@ const style = {
   borderRadius: "10px",
 };
 
-export default function MotorAddModal({ onSubmit, names, handlers }) {
+export default function MotorAddModal({ onSubmit, data, handlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const {
-    name,
-    company,
-    license,
-    cost,
-    passanger,
-    type,
-    date,
-    location,
-    rating,
-  } = names;
-  const {
-    onClick,
-    onCompany,
-    onLicense,
-    onPassanger,
-    onCost,
-    onDate,
-    onType,
-    onRating,
-    onLocation,
-  } = handlers;
 
   return (
     <div>
@@ -80,21 +58,21 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
               type="text"
               placeholder="Car name"
               name="name"
-              onChange={onClick}
-              value={name}
+              onChange={handlers.onClick}
+              value={data.name}
             />
             <ModalInputs
               type="text"
               placeholder="Car company"
               name="company"
-              onChange={onCompany}
-              value={company}
+              onChange={handlers.onClick}
+              value={data.company}
             />
             <ModalInputs
               type="text"
               placeholder="Car type"
-              value={type}
-              onChange={onType}
+              value={data.type}
+              onChange={handlers.onClick}
             />
             <div
               style={{
@@ -107,15 +85,15 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
                 type="text"
                 placeholder="License type"
                 name="license"
-                onChange={onLicense}
-                value={license}
+                onChange={handlers.onClick}
+                value={data.license}
               />
               <ModalInputs
                 type="number"
                 placeholder="Passangers"
                 name="passanger"
-                onChange={onPassanger}
-                value={passanger}
+                onChange={handlers.onClick}
+                value={data.passanger}
               />
             </div>
             <div
@@ -129,30 +107,30 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
                 type="text"
                 placeholder="Manufactured date"
                 name="date"
-                onChange={onDate}
-                value={date}
+                onChange={handlers.onClick}
+                value={data.date}
               />
               <ModalInputs
                 type="number"
                 placeholder="Cost"
                 name="cost"
-                onChange={onCost}
-                value={cost}
+                onChange={handlers.onClick}
+                value={data.cost}
               />
             </div>
             <ModalInputs
               type="text"
               placeholder="Location"
               name="location"
-              value={location}
-              onChange={onLocation}
+              value={data.location}
+              onChange={handlers.onClick}
             />
             <ModalInputs
               type="text"
               placeholder="Rating"
               name="rating"
-              value={rating}
-              onChange={onRating}
+              value={data.rating}
+              onChange={handlers.onClick}
             />
             <ModalInputs
               $submit
