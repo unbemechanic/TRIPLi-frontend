@@ -4,19 +4,19 @@ import { useParams } from "react-router-dom";
 import { Backgrounds, Seperated } from "../../style";
 import {
   BackgroundImg,
-  CarDesName,
   CarSpec,
   CarSpecDesc,
-  CarSpecInfo,
   CarSpecTitle,
   Home,
   HomeButton,
   MainContainer,
-} from "./documentStyle.";
+} from "./styles/documentStyle.";
 import { Button } from "@mui/material";
 import BasicTabs from "../../materials/tab";
 import "..//..//..//src/";
 import { API } from "../../address/address";
+import ProductImage from "./components/productImage";
+import ProductInfo from "./components/productInfo";
 
 const DocumentsComponent = () => {
   const mock = campcar.maindata.map((item) => item.id);
@@ -45,41 +45,10 @@ const DocumentsComponent = () => {
         return (
           <Seperated key={value.id}>
             <div>
-              <Home>
-                <h1>{value.name}</h1>
-                <HomeButton>
-                  <Button variant="contained">ADD TO CART</Button>
-                  <Button
-                    sx={{ color: "white", border: " 1px solid white" }}
-                    variant="outlined"
-                  >
-                    COMPARE
-                  </Button>
-                </HomeButton>
-              </Home>
               <MainContainer>
-                <CarSpec style={{ marginBottom: "80px" }}>
-                  <img style={{ maxWidth: "600px" }} src={value.photo} />
-                  <CarSpecInfo>
-                    <CarDesName $title>
-                      <h2>{value.name}</h2>
-                      <CarSpecTitle>{value.cost} Won</CarSpecTitle>
-                    </CarDesName>
-                    <div>
-                      <CarSpecDesc>
-                        <div>Company</div>
-                        <div>{value.company}</div>
-                      </CarSpecDesc>
-                      <CarSpecDesc>
-                        <div>People</div>
-                        {value.passanger}
-                      </CarSpecDesc>
-                      <CarSpecDesc>
-                        <div>Licence type</div>
-                        {value.license}
-                      </CarSpecDesc>
-                    </div>
-                  </CarSpecInfo>
+                <CarSpec style={{ marginBottom: "80px", padding: "20px" }}>
+                  <ProductImage image={value.image} />
+                  <ProductInfo value={value} />
                 </CarSpec>
                 <CarSpec>
                   <div>

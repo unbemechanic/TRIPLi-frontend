@@ -16,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
 import NavigationMenu from "../../components/navigation/NavigationMenu";
-import { useCart } from "../../contextAPI/cartContext";
+import { useCart } from "../../contextAPI/Context";
 
 // cart style
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -84,7 +84,7 @@ const Navbar = () => {
           </Link>
           <NavigationMenu />
           <SwipeableTemporaryDrawer />
-          <NavDisSecLang style={{ background: "red" }}>
+          <NavDisSecLang>
             {currentUser ? (
               <Link
                 to="/cart"
@@ -102,10 +102,11 @@ const Navbar = () => {
             )}
             {currentUser ? (
               <Link
-                // style={{
-                //   position: under1300 ? "absolute" : "unset",
-                //   right: "60px",
-                // }}
+                style={{
+                  position: under1300 ? "absolute" : "unset",
+                  right: "80px",
+                  width: "35px",
+                }}
                 to={"/profile"}
               >
                 <img
@@ -114,7 +115,7 @@ const Navbar = () => {
                   style={{
                     height: "35px",
                     borderRadius: "50%",
-                    marginRight: "20px",
+                    marginRight: "0px",
                     width: "35px",
                   }}
                 />

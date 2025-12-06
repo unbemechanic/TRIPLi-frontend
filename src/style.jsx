@@ -259,6 +259,11 @@ export const NavigationWrapper = styled.div`
     props.$name ? "#006DAB" : (props) => (props.$footer ? "white" : "")};
   flex-wrap: nowrap;
   white-space: nowrap;
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
   @media (max-width: 1300px) {
     display: none;
   }
@@ -547,50 +552,6 @@ export const MainSideBar = styled.div`
   }
 `;
 
-export const CampingBox = styled.div`
-  height: 250px;
-  width: 300px;
-  background-color: none;
-  margin: 0;
-  flex: 1;
-  @media (max-width: 440px) {
-    width: 80%;
-  }
-  img {
-    height: 200px;
-    width: 300px;
-    border-radius: 10px;
-  }
-`;
-export const CampingContainer = styled.div`
-  display: grid;
-  margin-inline: auto;
-  grid-template-columns: repeat(3, 1fr);
-  background-position: center;
-  grid-gap: 30px;
-  flex-shrink: 0;
-  padding: 30px 0;
-  transition: 0ms.9s;
-
-  :hover {
-    /* background: #f0f0f0; */
-    transform: scale(1.02);
-    transition: 0.5s ease;
-  }
-  @media (max-width: 1100px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: space-around;
-    align-items: center;
-  }
-  @media (max-width: 440px) {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: space-around;
-    align-items: center;
-    width: 70%;
-  }
-`;
 export const CampingScrollingImg = styled.img`
   /* width: 200px; */
   /* height: 200px; */

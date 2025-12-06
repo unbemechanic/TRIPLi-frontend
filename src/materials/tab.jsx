@@ -18,7 +18,7 @@ import {
   TabContent,
   TabImages,
   Wrapper,
-} from "../page/plp/documentStyle.";
+} from "../page/plp/styles/documentStyle.";
 import {
   Accordion,
   AccordionDetails,
@@ -29,7 +29,7 @@ import {
 } from "@mui/material";
 import { ExpandCircleDownOutlined, ExpandMore } from "@mui/icons-material";
 import { ContactUs } from "../email/email";
-import { ContactMaping } from "../maping";
+// import { ContactMaping } from "../maping";
 
 export default function UnstyledTabsIntroduction() {
   const { id } = useParams();
@@ -286,7 +286,7 @@ export default function UnstyledTabsIntroduction() {
       <TabPanel value={3}>
         <ContactWrapper>
           <div>
-            <ContactMaping />
+            {/* <ContactMaping /> */}
             <Wrapper>
               <div>
                 Phone number: <br /> +7 234 567 112

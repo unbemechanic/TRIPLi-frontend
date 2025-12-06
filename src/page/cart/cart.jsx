@@ -192,12 +192,11 @@ const CartMotorComponent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https://localhost:5500/motor");
+      const response = await fetch("http://localhost:5500/motor");
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }
       const motor = await response.json();
-      // const combinedData = [...motor, ...mock]
       setData(motor);
     } catch (error) {
       throw new Error("failed to fetch data", error);

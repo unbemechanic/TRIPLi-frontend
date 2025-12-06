@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { campcar } from "../page/data/mockdata";
+import { campcar } from "../../page/data/mockdata";
 import StarIcon from "@mui/icons-material/Star";
 import styled from "styled-components";
-import { caravan } from "../page/data/caravan";
-import { tuning } from "../page/data/tuning";
-import { usedCar } from "../page/data/usedCars";
-import Img from "..//assets/caravan-8.png";
+import { caravan } from "../../page/data/caravan";
+import { tuning } from "../../page/data/tuning";
+import { usedCar } from "../../page/data/usedCars";
+import Img from "../../assets/caravan-8.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/cart/cart";
+import { addToCart } from "../../redux/cart/cart";
 
 // style
 export const Star = styled(StarIcon)`
@@ -66,7 +66,7 @@ export const ButtonSec = styled.div`
   grid-template-columns: 1fr 1fr;
   justify-content: space-around;
   gap: 20px;
-  button{
+  button {
     flex: 1;
   }
 `;
@@ -140,7 +140,13 @@ export const VerticalMenuComponent = ({ filter }) => {
     );
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "red",
+      }}
+    >
       {filter.map((value) => {
         return (
           <SLinkV to={`/motor/${value._id}`} key={value.id}>
@@ -159,15 +165,15 @@ export const VerticalMenuComponent = ({ filter }) => {
                 <BLink to={`/cart/${value._id}`}>
                   <Buttons>Order</Buttons>
                 </BLink>
-                  <Buttons
-                    onClick={(e) => {
-                      handleAddToCart(value._id);
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    Add to cart
-                  </Buttons>
+                <Buttons
+                  onClick={(e) => {
+                    handleAddToCart(value._id);
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  Add to cart
+                </Buttons>
               </ButtonSec>
             </ButtonFunction>
           </SLinkV>
@@ -210,15 +216,15 @@ export const VerticalMenuCaravanComponent = ({ filter }) => {
                 <BLink to={`/caravan/cart/${value._id}`}>
                   <Buttons>Order</Buttons>
                 </BLink>
-                  <Buttons
-                    onClick={(e) => {
-                      handleAddToCart(value._id);
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    Add to cart
-                  </Buttons>
+                <Buttons
+                  onClick={(e) => {
+                    handleAddToCart(value._id);
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  Add to cart
+                </Buttons>
               </ButtonSec>
             </ButtonFunction>
           </SLinkV>
@@ -239,7 +245,13 @@ export const VerticalMenuTuningComponent = ({ filter }) => {
     );
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "red",
+      }}
+    >
       {filter.map((value) => {
         return (
           <SLinkV to={`/tuning/${value._id}`} key={value._id}>
@@ -258,15 +270,15 @@ export const VerticalMenuTuningComponent = ({ filter }) => {
                 <BLink to={`/tuning/cart/${value._id}`}>
                   <Buttons>Order</Buttons>
                 </BLink>
-                  <Buttons
-                    onClick={(e) => {
-                      handleAddToCart(value._id);
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    Add to cart
-                  </Buttons>
+                <Buttons
+                  onClick={(e) => {
+                    handleAddToCart(value._id);
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  Add to cart
+                </Buttons>
               </ButtonSec>
             </ButtonFunction>
           </SLinkV>
@@ -306,15 +318,15 @@ export const VerticalMenuUsedCarComponent = ({ filter }) => {
                 <BLink to={`/usedCar/cart/${value._id}`}>
                   <Buttons>Order</Buttons>
                 </BLink>
-                  <Buttons
-                    onClick={(e) => {
-                      handleAddToCart(value._id);
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    Add to cart
-                  </Buttons>
+                <Buttons
+                  onClick={(e) => {
+                    handleAddToCart(value._id);
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  Add to cart
+                </Buttons>
               </ButtonSec>
             </ButtonFunction>
           </SLinkV>

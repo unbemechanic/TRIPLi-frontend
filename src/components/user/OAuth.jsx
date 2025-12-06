@@ -1,15 +1,15 @@
 import React from "react";
-import { SocialIcon } from "../style";
+import { SocialIcon } from "../../style";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { app } from "../firebase";
+import { app } from "../../firebase";
 import { useDispatch } from "react-redux";
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from "../redux/user/userSlice";
+} from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import GoogleIcon from "../assets/google.png";
+import GoogleIcon from "../../assets/google.png";
 
 // create a new project in the firebase using email account, then click dev button for web, then click on authentication
 // import GoogleAuthProvider from firebase/auth

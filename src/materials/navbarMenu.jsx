@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import { DisNavMenu, DisNavMenu2, MenuButton } from "../style";
 import { SLink } from "../page/linkStyle";
 import { useDispatch } from "react-redux";
-import SignOut from "../components/signOut";
+import SignOut from "../components/user/signOut";
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = React.useState({

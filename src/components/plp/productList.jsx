@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Img from "..//assets/caravan-8.png";
-import { formatKRW } from "../utils/currency";
-import { useCart } from "../contextAPI/cartContext";
+import Img from "../../assets/caravan-8.png";
+import { formatKRW } from "../../utils/currency";
+import { useCart } from "../../contextAPI/Context";
 import {
   Buttons,
   Container,
@@ -11,7 +11,7 @@ import {
   Rating,
   SLink,
   Star,
-} from "./stylesUse";
+} from "../../useState/stylesUse";
 
 const ProductListMenuComponent = ({ filter }) => {
   const { handleAddToCart } = useCart();

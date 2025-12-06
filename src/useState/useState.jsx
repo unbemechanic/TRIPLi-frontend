@@ -9,7 +9,7 @@ import GridMenuComponent, {
   Rating,
   SLink,
   Star,
-} from "./productList";
+} from "../components/plp/productList";
 import VerticalMenuComponent, {
   BLink,
   ButtonFunction,
@@ -19,7 +19,7 @@ import VerticalMenuComponent, {
   VerticalMenuCaravanComponent,
   VerticalMenuTuningComponent,
   VerticalMenuUsedCarComponent,
-} from "./verticalMenu";
+} from "../components/plp/verticalMenu";
 import { campcar } from "../page/data/mockdata";
 import { FilterButton } from "../style";
 import SwipeableTemporaryDrawer2 from "../materials/sidebarMenu";
@@ -182,7 +182,7 @@ const UseStateComponent = () => {
   //end
   return (
     <div>
-      <HorizontalFilter>
+      <HorizontalFilter style={{ backgroundColor: "red" }}>
         <div>
           <b>Item</b> <b style={{ color: "#006Dab" }}>{filteredData.length}</b>{" "}
           <FilterButton>

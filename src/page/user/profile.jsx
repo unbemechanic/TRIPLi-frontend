@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { app } from "../firebase";
+import { app } from "../../firebase";
 import {
   getDownloadURL,
   getStorage,
@@ -12,9 +12,9 @@ import {
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
-} from "../redux/user/userSlice";
+} from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import SignOut from "../components/signOut";
+import SignOut from "../../components/user/signOut";
 const Profile = () => {
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);

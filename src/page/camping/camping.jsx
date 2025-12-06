@@ -1,60 +1,86 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   BodyDiv,
-  CampingBox,
-  CampingContainer,
   Heading,
-  IndentedDiv,
-  MainBodyDiv,
   MotorBodyContainer,
   MotorH,
   HeroSection,
 } from "../../style";
-import { campingPlace } from "../data/campingPlace";
+import { CampingBoxLink } from "./style/style";
+import "./styles.css";
+import { FaRegCopy } from "react-icons/fa";
+import LoadingOverlay from "../../components/general/loader";
 
 const CampingComponent = () => {
-  const data = campingPlace.maindata;
+  // const data = campingPlace.maindata;
+  const [camps, setCamps] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const campsWithImages = camps.filter((camp) => camp.firstImageUrl);
+  const campsWithoutImages = camps.filter((camp) => !camp.firstImageUrl);
+
+  useEffect(() => {
+    async function loadCamps() {
+      setLoading(true);
+      const rawKey =
+        "549fdaa0a592c57f9ec0179f1a1039ac437550d49cc8c5886d5a6e985b17794a";
+      const apiKey = encodeURIComponent(
+        process.env.REACT_APP_CAMPING_SECURITY_KEY || rawKey
+      );
+      const url = `https://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${apiKey}&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=campApp&_type=json`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      console.log("camping data: ", data);
+      // Camping items
+      const items = data.response.body.items.item;
+
+      setCamps(items);
+      setLoading(false);
+    }
+
+    loadCamps();
+  }, []);
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    alert("Address copied!");
+  };
 
   return (
-    <div>
-      <BodyDiv>
-        <HeroSection $camping>
-          <MotorH $home>Home / Camping Places</MotorH>
-          <MotorH $ranges>Our Sights</MotorH>
-          <MotorH $motor>Camping Places</MotorH>
-        </HeroSection>
-        <IndentedDiv $motorBody>
-          <MotorBodyContainer>
-            <MainBodyDiv>
-              <CampingContainer>
-                {data.map((value) => {
-                  return (
-                    <Link
-                      style={{ textDecoration: "none" }}
-                      to={`/camping/${value.id}`}
-                    >
-                      <CampingBox key={value.id}>
-                        <div>
-                          <img src={value.campingPlace.photo} alt="car" />
-                        </div>
-                        <div>
-                          <Heading $name>{value.campingPlace.name}</Heading>
-                          <Heading $brand>
-                            {value.campingPlace.location}
-                          </Heading>
-                        </div>
-                      </CampingBox>
-                    </Link>
-                  );
-                })}
-              </CampingContainer>
-              <div></div>
-            </MainBodyDiv>
-          </MotorBodyContainer>
-        </IndentedDiv>
-      </BodyDiv>
-    </div>
+    <BodyDiv>
+      <HeroSection $camping>
+        <MotorH $home>Home / Camping Places</MotorH>
+        <MotorH $ranges>Our Sights</MotorH>
+        <MotorH $motor>Camping Places</MotorH>
+      </HeroSection>
+      <MotorBodyContainer>
+        <div className="camping-container">
+          {campsWithImages.map((camp) => {
+            return (
+              <CampingBoxLink
+                to={`/camping/${camp.contentId}`}
+                key={camp.contentId}
+              >
+                <img src={camp.firstImageUrl} alt="car" />
+                <div className="camping-info">
+                  <h3>{camp.facltNm}</h3>
+                  <p>
+                    {camp.addr1}
+                    <FaRegCopy
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCopy(camp.addr1);
+                      }}
+                    />
+                  </p>
+                </div>
+              </CampingBoxLink>
+            );
+          })}
+        </div>
+      </MotorBodyContainer>
+      {loading && <LoadingOverlay />}
+    </BodyDiv>
   );
 };
 

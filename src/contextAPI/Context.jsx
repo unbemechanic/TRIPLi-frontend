@@ -1,14 +1,22 @@
 import { API } from "../address/address";
 
-const { createContext, useContext, useState, useEffect } = require("react");
+import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CartContext = createContext();
-export const useCart = () => useContext(CartContext);
-export const CartProvider = ({ children }) => {
-  const persistRoot = JSON.parse(localStorage.getItem("persist:root") || "{}");
-  const userObj = persistRoot.user ? JSON.parse(persistRoot.user) : {};
-  const userId = userObj?.currentUser?._id;
+const GeneralContext = createContext();
+export const useCart = () => useContext(GeneralContext);
+export const GeneralProvider = ({ children }) => {
+  const navigate = useNavigate();
 
+  const getUserId = () => {
+    const persistRoot = JSON.parse(
+      localStorage.getItem("persist:root") || "{}"
+    );
+    const userObj = persistRoot.user ? JSON.parse(persistRoot.user) : {};
+    return userObj?.currentUser?._id;
+  };
+
+  const [userId, setUserId] = useState(getUserId());
   const [carts, setCarts] = useState({ items: [] });
   const refreshCart = async () => {
     if (!userId) return;
@@ -57,20 +65,41 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    refreshCart();
+    const interval = setInterval(() => {
+      const newId = getUserId();
+      if (newId && newId !== userId) {
+        setUserId(newId);
+        refreshCart();
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
   }, [userId]);
+
+  // Navigation menu context
+  const [selectedNav, setSelectedNav] = useState("Motor");
+
+  const handleNavChange = (title) => {
+    setSelectedNav(title.toLowerCase());
+    navigate("/vehicles");
+    console.log("Selected Navigation:", title.toLowerCase());
+  };
+
   return (
-    <CartContext.Provider
+    <GeneralContext.Provider
       value={{
         carts,
+        getUserId,
         setCarts,
         handleAddToCart,
         refreshCart,
         handleUpdateQuantity,
         handleMinusQuantity,
+        selectedNav,
+        handleNavChange,
       }}
     >
       {children}
-    </CartContext.Provider>
+    </GeneralContext.Provider>
   );
 };

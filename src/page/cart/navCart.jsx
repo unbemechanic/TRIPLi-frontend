@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { API } from "../../address/address";
 import { formatKRW } from "../../utils/currency";
-import { useCart } from "../../contextAPI/cartContext";
+import { useCart } from "../../contextAPI/Context";
 
 const NavCart = () => {
   const { carts, handleUpdateQuantity, handleMinusQuantity, refreshCart } =
     useCart();
+  useEffect(() => {
+    refreshCart();
+  }, [refreshCart]);
 
   return (
     <div style={{ marginBottom: "50px", minHeight: "50dvh" }}>

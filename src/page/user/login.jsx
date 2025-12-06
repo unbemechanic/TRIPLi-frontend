@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import BgImg from "./assets/login.jpeg";
+import BgImg from "../../assets/login.jpeg";
 import {
   LogInForm,
   LogInInputs,
@@ -10,19 +10,20 @@ import {
   SignTypography,
   SocialIcon,
   SocialIcons,
-} from "./style";
-import { SLink } from "./page/linkStyle";
-import SizeCheckboxes from "./materials/checkbox";
+} from "../../style";
+import { SLink } from "../linkStyle";
+import SizeCheckboxes from "../../materials/checkbox";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from "./redux/user/userSlice";
-import OAuth from "./components/OAuth";
-import { API } from "./address/address";
+} from "../../redux/user/userSlice";
+import OAuth from "../../components/user/OAuth";
+import { API } from "../../address/address";
+import { useCart } from "../../contextAPI/Context";
 
 const Container = styled.div`
   width: 100%;
@@ -88,6 +89,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const { refreshCart } = useCart();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +111,7 @@ const Login = () => {
           setError("");
           localStorage.setItem("token", access);
           dispatch(signInSuccess(data));
+          refreshCart();
         } else {
           setError("Incorrect email or password.");
           alert("Incorrect email or password.");
