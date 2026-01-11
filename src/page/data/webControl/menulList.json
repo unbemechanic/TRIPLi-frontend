@@ -1,19 +1,19 @@
 [
     {
         "title": "Motor",
-        "url": "/vehicle"
+        "url": "/vehicles/motor"
     },
     {
         "title": "Caravan",
-        "url": "/vehicle"
+        "url": "/vehicles/caravan"
     },
     {
         "title": "Tuning",
-        "url": "/vehicle"
+        "url": "/vehicles/tuning"
     },
     {
-        "title": "Used Car",
-        "url": "/vehicle"
+        "title": "Used Cars",
+        "url": "/vehicles/used-cars"
     },
     {
         "title": "Camping Places",

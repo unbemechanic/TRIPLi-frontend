@@ -12,12 +12,17 @@ import Hero from "components/hero/Hero";
 import SidebarFilters from "components/plp/SidebarFilters";
 import FilterHeader from "components/plp/SearchSection";
 import LoadingOverlay from "components/general/loader";
+import { useParams } from "react-router-dom";
 
 const ProductListComponent = () => {
-  const devURL = `http://localhost:5500/motor`;
-  const { data: fetchedData, loading, error } = useFetchData(devURL, []);
+  const { category } = useParams();
+  const [query, setQuery] = useState("");
+  const devURL = `http://localhost:5500/motor?${query}`;
+  const { data, loading } = useFetchData(devURL, []);
+
+  const products = data?.data || [];
+
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedNames, setSelectedNames] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedLicenses, setSelectedLicenses] = useState([]);
   const [selectedPeople, setSelectedPeople] = useState([]);
@@ -29,34 +34,49 @@ const ProductListComponent = () => {
     window.matchMedia("(max-width: 1600px)").matches
   );
   const [sidebar, setSidebar] = useState(false);
-  const combinedData = useMemo(() => [...fetchedData], [fetchedData]);
-
+  const [page, setPage] = useState(1);
+  const combinedData = useMemo(() => [...(products || [])], [products]);
+  const dynamicCategory = useMemo(() => {
+    if (!category) return "";
+    if (category === "used-cars") return "used cars";
+    return category;
+  }, [category]);
   useEffect(() => {
-    setFilteredData(
-      combinedData.filter(
-        (item) =>
-          (selectedNames.length === 0 || selectedNames.includes(item.name)) &&
-          (selectedCompanies.length === 0 ||
-            selectedCompanies.includes(item.company)) &&
-          (selectedLicenses.length === 0 ||
-            selectedLicenses.includes(item.license)) &&
-          (selectedPeople.length === 0 ||
-            selectedPeople.includes(item.passanger)) &&
-          (selectedLocations.length === 0 ||
-            selectedLocations.includes(item.location)) &&
-          (searchTerm === "" ||
-            item.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
-    );
+    setQuery(buildQuery());
   }, [
-    combinedData,
-    selectedNames,
     selectedCompanies,
     selectedLicenses,
     selectedPeople,
     selectedLocations,
     searchTerm,
+    page,
   ]);
+
+  const buildQuery = () => {
+    const params = new URLSearchParams();
+
+    params.set("category", dynamicCategory);
+
+    if (selectedCompanies.length)
+      params.set("company", selectedCompanies.join(","));
+
+    if (selectedLicenses.length)
+      params.set("license", selectedLicenses.join(","));
+
+    if (selectedPeople.length)
+      params.set("passanger", selectedPeople.join(","));
+
+    if (selectedLocations.length)
+      params.set("location", selectedLocations.join(","));
+
+    if (searchTerm) params.set("search", searchTerm);
+
+    params.set("page", page);
+    params.set("limit", 12);
+
+    return params.toString();
+  };
+
   const horizontalMenuHandle = () => {
     setActive(true);
   };
@@ -72,7 +92,6 @@ const ProductListComponent = () => {
     });
   };
 
-  const handleNameChange = handleChange(setSelectedNames);
   const handleCompanyChange = handleChange(setSelectedCompanies);
   const handleLicenseChange = handleChange(setSelectedLicenses);
   const handlePeopleChange = handleChange(setSelectedPeople);
@@ -95,6 +114,16 @@ const ProductListComponent = () => {
       mediaQuery.removeEventListener("change", handleMediaChange);
     };
   }, []);
+
+  // Sync server results into filteredData so the header/show counts reflect server-side paging
+  useEffect(() => {
+    setFilteredData(products);
+  }, [products]);
+
+  useEffect(() => {
+    setPage(1);
+    setQuery(buildQuery());
+  }, [category]);
 
   const handleOpen = () => {
     if (isMobile) {
@@ -142,9 +171,21 @@ const ProductListComponent = () => {
                 verticalMenuHandle={verticalMenuHandle}
               />
               {active ? (
-                <ProductListMenuComponent filter={filteredData} />
+                <ProductListMenuComponent
+                  products={products}
+                  page={page}
+                  setPage={setPage}
+                  total={data?.total ?? 0}
+                  limit={12}
+                />
               ) : (
-                <VerticalMenuComponent filter={filteredData} />
+                <VerticalMenuComponent
+                  products={products}
+                  page={page}
+                  setPage={setPage}
+                  total={data?.total ?? 0}
+                  limit={12}
+                />
               )}
             </MainBodyDiv>
           </MotorBodyContainer>

@@ -8,10 +8,11 @@ import ProductImage from "./components/productImage";
 import ProductInfo from "./components/productInfo";
 
 const DocumentsComponent = () => {
+  let { id } = useParams();
   const [data, setData] = useState([]);
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5500/motor`);
+      const response = await fetch(`http://localhost:5500/motor/${id}`);
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }
@@ -21,28 +22,23 @@ const DocumentsComponent = () => {
       console.log("failed to fetch data", error);
     }
   };
+  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);
-  let { id } = useParams();
-  const separatedData = data.filter((item) => item._id == id);
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
-      {separatedData.map((value) => {
-        return (
-          <Seperated key={value.id}>
-            <div>
-              <MainContainer>
-                <CarSpec style={{ marginBottom: "80px", padding: "20px" }}>
-                  <ProductImage image={value.image} />
-                  <ProductInfo value={value} />
-                </CarSpec>
-              </MainContainer>
-              <BasicTabs />
-            </div>
-          </Seperated>
-        );
-      })}
+      <Seperated key={data._id}>
+        <div>
+          <MainContainer>
+            <CarSpec style={{ marginBottom: "80px", padding: "20px" }}>
+              <ProductImage image={data.image} />
+              <ProductInfo value={data} />
+            </CarSpec>
+          </MainContainer>
+          <BasicTabs />
+        </div>
+      </Seperated>
     </div>
   );
 };

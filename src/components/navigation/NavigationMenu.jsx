@@ -1,8 +1,8 @@
 import React from "react";
 import menuList from "../../page/data/webControl/menulList.json";
-import { DirectH, NavigationWrapper } from "../../style";
-import { SLink } from "../../page/linkStyle";
-import { useCart } from "../../contextAPI/Context";
+import { DirectH, NavigationWrapper } from "style";
+import { SLink } from "page/linkStyle";
+import { useCart } from "contextAPI/Context";
 
 const DropdownIcon = () => (
   <svg
@@ -20,25 +20,12 @@ const NavigationMenu = () => {
   const { handleNavChange } = useCart();
   return (
     <NavigationWrapper>
-      {menuList.map((item, index) =>
-        item.title === "Camping Places" ? (
-          <SLink to={item.url} key={index}>
-            {item.title}
-          </SLink>
-        ) : (
-          <button
-            to={item.url}
-            key={index}
-            onClick={() => handleNavChange(item.title)}
-          >
-            <DirectH>
-              {item.title}
-              {/* Optional icon for first 4 only */}
-              {index < 4 && <DropdownIcon />}
-            </DirectH>
-          </button>
-        )
-      )}
+      {menuList.map((item, index) => (
+        <SLink to={item.url} key={index} style={{ flexDirection: "row" }}>
+          {item.title}
+          {index < 4 && <DropdownIcon />}
+        </SLink>
+      ))}
     </NavigationWrapper>
   );
 };

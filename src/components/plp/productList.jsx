@@ -1,36 +1,46 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Img from "../../assets/caravan-8.png";
-import { formatKRW } from "../../utils/currency";
-import { useCart } from "../../contextAPI/Context";
+import { Link, useParams } from "react-router-dom";
+import Img from "assets/caravan-8.png";
+import { formatKRW } from "utils/currency";
+import { useCart } from "contextAPI/Context";
 import {
   Buttons,
   Container,
-  ExpandButton,
   FunctionButtons,
   Rating,
   SLink,
   Star,
-} from "../../useState/stylesUse";
+} from "useState/stylesUse";
+import {
+  PageButton,
+  PaginationContainer,
+} from "page/plp/styles/documentStyle.";
 
-const ProductListMenuComponent = ({ filter }) => {
+const ProductListMenuComponent = ({
+  products = [],
+  page,
+  setPage,
+  total,
+  limit,
+}) => {
+  const { category } = useParams();
   const { handleAddToCart } = useCart();
-  const [visibleCount, setVisibleCount] = useState(20);
 
-  const handleExpand = () => {
-    setVisibleCount((prevCount) => prevCount + 20);
+  const totalPages = Math.ceil(total / limit);
+
+  const handlePageChange = (newPage) => {
+    if (newPage !== page) {
+      setPage(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
-
-  const visibleProducts = filter.slice(0, visibleCount);
-  const hasMoreProducts = visibleCount < filter.length;
 
   return (
     <>
       <Container>
-        {visibleProducts.map((value) => {
+        {products.map((value) => {
           return (
             <div key={value.id}>
-              <SLink to={`/motor/${value._id}`}>
+              <SLink to={`/product/detail/${category}/${value._id}`}>
                 <img src={value.image || value.photo || Img} />
                 <FunctionButtons>
                   <div className="title">
@@ -62,10 +72,20 @@ const ProductListMenuComponent = ({ filter }) => {
           );
         })}
       </Container>
-      {hasMoreProducts && (
-        <ExpandButton onClick={handleExpand}>
-          Expand ({filter.length - visibleCount} more cars)
-        </ExpandButton>
+      {totalPages > 1 && (
+        <PaginationContainer>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNumber) => (
+              <PageButton
+                key={pageNumber}
+                active={page === pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+              >
+                {pageNumber}
+              </PageButton>
+            )
+          )}
+        </PaginationContainer>
       )}
     </>
   );

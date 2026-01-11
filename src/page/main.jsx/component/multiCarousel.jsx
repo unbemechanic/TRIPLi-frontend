@@ -29,7 +29,7 @@ const responsive = {
   },
 };
 
-const DEV_URL = `http://localhost:5500/motor`;
+const DEV_URL = `http://localhost:5500/products/recommended/list`;
 
 const RecommendedCard = ({ image, name }) => {
   return (
@@ -54,9 +54,7 @@ const RecommendedCard = ({ image, name }) => {
 };
 
 const MultiCarouselComponent = () => {
-  const { data: fetchData, loading, error } = useFetchData(DEV_URL, []);
-
-  const recommended = fetchData.filter((r) => (r.rating = 5)).slice(0, 5); // limit carousel items
+  const { data: recommended, loading, error } = useFetchData(DEV_URL, []);
 
   if (loading) return <p>Loading recommendations...</p>;
   if (error) return <p>Failed to load recommendations</p>;

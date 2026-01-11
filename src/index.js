@@ -39,8 +39,14 @@ root.render(
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<MainComponent />} />
-              <Route path="/vehicles" element={<ProductListComponent />} />
-              <Route path="/motor/:id" element={<DocumentsComponent />} />
+              <Route
+                path="/vehicles/:category"
+                element={<ProductListComponent />}
+              />
+              <Route
+                path="/product/detail/:category/:id"
+                element={<DocumentsComponent />}
+              />
               <Route path="/camping" element={<CampingComponent />} />
               <Route path="/camping/:id" element={<CampingDetailComponent />} />
               <Route path="/register" element={<RegisterComponent />} />
