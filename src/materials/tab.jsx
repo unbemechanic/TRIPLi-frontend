@@ -6,14 +6,10 @@ import { TabPanel as BaseTabPanel } from "@mui/base/TabPanel";
 import { buttonClasses } from "@mui/base/Button";
 import { Tab as BaseTab, tabClasses } from "@mui/base/Tab";
 import { campcar } from "../page/data/mockdata";
-import { useParams } from "react-router-dom";
 import {
-  ContactImg,
   ContactWrapper,
-  InputA,
   Length,
   QWrapper,
-  Qustion,
   QustionContainer,
   TabContent,
   TabImages,
@@ -23,16 +19,12 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
-  Input,
   Typography,
 } from "@mui/material";
-import { ExpandCircleDownOutlined, ExpandMore } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import { ContactUs } from "../email/email";
-// import { ContactMaping } from "../maping";
 
 export default function UnstyledTabsIntroduction() {
-  const { id } = useParams();
   const CarList = campcar.maindata.slice(0, 7);
 
   return (

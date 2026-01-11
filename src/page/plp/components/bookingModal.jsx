@@ -6,8 +6,7 @@ import { useCart } from "../../../contextAPI/Context";
 const BookingModal = ({ close, value }) => {
   const [bookData, setBookData] = React.useState({});
   const [userData, setUserData] = React.useState({});
-  const { getUserId } = useCart();
-  const userId = getUserId();
+  const { userId } = useCart();
   // const hours = Array.from({ length: 24 }, (_, i) => i + 1);
   const [formattedDate, setFormattedDate] = React.useState("");
   const [duration, setDuration] = React.useState("");

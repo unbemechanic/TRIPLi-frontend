@@ -10,7 +10,7 @@ import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import CampSwiper from "./campSwipe";
-import Maping from "../../maping";
+import Maping from "../../components/general/maping";
 import { MdDescription } from "react-icons/md";
 
 const StyledClock = styled(ScheduleOutlinedIcon)`

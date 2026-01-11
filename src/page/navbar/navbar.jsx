@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-  DirectH,
   Header,
   IndentedDiv,
   NavDisSec,
   NavDisSecLang,
+  TripliLogo,
 } from "../../style";
-import SwipeableTemporaryDrawer from "../../materials/navbarMenu";
+import RightSideSwipeableTemporaryDrawer from "materials/navbarMenu";
 import { Link } from "react-router-dom";
 
 // cart imports
@@ -15,8 +15,8 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
-import NavigationMenu from "../../components/navigation/NavigationMenu";
-import { useCart } from "../../contextAPI/Context";
+import NavigationMenu from "components/navigation/NavigationMenu";
+import { useCart } from "contextAPI/Context";
 
 // cart style
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -80,10 +80,11 @@ const Navbar = () => {
       <IndentedDiv>
         <Header>
           <Link style={{ textDecoration: "none" }} to="/">
-            <DirectH $name>Camper</DirectH>
+            <TripliLogo />
+            <div></div>
           </Link>
           <NavigationMenu />
-          <SwipeableTemporaryDrawer />
+          <RightSideSwipeableTemporaryDrawer />
           <NavDisSecLang>
             {currentUser ? (
               <Link

@@ -2,16 +2,21 @@ import { useEffect, useState } from "react";
 import { Container } from "./cart";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { API } from "../../address/address";
-import { formatKRW } from "../../utils/currency";
-import { useCart } from "../../contextAPI/Context";
+import { formatKRW } from "utils/currency";
+import { useCart } from "contextAPI/Context";
 
 const NavCart = () => {
-  const { carts, handleUpdateQuantity, handleMinusQuantity, refreshCart } =
-    useCart();
+  const {
+    carts,
+    handleUpdateQuantity,
+    handleMinusQuantity,
+    refreshCart,
+    userId,
+  } = useCart();
   useEffect(() => {
     refreshCart();
-  }, [refreshCart]);
+  }, [userId]);
+  console.log(carts);
 
   return (
     <div style={{ marginBottom: "50px", minHeight: "50dvh" }}>
@@ -21,7 +26,7 @@ const NavCart = () => {
         {carts.items?.map((item) => (
           <Link
             key={item._id}
-            to={`/cart/${item.productId}`}
+            to={`/cart/${item.productId._id}`}
             style={{ width: "100%", textDecoration: "none" }}
           >
             <CellWrapper key={item.productId}>

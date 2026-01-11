@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { campcar } from "../data/mockdata";
 import { useParams } from "react-router-dom";
-import { Backgrounds, Seperated } from "../../style";
-import {
-  BackgroundImg,
-  CarSpec,
-  CarSpecDesc,
-  CarSpecTitle,
-  Home,
-  HomeButton,
-  MainContainer,
-} from "./styles/documentStyle.";
-import { Button } from "@mui/material";
+import { Seperated } from "../../style";
+import { CarSpec, MainContainer } from "./styles/documentStyle.";
 import BasicTabs from "../../materials/tab";
 import "..//..//..//src/";
-import { API } from "../../address/address";
 import ProductImage from "./components/productImage";
 import ProductInfo from "./components/productInfo";
 
 const DocumentsComponent = () => {
-  const mock = campcar.maindata.map((item) => item.id);
   const [data, setData] = useState([]);
   const fetchData = async () => {
     try {
@@ -28,8 +16,7 @@ const DocumentsComponent = () => {
         throw new Error("Error fetching data 'frontend'");
       }
       const motor = await response.json();
-      const combinedData = [...motor, ...mock];
-      setData(combinedData);
+      setData(motor);
     } catch (error) {
       console.log("failed to fetch data", error);
     }
@@ -49,82 +36,6 @@ const DocumentsComponent = () => {
                 <CarSpec style={{ marginBottom: "80px", padding: "20px" }}>
                   <ProductImage image={value.image} />
                   <ProductInfo value={value} />
-                </CarSpec>
-                <CarSpec>
-                  <div>
-                    <h2>Comfort</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Rutrum nibh urna sagittis arcu natoque lectus cursus
-                      felis. Nec, felis risus, id in proin sed proin iaculis mi.
-                      Turpis ac ut metus, amet, pulvinar. Eget amet dictum
-                      luctus quis molestie tellus vitae.Lorem ipsum dolor sit
-                      amet, consectetur adipiscing elit. Rutrum nibh urna
-                      sagittis arcu natoque lectus cursus felis. Nec, felis
-                      risus, id in proin sed proin iaculis mi.
-                    </p>
-                  </div>
-                  <BackgroundImg></BackgroundImg>
-                </CarSpec>
-                <CarSpec>
-                  <BackgroundImg $second></BackgroundImg>
-                  <div>
-                    <h2>Tidying away is child’s play!</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Rutrum nibh urna sagittis arcu natoque lectus cursus
-                      felis. Nec, felis risus, id in proin sed proin iaculis mi.
-                      Turpis ac ut metus, amet, pulvinar. Eget amet dictum
-                      luctus quis molestie tellus vitae.Lorem ipsum dolor sit
-                      amet, consectetur adipiscing elit. Rutrum nibh urna
-                      sagittis arcu natoque lectus cursus felis. Nec, felis
-                      risus, id in proin sed proin iaculis mi.
-                    </p>
-                  </div>
-                </CarSpec>
-                <CarSpec>
-                  <div>
-                    <h2>Ventilated , Lit up</h2>
-                    <p>
-                      In our vans and motorhomes, all our body lighting is 100%
-                      LED: a guarantee of energy efficiency and durability. As
-                      for ventilation, we also often offer double ventilation in
-                      the bathroom (Skylight + window), which is very popular
-                      with our customers… Camper relies on legendary Seitz
-                      windows. They offer the best insulation and are also the
-                      easiest to use and safest because they can’t be removed
-                      from the outside.
-                    </p>
-                  </div>
-                  <BackgroundImg $third></BackgroundImg>
-                </CarSpec>
-                <CarSpec>
-                  <BackgroundImg $fourth></BackgroundImg>
-                  <div>
-                    <h2>Easy access</h2>
-                    <p>
-                      We add little touches that your joints will thank you for…
-                      All our motorhomes are equipped with a built-in step to
-                      facilitate entry to the vehicle All our vans are equipped
-                      with an electric step.
-                    </p>
-                  </div>
-                </CarSpec>
-                <CarSpec>
-                  <div>
-                    <h2>Heating when driving</h2>
-                    <p>
-                      Fuel heating is now very popular in the industry, but this
-                      was not always the case; Camper (once again) led the way
-                      in this area over 15 years ago. <br />
-                      One of the advantages it offers is that it can heat up
-                      your vehicle while you drive, for a more comfortable
-                      arrival.
-                    </p>
-                    <Button variant="contained">ADD TO CART</Button>
-                    <Button variant="outlined">COMPARE</Button>
-                  </div>
-                  <BackgroundImg $fifth></BackgroundImg>
                 </CarSpec>
               </MainContainer>
               <BasicTabs />

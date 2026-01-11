@@ -1,25 +1,6 @@
 import React, { useState } from "react";
-import GridMenuComponent, {
-  Buttons,
-  Container,
-  FunctionButtons,
-  GridMenuCaravanComponent,
-  GridMenuTuningComponent,
-  GridMenuUsedCarComponent,
-  Rating,
-  SLink,
-  Star,
-} from "../components/plp/productList";
-import VerticalMenuComponent, {
-  BLink,
-  ButtonFunction,
-  ButtonSec,
-  PriceDescription,
-  SLinkV,
-  VerticalMenuCaravanComponent,
-  VerticalMenuTuningComponent,
-  VerticalMenuUsedCarComponent,
-} from "../components/plp/verticalMenu";
+import GridMenuComponent from "../components/plp/productList";
+import VerticalMenuComponent from "../components/plp/verticalMenu";
 import { campcar } from "../page/data/mockdata";
 import { FilterButton } from "../style";
 import SwipeableTemporaryDrawer2 from "../materials/sidebarMenu";
@@ -28,10 +9,6 @@ import styled from "styled-components";
 import WindowSharpIcon from "@mui/icons-material/WindowSharp";
 import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
 import { HorizontalFilter, VerticalFilterInput } from "./stylesUse";
-import { caravan } from "../page/data/caravan";
-import { tuning } from "../page/data/tuning";
-import { usedCar } from "../page/data/usedCars";
-import { Link } from "react-router-dom";
 
 // styles
 export const ExpandStyle = styled(ExpandMoreIcon)`
@@ -39,7 +16,6 @@ export const ExpandStyle = styled(ExpandMoreIcon)`
   padding-inline: 5px;
   cursor: pointer;
   border-left: 1px solid black;
-  /* background-color: red; */
   padding: 5px;
 `;
 

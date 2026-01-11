@@ -45,10 +45,6 @@ export const HorizontalFilter = styled.div`
 `;
 export const VerticalFilterInput = styled.div`
   border: 1px solid gray;
-  /* position: absolute;
-    background-color: red;
-    bottom: 10px ;
-    right: 0; */
   border-radius: 5px;
   margin-right: ${(props) => (props.$inputs ? "20px" : "")};
   @media (max-width: 1100px) {
@@ -194,8 +190,6 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
-    /* align-items: center; */
-    /* background-color: red; */
     margin-inline: 50px;
   }
   @media (max-width: 560px) {

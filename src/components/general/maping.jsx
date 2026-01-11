@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { campingPlace } from "./page/data/campingPlace";
+import { campingPlace } from "../../page/data/campingPlace";
 import { useParams } from "react-router-dom";
 
 const Maping = () => {

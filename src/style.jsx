@@ -1,22 +1,18 @@
 import styled from "styled-components";
-import MotorHomeImg from "..//src/assets/motorHome.png";
-import Compare1 from "..//src/assets/compare-1.png";
-import Compare2 from "..//src/assets/compare-2.png";
-import Compare3 from "..//src/assets/compare-3.png";
-import { startTransition } from "react";
-import Meny from "..//src/assets/menuButton.svg";
+import Compare1 from "assets/compare-1.png";
+import Compare2 from "assets/compare-2.png";
+import Compare3 from "assets/compare-3.png";
+import Meny from "assets/menuButton.svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import SignIcons from "..//src/assets/signIcon.png";
-import MainCarouselImg1 from "..//src/assets/carousel-img.png";
-import MainCarouselImg2 from "..//src/assets/carousel-img2.webp";
-import CampingHomeImg from "..//src/assets/camping-places-12.jpg";
-import DotMenu from "..//src/assets/fourdotMenu.png";
-import CaravanHome from "..//src/assets/caravan-header-3.webp";
-import TuningHomeImg from "..//src/assets/tuning-header-7.jpg";
-import UsedCarHomeImg from "..//src/assets/used-header.jpg";
-import HomeImg from "..//src/assets/home.jpg";
-import CartImg1 from "..//./src/assets/img-11.webp";
-import GoogleIcon from "../src/assets/google.png";
+import SignIcons from "assets/signIcon.png";
+import MainCarouselImg1 from "assets/carousel-img.png";
+import MainCarouselImg2 from "assets/carousel-img2.webp";
+import CampingHomeImg from "assets/camping-places-12.jpg";
+import CaravanHome from "assets/caravan-header-3.webp";
+import TuningHomeImg from "assets/tuning-header-7.jpg";
+import UsedCarHomeImg from "assets/used-header.jpg";
+import HomeImg from "assets/home.jpg";
+import Tripli from "assets/tripli-logo.png";
 
 export const IndentedDiv = styled.div`
   width: 90%;
@@ -25,18 +21,18 @@ export const IndentedDiv = styled.div`
   column-gap: ${(props) => (props.$motorBody ? "20px" : "")};
 `;
 
+const getCarouselImage = (prop) => {
+  if (prop.$first) return MainCarouselImg1;
+  return MainCarouselImg2;
+};
+
 export const MainCarouselImg = styled.div`
-  background-image: url(${(props) =>
-    props.$first ? `${MainCarouselImg1} ` : `${MainCarouselImg2}`});
+  background-image: url(${getCarouselImage});
   background-size: cover;
   background-position: ${(props) => (props.$first ? "bottom" : `center`)};
   height: 70vh;
   width: 100vw;
   background-repeat: no-repeat;
-  /* background-image: url(${(props) => (props.$cart ? `${CartImg1}` : ``)}); */
-  /* margin-top: 100px; */
-  /* width: ${(props) => (props.$cart ? "100%" : "100vw")}; */
-  /* height: ${(props) => (props.$cart ? "auto" : "70vw")}; */
 `;
 
 export const SignBackground = styled.div`
@@ -177,7 +173,15 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
+  height: 80px;
+`;
+
+export const TripliLogo = styled.div`
+  background-image: url(${Tripli});
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 80px;
+  width: 110px;
 `;
 
 export const NavDisSecLang = styled.div`
@@ -206,7 +210,7 @@ export const DirectH = styled.div`
   justify-content: center;
   align-items: center;
   color: var(--text, #373737);
-  font-family: Montserrat;
+  font-family: ${(props) => (props.$name ? "Tinos" : "Montserrat")};
   font-size: ${(props) =>
     props.$name ? "38px" : (props) => (props.$footer ? "38px" : "16px")};
   font-style: normal;
@@ -224,7 +228,7 @@ export const MenuButton = styled.div`
   background-repeat: no-repeat;
   display: block;
   position: absolute;
-  top: 35px;
+  top: 20px;
   right: 40px;
   &:hover {
     cursor: pointer;
@@ -311,6 +315,14 @@ export const FooterH = styled.div`
     }
   }
 `;
+const getHeroBackground = (props) => {
+  if (props.$camping) return CampingHomeImg;
+  if (props.$caravan) return CaravanHome;
+  if (props.$tuning) return TuningHomeImg;
+  if (props.$usedCar) return UsedCarHomeImg;
+  return HomeImg;
+};
+
 export const HeroSection = styled.div`
   width: 100%;
   text-align: center;
@@ -319,18 +331,7 @@ export const HeroSection = styled.div`
       rgba(0, 0, 0, 0.6) 50%,
       rgba(0, 0, 0, 0.5) 90%
     ),
-    url(${(props) =>
-        props.$camping
-          ? `${CampingHomeImg}`
-          : (props) =>
-              props.$caravan
-                ? `${CaravanHome}`
-                : (props) =>
-                    props.$tuning
-                      ? `${TuningHomeImg}`
-                      : (props) =>
-                          props.$usedCar ? `${UsedCarHomeImg}` : `${HomeImg}`})
-      lightgray 50% / cover no-repeat;
+    url(${getHeroBackground}) lightgray 50% / cover no-repeat;
   background-size: cover;
   padding: 210px 0;
   margin-inline: auto;
@@ -543,9 +544,8 @@ export const MainSideBar = styled.div`
   @media (max-width: 1600px) {
     display: ${(props) => (props.sidebar ? "block" : "none")};
     background-color: ${(props) => (props.sidebar ? "white" : "inherit")};
-    /* display: none; */
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: 0px;
     bottom: 0px;
     padding-left: 20px;

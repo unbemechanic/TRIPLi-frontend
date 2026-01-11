@@ -5,6 +5,10 @@ body.active-modal {
 .btn-modal {
     font-size: 18px;
     cursor: pointer;
+    width: 100%;
+    img{
+        width: 100%;
+    }
 }
 
 .modal, .overlay {
@@ -32,8 +36,8 @@ body.active-modal {
     padding: 14px 28px;
     padding-bottom: 30px;
     border-radius: 20px;
-    max-width: 600px;
-    min-width: 300px;
+    width: 850px;
+    min-width: 600px;
     z-index: 999999999999;
     margin-inline: auto;
     display: flex;
@@ -52,6 +56,8 @@ body.active-modal {
 .videos{
     border-radius: 20px;
     height: 290px;
+    width: 95%;
+    margin-inline: auto;
 }
 .custom-dot-list-style{
     z-index: 2;

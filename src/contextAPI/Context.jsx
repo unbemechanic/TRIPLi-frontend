@@ -1,4 +1,5 @@
 import { API } from "../address/address";
+import { useMemo } from "react";
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +17,7 @@ export const GeneralProvider = ({ children }) => {
     return userObj?.currentUser?._id;
   };
 
-  const [userId, setUserId] = useState(getUserId());
+  const [userId, setUserId] = useState(getUserId);
   const [carts, setCarts] = useState({ items: [] });
   const refreshCart = async () => {
     if (!userId) return;
@@ -34,6 +35,7 @@ export const GeneralProvider = ({ children }) => {
       body: JSON.stringify({ productId, quantity: 1 }),
     });
     refreshCart();
+    console.log(userId);
   };
 
   const updateCart = async (url, options = {}) => {
@@ -65,15 +67,10 @@ export const GeneralProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newId = getUserId();
-      if (newId && newId !== userId) {
-        setUserId(newId);
-        refreshCart();
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
+    if (userId) {
+      refreshCart();
+      console.log("UserId updated:", userId);
+    }
   }, [userId]);
 
   // Navigation menu context
@@ -85,21 +82,23 @@ export const GeneralProvider = ({ children }) => {
     console.log("Selected Navigation:", title.toLowerCase());
   };
 
+  const value = useMemo(
+    () => ({
+      carts,
+      userId,
+      setUserId,
+      setCarts,
+      handleAddToCart,
+      refreshCart,
+      handleUpdateQuantity,
+      handleMinusQuantity,
+      selectedNav,
+      handleNavChange,
+    }),
+    [carts, selectedNav]
+  );
+
   return (
-    <GeneralContext.Provider
-      value={{
-        carts,
-        getUserId,
-        setCarts,
-        handleAddToCart,
-        refreshCart,
-        handleUpdateQuantity,
-        handleMinusQuantity,
-        selectedNav,
-        handleNavChange,
-      }}
-    >
-      {children}
-    </GeneralContext.Provider>
+    <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>
   );
 };

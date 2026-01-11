@@ -90,6 +90,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { refreshCart } = useCart();
+  const { userId, setUserId } = useCart();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,13 +106,16 @@ const Login = () => {
         });
         const data = await response.json();
         const access = data.token;
+        console.log(data._id);
         if (response.status === 201) {
           alert(`Welcom ${data.name}`);
           navigate("/");
           setError("");
           localStorage.setItem("token", access);
           dispatch(signInSuccess(data));
-          refreshCart();
+          // refreshCart();
+          setUserId(data._id);
+          console.log(userId);
         } else {
           setError("Incorrect email or password.");
           alert("Incorrect email or password.");

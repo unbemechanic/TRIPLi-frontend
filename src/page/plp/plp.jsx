@@ -1,28 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { campcar } from "../data/mockdata";
+import { useEffect, useMemo, useState } from "react";
 
-import {
-  BodyDiv,
-  IndentedDiv,
-  MainBodyDiv,
-  MotorBodyContainer,
-} from "../../style";
-import "..//..//index.css";
-import ProductListMenuComponent from "../../components/plp/productList";
-import VerticalMenuComponent from "../../components/plp/verticalMenu";
+import { BodyDiv, IndentedDiv, MainBodyDiv, MotorBodyContainer } from "style";
+import "index.css";
+import ProductListMenuComponent from "components/plp/productList";
+import VerticalMenuComponent from "components/plp/verticalMenu";
 import { useMediaQuery } from "@mui/material";
-import "..//..//materials/mui.css";
-import { API } from "../../address/address";
-import { useFetchData } from "../../components/custom hooks/useFetch";
-import useUniqueValues from "../../components/custom hooks/useUniqeValues";
-import Hero from "../../components/hero/Hero";
-import SidebarFilters from "../../components/plp/SidebarFilters";
-import FilterHeader from "../../components/plp/SearchSection";
-import LoadingOverlay from "../../components/general/loader";
+import "materials/mui.css";
+import { useFetchData } from "components/custom hooks/useFetch";
+import useUniqueValues from "components/custom hooks/useUniqeValues";
+import Hero from "components/hero/Hero";
+import SidebarFilters from "components/plp/SidebarFilters";
+import FilterHeader from "components/plp/SearchSection";
+import LoadingOverlay from "components/general/loader";
 
 const ProductListComponent = () => {
   const devURL = `http://localhost:5500/motor`;
-  const mock = campcar.maindata.map((item) => item.car);
   const { data: fetchedData, loading, error } = useFetchData(devURL, []);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedNames, setSelectedNames] = useState([]);
@@ -115,27 +107,11 @@ const ProductListComponent = () => {
       setSidebar(false);
     }
   };
-  const [product, setProduct] = useState([]);
-  const fetchProduct = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/products");
-      const prod = await res.json();
-      setProduct(prod);
-      console.log("products", prod);
-    } catch (error) {
-      console.error("failed to fetch product", error);
-    }
-  };
-  useEffect(() => {
-    console.log("fetching products...");
-    fetchProduct();
-  }, []);
 
   return (
     <div>
       <BodyDiv>
         <Hero />
-        <div>hello</div>
         <IndentedDiv $motorBody>
           <MotorBodyContainer>
             <SidebarFilters
@@ -173,11 +149,6 @@ const ProductListComponent = () => {
             </MainBodyDiv>
           </MotorBodyContainer>
         </IndentedDiv>
-        <div>
-          {product.map((item) => (
-            <div key={item.id}>{item.name}s</div>
-          ))}
-        </div>
       </BodyDiv>
       {loading && <LoadingOverlay />}
     </div>

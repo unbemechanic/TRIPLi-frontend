@@ -144,7 +144,6 @@ export const VerticalMenuComponent = ({ filter }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "red",
       }}
     >
       {filter.map((value) => {

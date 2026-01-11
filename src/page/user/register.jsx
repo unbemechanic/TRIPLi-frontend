@@ -1,26 +1,15 @@
 import React, { useState } from "react";
 import {
-  LongDash,
   RegisterBackground,
   RegisterButton,
   RegisterInputs,
-  SignBackground,
-  SignCheckboxDiv,
   SignContainer,
-  SignIconsBlur,
   SignInnerDiv,
-  SignOr,
   SignTypography,
-  SocialIcon,
-  SocialIcons,
 } from "../../style";
 import SizeCheckboxes from "../../materials/checkbox";
-import { Button, TextField } from "@mui/material";
 import { SLink } from "../linkStyle";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
-import { API } from "../../address/address";
 
 const RegisterComponent = () => {
   const [data, setData] = useState([]);
