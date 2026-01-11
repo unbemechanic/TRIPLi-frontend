@@ -395,3 +395,22 @@ export const PDPImage = styled.img`
   overflow: hidden;
   background: #f0f0f0;
 `;
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  gap: 8px;
+`;
+
+export const PageButton = styled.button`
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  background: ${({ active }) => (active ? "#000" : "#fff")};
+  color: ${({ active }) => (active ? "#fff" : "#000")};
+  cursor: pointer;
+
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+`;

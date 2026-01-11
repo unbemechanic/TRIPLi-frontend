@@ -9,10 +9,10 @@ import { useDispatch } from "react-redux";
 import SignOut from "../components/user/signOut";
 
 const MENU_ITEMS = [
-  { label: "Motor", path: "/vehicles", withIcon: true },
-  { label: "Caravan", path: "/vehicles", withIcon: true },
-  { label: "Tuning", path: "/vehicles", withIcon: true },
-  { label: "Used Cars", path: "/vehicles", withIcon: true },
+  { label: "Motor", path: "/vehicles/motor", withIcon: true },
+  { label: "Caravan", path: "/vehicles/caravan", withIcon: true },
+  { label: "Tuning", path: "/vehicles/tuning", withIcon: true },
+  { label: "Used Cars", path: "/vehicles/used-cars", withIcon: true },
   { label: "Camping Place", path: "/camping", withIcon: false },
 ];
 
@@ -97,50 +97,4 @@ export default function RightSideSwipeableTemporaryDrawer() {
       </SwipeableDrawer>
     </>
   );
-
-  // const list = (anchor) => (
-  //   <Box
-  //     sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-  //     role="presentation"
-  //     onClick={toggleDrawer(anchor, false)}
-  //     onKeyDown={toggleDrawer(anchor, false)}
-  //   >
-  //     <List
-  //       sx={{
-  //         display: "flex",
-  //         flexDirection: "column",
-  //         alignItems: "center",
-  //         justifyContent: "space-around",
-  //         paddingTop: "30px",
-  //       }}
-  //     >
-  //       <SLink to="/vehicle">{<DisNavMenu>Motor</DisNavMenu>}</SLink>
-  //       <SLink to="/vehicle">{<DisNavMenu>Caravan</DisNavMenu>}</SLink>
-  //       <SLink to="/vehicle">{<DisNavMenu>Tuning</DisNavMenu>}</SLink>
-  //       <SLink to="/vehicle">{<DisNavMenu>Used Cars</DisNavMenu>}</SLink>
-  //       <SLink to="/vehicle">{<DisNavMenu2>Camping Place</DisNavMenu2>}</SLink>
-
-  //       {<DisNavMenu2 onClick={SignOut}>Log out</DisNavMenu2>}
-  //     </List>
-  //   </Box>
-  // );
-
-  // return (
-  //   <div>
-  //     {["right"].map((anchor) => (
-  //       <React.Fragment key={anchor}>
-  //         <MenuButton onClick={toggleDrawer(anchor, true)} />
-  //         <SwipeableDrawer
-  //           anchor={anchor}
-  //           open={state[anchor]}
-  //           onClose={toggleDrawer(anchor, false)}
-  //           onOpen={toggleDrawer(anchor, true)}
-  //           sx={{ zIndex: "9999999" }}
-  //         >
-  //           {list(anchor)}
-  //         </SwipeableDrawer>
-  //       </React.Fragment>
-  //     ))}
-  //   </div>
-  // );
 }

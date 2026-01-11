@@ -1,12 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { campcar } from "../../page/data/mockdata";
+import { Link, useParams } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import styled from "styled-components";
-import { caravan } from "../../page/data/caravan";
-import { tuning } from "../../page/data/tuning";
-import { usedCar } from "../../page/data/usedCars";
-import Img from "../../assets/caravan-8.png";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cart/cart";
 
@@ -128,7 +123,14 @@ export const Buttons = styled.button`
   }
 `;
 
-export const VerticalMenuComponent = ({ filter }) => {
+export const VerticalMenuComponent = ({
+  products = [],
+  page,
+  setPage,
+  total,
+  limit,
+}) => {
+  const { category } = useParams();
   const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
   const handleAddToCart = (id) => {
@@ -139,6 +141,14 @@ export const VerticalMenuComponent = ({ filter }) => {
       })
     );
   };
+  const totalPages = Math.ceil(total / limit);
+
+  const handlePageChange = (newPage) => {
+    if (newPage !== page) {
+      setPage(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   return (
     <div
       style={{
@@ -146,9 +156,12 @@ export const VerticalMenuComponent = ({ filter }) => {
         flexDirection: "column",
       }}
     >
-      {filter.map((value) => {
+      {products.map((value) => {
         return (
-          <SLinkV to={`/motor/${value._id}`} key={value.id}>
+          <SLinkV
+            to={`/product/detail/${category}/${value._id}`}
+            key={value.id}
+          >
             <img src={value?.photo || value?.image} />
             <ButtonFunction>
               <PriceDescription>

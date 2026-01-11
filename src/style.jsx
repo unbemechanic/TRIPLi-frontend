@@ -328,18 +328,18 @@ export const HeroSection = styled.div`
   text-align: center;
   background: linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.76) 50%,
       rgba(0, 0, 0, 0.5) 90%
     ),
-    url(${getHeroBackground}) lightgray 50% / cover no-repeat;
+    url(${getHeroBackground}) lightgray 80% / cover no-repeat;
   background-size: cover;
+  background-position: center;
   padding: 210px 0;
   margin-inline: auto;
   margin-bottom: 60px;
   display: flex;
   flex-direction: column;
   row-gap: 25px;
-  /* padding-top: 190px; */
 `;
 export const MotorH = styled.div`
   color: #fff;
