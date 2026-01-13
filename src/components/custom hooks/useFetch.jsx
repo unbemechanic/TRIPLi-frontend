@@ -1,4 +1,4 @@
-import { useState, useEffect, useDebugValue, useRef } from "react";
+import { useState, useEffect, useDebugValue } from "react";
 
 const useFetchData = (url, initialValue) => {
   useDebugValue(url);

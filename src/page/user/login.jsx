@@ -22,7 +22,6 @@ import {
   signInSuccess,
 } from "../../redux/user/userSlice";
 import OAuth from "../../components/user/OAuth";
-import { API } from "../../address/address";
 import { useCart } from "../../contextAPI/Context";
 
 const Container = styled.div`

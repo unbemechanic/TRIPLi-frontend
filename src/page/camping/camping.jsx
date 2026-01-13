@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  BodyDiv,
-  Heading,
-  MotorBodyContainer,
-  MotorH,
-  HeroSection,
-} from "../../style";
+import { BodyDiv, MotorBodyContainer, MotorH, HeroSection } from "../../style";
 import { CampingBoxLink } from "./style/style";
 import "./styles.css";
 import { FaRegCopy } from "react-icons/fa";
 import LoadingOverlay from "../../components/general/loader";
 
 const CampingComponent = () => {
-  // const data = campingPlace.maindata;
   const [camps, setCamps] = useState([]);
   const [loading, setLoading] = useState(true);
   const campsWithImages = camps.filter((camp) => camp.firstImageUrl);

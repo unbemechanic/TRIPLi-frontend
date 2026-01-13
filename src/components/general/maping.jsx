@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { campingPlace } from "../../page/data/campingPlace";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Maping = () => {
@@ -71,7 +70,6 @@ const Maping = () => {
       });
     });
   }, [latitude, longitude]);
-  const addressRef = useRef(null);
   return (
     <div>
       <div
@@ -79,71 +77,7 @@ const Maping = () => {
         className="map"
         style={{ width: "1200px", height: "500px" }}
       />
-      {/* {mapData.map((value) => {
-        return (
-          <div className="campingPlace" key={value.contentId}>
-            <div className="campingPlace"></div>
-          </div>
-        );
-      })} */}
     </div>
   );
 };
 export default Maping;
-export const ContactMaping = () => {
-  const data = campingPlace.maindata;
-  const { id } = useParams();
-  const mapData = data.filter((value) => value.id == id);
-  const latitude = data.ca;
-
-  const new_script = (src) => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.addEventListener("load", () => {
-        resolve();
-      });
-      script.addEventListener("error", (e) => {
-        reject(e);
-      });
-      document.head.appendChild(script);
-    });
-  };
-
-  useEffect(() => {
-    const my_script = new_script(
-      "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=896f4f88b2060f77a9fea902e7d4ba20"
-    );
-    my_script.then(() => {
-      console.log("script loaded!!!");
-      const kakao = window["kakao"];
-      kakao.maps.load(() => {
-        const mapContainer = document.getElementById("map");
-        const options = {
-          center: new kakao.maps.LatLng(35.88419, 127.0856),
-          level: 8,
-        };
-
-        const map = new kakao.maps.Map(mapContainer, options);
-        const markerPositions = [new kakao.maps.LatLng(35.88419, 127.0856)];
-
-        markerPositions.forEach((position) => {
-          const marker = new kakao.maps.Marker({
-            position: position,
-          });
-          marker.setMap(map);
-        });
-      });
-    });
-  }, []);
-  const addressRef = useRef(null);
-  return (
-    <div>
-      <div
-        id="map-contact"
-        className="map"
-        style={{ width: "500px", height: "280px" }}
-      />
-    </div>
-  );
-};

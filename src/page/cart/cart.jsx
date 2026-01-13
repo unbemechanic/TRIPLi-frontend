@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { campcar } from "../data/mockdata";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { caravan } from "../data/caravan";
-import { tuning } from "../data/tuning";
-import { usedCar } from "../data/usedCars";
-import { RemoveScroll } from "react-remove-scroll";
 import useWindowSize from "../../components/windowSize";
-import { API } from "../../address/address";
 
 // style
 export const Container = styled.div`

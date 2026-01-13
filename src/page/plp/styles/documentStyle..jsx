@@ -5,8 +5,6 @@ import InnerSofa2 from "../../../assets/carInSofa2.png";
 import InnerSofa3 from "../../../assets/carInSofa3.png";
 import InnerSofa4 from "../../../assets/carInSofa4.png";
 import InnerSofa5 from "../../../assets/carInSofa5.png";
-import { tab } from "@testing-library/user-event/dist/tab";
-import { Tab } from "@mui/material";
 import SeatIcon from "../../../assets/pdp/car-seat-svgrepo-com.svg";
 import TransmissionIcon from "../../../assets/pdp/transmission-svgrepo-com.svg";
 import LicensePlateIcon from "../../../assets/pdp/license-plate-number-svgrepo-com.svg";

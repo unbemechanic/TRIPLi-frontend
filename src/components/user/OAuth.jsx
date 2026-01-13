@@ -1,5 +1,4 @@
 import React from "react";
-import { SocialIcon } from "../../style";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../../firebase";
 import { useDispatch } from "react-redux";
@@ -28,7 +27,7 @@ const OAuth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider); // this works as a popup sign in
 
-      const response = await fetch("https://api-camper.inomjonov.site/auth", {
+      const response = await fetch("http://localhost:5500/api/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

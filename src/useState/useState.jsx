@@ -4,59 +4,17 @@ import VerticalMenuComponent from "../components/plp/verticalMenu";
 import { campcar } from "../page/data/mockdata";
 import { FilterButton } from "../style";
 import SwipeableTemporaryDrawer2 from "../materials/sidebarMenu";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import styled from "styled-components";
-import WindowSharpIcon from "@mui/icons-material/WindowSharp";
-import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
-import { HorizontalFilter, VerticalFilterInput } from "./stylesUse";
+import {
+  FilterSec,
+  HorizontalFilter,
+  VerticalFilterInput,
+  InputSearch,
+  ExpandStyle,
+  WindowStyle,
+  ListIconStyle,
+} from "./stylesUse";
 
 // styles
-export const ExpandStyle = styled(ExpandMoreIcon)`
-  font-size: 1.5rem;
-  padding-inline: 5px;
-  cursor: pointer;
-  border-left: 1px solid black;
-  padding: 5px;
-`;
-
-export const ListIconStyle = styled(ViewListRoundedIcon)`
-  padding: 5px 0;
-
-  padding-inline: 5px 2px;
-  padding-left: 5px;
-  padding-right: 7px;
-  margin-left: -10px;
-  color: rgba(55, 55, 55, 0.4);
-  &:hover {
-    cursor: pointer;
-  }
-`;
-export const WindowStyle = styled(WindowSharpIcon)`
-  font-size: 1.5rem;
-  padding-inline: 0px;
-  border-right: 1px solid gray;
-  &:hover {
-    cursor: pointer;
-  }
-  padding: 5px;
-`;
-export const FilterSec = styled.div`
-  display: flex;
-  white-space: nowrap;
-  @media (max-width: 950px) {
-    flex-wrap: wrap-reverse;
-    justify-content: flex-end;
-  }
-`;
-export const InputSearch = styled.input`
-  min-width: 600px;
-  @media (max-width: 1100px) {
-    min-width: 300px;
-  }
-  @media (max-width: 850px) {
-    min-width: 200px;
-  }
-`;
 
 const UseStateComponent = () => {
   const [active, setActive] = useState(true);
@@ -84,62 +42,6 @@ const UseStateComponent = () => {
     );
   };
 
-  const handleNameChange = (name) => {
-    setSelectedNames((prevSelectedNames) => {
-      const isSelected = prevSelectedNames.includes(name);
-      if (isSelected) {
-        return prevSelectedNames.filter((item) => item !== name);
-      } else {
-        return [...prevSelectedNames, name];
-      }
-    });
-  };
-
-  const handleCompanyChange = (companyName) => {
-    setSelectedCompanies((prevSelectedCompanies) => {
-      const isSelected = prevSelectedCompanies.includes(companyName);
-      if (isSelected) {
-        return prevSelectedCompanies.filter((item) => item !== companyName);
-      } else {
-        return [...prevSelectedCompanies, companyName];
-      }
-    });
-  };
-
-  const handleLicenseChange = (licenseType) => {
-    setSelectedLicenses((prevSelectedLicenses) => {
-      const isSelected = prevSelectedLicenses.includes(licenseType);
-      if (isSelected) {
-        return prevSelectedLicenses.filter((item) => item !== licenseType);
-      } else {
-        return [...prevSelectedLicenses, licenseType];
-      }
-    });
-  };
-
-  const handlePeopleChange = (peopleCount) => {
-    setSelectedPeople((prevSelectedPeople) => {
-      const isSelected = prevSelectedPeople.includes(peopleCount);
-      if (isSelected) {
-        return prevSelectedPeople.filter((item) => item !== peopleCount);
-      } else {
-        return [...prevSelectedPeople, peopleCount];
-      }
-    });
-  };
-
-  const handleLocationChange = (location) => {
-    // 새로운 핸들러 추가
-    setSelectedLocations((prevSelectedLocations) => {
-      const isSelected = prevSelectedLocations.includes(location);
-      if (isSelected) {
-        return prevSelectedLocations.filter((item) => item !== location);
-      } else {
-        return [...prevSelectedLocations, location];
-      }
-    });
-  };
-
   const filteredData = filter.filter(
     (item) =>
       (selectedNames.length === 0 || selectedNames.includes(item.car.name)) &&
@@ -152,10 +54,7 @@ const UseStateComponent = () => {
       (selectedLocations.length === 0 ||
         selectedLocations.includes(item.car.location))
   );
-  //grid data end
 
-  //vertical data
-  //end
   return (
     <div>
       <HorizontalFilter style={{ backgroundColor: "red" }}>

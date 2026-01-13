@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import WindowSharpIcon from "@mui/icons-material/WindowSharp";
+import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
 
 export const HorizontalFilter = styled.div`
   display: flex;
@@ -229,5 +232,51 @@ export const ExpandButton = styled.button`
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+`;
+export const ExpandStyle = styled(ExpandMoreIcon)`
+  font-size: 1.5rem;
+  padding-inline: 5px;
+  cursor: pointer;
+  border-left: 1px solid black;
+  padding: 5px;
+`;
+
+export const ListIconStyle = styled(ViewListRoundedIcon)`
+  padding: 5px 0;
+
+  padding-inline: 5px 2px;
+  padding-left: 5px;
+  padding-right: 7px;
+  margin-left: -10px;
+  color: rgba(55, 55, 55, 0.4);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+export const WindowStyle = styled(WindowSharpIcon)`
+  font-size: 1.5rem;
+  padding-inline: 0px;
+  border-right: 1px solid gray;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 5px;
+`;
+export const FilterSec = styled.div`
+  display: flex;
+  white-space: nowrap;
+  @media (max-width: 950px) {
+    flex-wrap: wrap-reverse;
+    justify-content: flex-end;
+  }
+`;
+export const InputSearch = styled.input`
+  min-width: 600px;
+  @media (max-width: 1100px) {
+    min-width: 300px;
+  }
+  @media (max-width: 850px) {
+    min-width: 200px;
   }
 `;

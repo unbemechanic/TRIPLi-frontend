@@ -60,7 +60,7 @@ const Profile = () => {
     try {
       dispatch(updateUserStart());
       const response = await fetch(
-        `https://api-camper.inomjonov.site/api/update/${currentUser._id}`,
+        `http://localhost:5500/api/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {

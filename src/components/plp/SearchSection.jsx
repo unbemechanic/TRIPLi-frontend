@@ -1,14 +1,18 @@
 import React from "react";
 import { Menu as MenuIcon } from "@mui/icons-material"; // adjust import if different
+// import {
+//   FilterSec,
+//   InputSearch,
+//   WindowStyle,
+//   ListIconStyle,
+// } from "../../useState/useState"; // adjust path to your styled-components
 import {
+  HorizontalFilter,
+  VerticalFilterInput,
   FilterSec,
   InputSearch,
   WindowStyle,
   ListIconStyle,
-} from "../../useState/useState"; // adjust path to your styled-components
-import {
-  HorizontalFilter,
-  VerticalFilterInput,
 } from "../../useState/stylesUse";
 
 function FilterHeader({

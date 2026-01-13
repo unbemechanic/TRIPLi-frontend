@@ -5,7 +5,6 @@ import { TabsList as BaseTabsList } from "@mui/base/TabsList";
 import { TabPanel as BaseTabPanel } from "@mui/base/TabPanel";
 import { buttonClasses } from "@mui/base/Button";
 import { Tab as BaseTab, tabClasses } from "@mui/base/Tab";
-import { campcar } from "../page/data/mockdata";
 import {
   ContactWrapper,
   Length,
@@ -23,9 +22,11 @@ import {
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import { ContactUs } from "../email/email";
+import { useFetchData } from "components/custom hooks/useFetch";
+const DEV_URL = `http://localhost:5500/products/recommended/list`;
 
 export default function UnstyledTabsIntroduction() {
-  const CarList = campcar.maindata.slice(0, 7);
+  const { data } = useFetchData(DEV_URL, []);
 
   return (
     <Tabs defaultValue={0}>
@@ -37,7 +38,7 @@ export default function UnstyledTabsIntroduction() {
       </TabsList>
       <TabPanel value={0}>
         <TabContent $review>
-          <div>Premium reviews</div> <Length>{CarList.length}</Length>
+          <div>Premium reviews</div> <Length>{data.length}</Length>
           <select>
             <option>Best</option>
             <option>Good</option>
@@ -45,17 +46,17 @@ export default function UnstyledTabsIntroduction() {
           </select>
         </TabContent>
         <div>
-          {CarList.map((value) => {
+          {data.map((value) => {
             return (
               <TabContent key={value.id}>
                 <TabImages
                   style={{ width: "10%", height: "80%" }}
-                  src={value.car.photo}
+                  src={value.image}
                   alt={value.name}
                 />
                 <div>
-                  <h2>{value.car.name}</h2>
-                  <h4>{value.car.company}</h4>
+                  <h2>{value.name}</h2>
+                  <h4>{value.company}</h4>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Ratione nostrum est maxime placeat?{" "}
@@ -63,7 +64,7 @@ export default function UnstyledTabsIntroduction() {
                 </div>
                 <div>
                   <p>ID: {value.id}</p>
-                  <p>Data: {value.car.date}</p>
+                  <p>Data: {value.date}</p>
                   <p>Viewed: 135</p>
                 </div>
               </TabContent>
@@ -278,7 +279,6 @@ export default function UnstyledTabsIntroduction() {
       <TabPanel value={3}>
         <ContactWrapper>
           <div>
-            {/* <ContactMaping /> */}
             <Wrapper>
               <div>
                 Phone number: <br /> +7 234 567 112

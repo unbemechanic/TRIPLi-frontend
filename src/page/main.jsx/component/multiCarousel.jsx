@@ -1,12 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { campcar } from "../../data/mockdata";
-import RecomendedImg from "assets/img-1.png";
-import RecomendedImg2 from "assets/img-7.webp";
-import RecomendedImg3 from "assets/img-3.png";
-import RecomendedImg4 from "assets/img-4.png";
-import RecomendedImg5 from "assets/img-5.png";
 import { RecomendedImgDivs, TiltedDiv } from "../styles";
 import "../styles.css";
 import { useFetchData } from "components/custom hooks/useFetch";
