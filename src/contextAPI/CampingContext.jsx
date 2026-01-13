@@ -4,14 +4,12 @@ const CampingContext = createContext();
 
 export function CampingProvider({ children }) {
   const [camps, setCamps] = useState([]);
-  const rawKey =
-    "549fdaa0a592c57f9ec0179f1a1039ac437550d49cc8c5886d5a6e985b17794a";
 
   useEffect(() => {
     async function loadCamps() {
       try {
         const apiKey = encodeURIComponent(
-          process.env.REACT_APP_CAMPING_SECURITY_KEY || rawKey
+          process.env.REACT_APP_CAMPING_SECURITY_KEY
         );
 
         const url = `https://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${apiKey}&numOfRows=500&pageNo=1&MobileOS=ETC&MobileApp=campApp&_type=json`;

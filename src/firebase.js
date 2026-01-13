@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAUurEHTRaC4PM5tjrCeajnodilfDWQ0yc",
-  authDomain: "camper-d01e5.firebaseapp.com",
-  projectId: "camper-d01e5",
-  storageBucket: "camper-d01e5.appspot.com",
-  messagingSenderId: "434690180257",
-  appId: "1:434690180257:web:5a47530e422ad79d381ce0"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_API_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_API_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_API_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_API_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_API_APP_ID,
 };
 
 // Initialize Firebase

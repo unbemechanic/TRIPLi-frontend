@@ -7,10 +7,8 @@ const Maping = () => {
 
   useEffect(() => {
     async function loadCamps() {
-      const rawKey =
-        "549fdaa0a592c57f9ec0179f1a1039ac437550d49cc8c5886d5a6e985b17794a";
       const apiKey = encodeURIComponent(
-        process.env.REACT_APP_CAMPING_SECURITY_KEY || rawKey
+        process.env.REACT_APP_CAMPING_SECURITY_KEY
       );
       const url = `https://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${apiKey}&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=campApp&_type=json`;
 
