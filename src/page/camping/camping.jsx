@@ -14,8 +14,6 @@ const CampingComponent = () => {
   useEffect(() => {
     async function loadCamps() {
       setLoading(true);
-      const rawKey =
-        "549fdaa0a592c57f9ec0179f1a1039ac437550d49cc8c5886d5a6e985b17794a";
       const apiKey = encodeURIComponent(
         process.env.REACT_APP_CAMPING_SECURITY_KEY
       );

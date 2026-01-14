@@ -1,1 +1,1 @@
-export const API = "http://localhost:5500";
+export const API = "tripli-api.inomjonov.site";

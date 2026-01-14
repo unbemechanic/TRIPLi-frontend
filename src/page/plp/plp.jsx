@@ -16,12 +16,6 @@ import { useParams } from "react-router-dom";
 
 const ProductListComponent = () => {
   const { category } = useParams();
-  const [query, setQuery] = useState("");
-  const devURL = `http://localhost:5500/motor?${query}`;
-  const { data, loading } = useFetchData(devURL, []);
-
-  const products = data?.data || [];
-
   const [filteredData, setFilteredData] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedLicenses, setSelectedLicenses] = useState([]);
@@ -29,28 +23,15 @@ const ProductListComponent = () => {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [active, setActive] = useState(true);
-
-  const [isMobile, setIsMobile] = useState(
-    window.matchMedia("(max-width: 1600px)").matches
-  );
-  const [sidebar, setSidebar] = useState(false);
   const [page, setPage] = useState(1);
-  const combinedData = useMemo(() => [...(products || [])], [products]);
+
+  // const [query, setQuery] = useState("");
+
   const dynamicCategory = useMemo(() => {
     if (!category) return "";
     if (category === "used-cars") return "used cars";
     return category;
   }, [category]);
-  useEffect(() => {
-    setQuery(buildQuery());
-  }, [
-    selectedCompanies,
-    selectedLicenses,
-    selectedPeople,
-    selectedLocations,
-    searchTerm,
-    page,
-  ]);
 
   const buildQuery = () => {
     const params = new URLSearchParams();
@@ -76,6 +57,42 @@ const ProductListComponent = () => {
 
     return params.toString();
   };
+
+  const query = useMemo(
+    () => buildQuery(),
+    [
+      dynamicCategory,
+      selectedCompanies.join(","),
+      selectedLicenses.join(","),
+      selectedPeople.join(","),
+      selectedLocations.join(","),
+      searchTerm,
+      page,
+    ]
+  );
+  const devURL = `https://tripli-api.inomjonov.site/motor?${query}`;
+  console.log("before");
+  const { data, loading } = useFetchData(devURL, []);
+  console.log("first");
+
+  const products = data?.data || [];
+
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 1600px)").matches
+  );
+  const [sidebar, setSidebar] = useState(false);
+  const combinedData = useMemo(() => [...(products || [])], [products]);
+
+  // useEffect(() => {
+  //   setQuery(buildQuery());
+  // }, [
+  //   selectedCompanies,
+  //   selectedLicenses,
+  //   selectedPeople,
+  //   selectedLocations,
+  //   searchTerm,
+  //   page,
+  // ]);
 
   const horizontalMenuHandle = () => {
     setActive(true);
@@ -117,12 +134,12 @@ const ProductListComponent = () => {
 
   // Sync server results into filteredData so the header/show counts reflect server-side paging
   useEffect(() => {
-    setFilteredData(products);
+    setFilteredData((prev) => (prev !== products ? products : prev));
   }, [products]);
 
   useEffect(() => {
     setPage(1);
-    setQuery(buildQuery());
+    // setQuery(buildQuery());
   }, [category]);
 
   const handleOpen = () => {

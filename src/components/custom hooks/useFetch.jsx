@@ -8,6 +8,10 @@ const useFetchData = (url, initialValue) => {
   useDebugValue(error, (error) => error.message || "No error");
 
   useEffect(() => {
+    if (!url) return;
+
+    let cancelled = false;
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -16,15 +20,19 @@ const useFetchData = (url, initialValue) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setData(data);
+        if (!cancelled) setData(data);
       } catch (err) {
-        setError(err);
+        if (!cancelled) setError(err);
         console.log("custom hook error: ", err);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     fetchData();
+
+    return () => {
+      cancelled = true;
+    };
   }, [url]);
 
   useDebugValue(data, (items) =>

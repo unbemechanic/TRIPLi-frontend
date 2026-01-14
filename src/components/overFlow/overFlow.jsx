@@ -15,7 +15,7 @@ export const OverFlow = () => {
   const { id } = useParams();
   const accountRef = useRef(null);
   const scrollRef = useRef(null);
-  const devURL = `http://localhost:5500/motor/${id}`;
+  const devURL = `tripli-api.inomjonov.site/motor/${id}`;
   const { data: value, loading, error } = useFetchData(devURL, []);
 
   const handleScrollUp = () => {

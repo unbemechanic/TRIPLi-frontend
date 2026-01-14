@@ -12,7 +12,9 @@ const DocumentsComponent = () => {
   const [data, setData] = useState([]);
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5500/motor/${id}`);
+      const response = await fetch(
+        `https://tripli-api.inomjonov.site/motor/${id}`
+      );
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

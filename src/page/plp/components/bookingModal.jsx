@@ -25,7 +25,7 @@ const BookingModal = ({ close, value }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5500/booking`, {
+      const res = await fetch(`https://tripli-api.inomjonov.site/booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

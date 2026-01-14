@@ -47,7 +47,7 @@ export default function BasicModal() {
     e.preventDefault();
     if (email !== "") {
       try {
-        const response = await fetch("http://localhost:5500/log-in", {
+        const response = await fetch("tripli-api.inomjonov.site/log-in", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function BasicModal() {
         if (response.status === 201) {
           navigate("/motor");
           setError("");
-          setOpen(false)
+          setOpen(false);
           localStorage.setItem("token", access);
         } else {
           setError("Incorrect email or password.");
@@ -110,32 +110,32 @@ export default function BasicModal() {
           <SignBackground>
             <SignContainer onSubmit={handleSubmit}>
               <h2>Sign in</h2>
-                <label>Your email</label>
-                <LogInInputs
-                  type="text"
-                  placeholder="example@gmail.com"
-                  id="email"
-                  onChange={handleChange}
-                />
-                <label>Your password</label>
-                <LogInInputs
-                  type="password"
-                  placeholder="Your password"
-                  id="password"
-                  onChange={handleChange}
-                />
-                <SignInnerDiv style={{ marginBottom: "10px" }}>
-                  <SizeCheckboxes />
-                  <SignTypography>Keep me Logged in</SignTypography>
-                  <SignTypography>Forgot your password?</SignTypography>
-                </SignInnerDiv>
-                <Button
-                  type="submit"
-                  sx={{ width: "100%", height: "50px" }}
-                  variant="contained"
-                >
-                  SIGN IN
-                </Button>
+              <label>Your email</label>
+              <LogInInputs
+                type="text"
+                placeholder="example@gmail.com"
+                id="email"
+                onChange={handleChange}
+              />
+              <label>Your password</label>
+              <LogInInputs
+                type="password"
+                placeholder="Your password"
+                id="password"
+                onChange={handleChange}
+              />
+              <SignInnerDiv style={{ marginBottom: "10px" }}>
+                <SizeCheckboxes />
+                <SignTypography>Keep me Logged in</SignTypography>
+                <SignTypography>Forgot your password?</SignTypography>
+              </SignInnerDiv>
+              <Button
+                type="submit"
+                sx={{ width: "100%", height: "50px" }}
+                variant="contained"
+              >
+                SIGN IN
+              </Button>
               <SignOr $or>
                 <LongDash></LongDash> OR <LongDash></LongDash>
               </SignOr>

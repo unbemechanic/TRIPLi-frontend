@@ -60,7 +60,7 @@ const Profile = () => {
     try {
       dispatch(updateUserStart());
       const response = await fetch(
-        `http://localhost:5500/api/update/${currentUser._id}`,
+        `https://tripli-api.inomjonov.site/api/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {

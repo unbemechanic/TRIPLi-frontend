@@ -96,13 +96,16 @@ const Login = () => {
     dispatch(signInStart());
     if (email !== "") {
       try {
-        const response = await fetch(`http://localhost:5500/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const response = await fetch(
+          `https://tripli-api.inomjonov.site/api/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         const data = await response.json();
         const access = data.token;
         console.log(data._id);

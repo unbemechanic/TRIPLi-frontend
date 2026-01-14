@@ -27,7 +27,7 @@ const OAuth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider); // this works as a popup sign in
 
-      const response = await fetch("http://localhost:5500/api/auth", {
+      const response = await fetch("tripli-api.inomjonov.site/api/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
