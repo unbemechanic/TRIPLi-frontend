@@ -25,8 +25,6 @@ const ProductListComponent = () => {
   const [active, setActive] = useState(true);
   const [page, setPage] = useState(1);
 
-  // const [query, setQuery] = useState("");
-
   const dynamicCategory = useMemo(() => {
     if (!category) return "";
     if (category === "used-cars") return "used cars";
@@ -70,10 +68,12 @@ const ProductListComponent = () => {
       page,
     ]
   );
-  const devURL = `https://tripli-api.inomjonov.site/motor?${query}`;
-  console.log("before");
+  // const devURL = `https://tripli-api.inomjonov.site/motor?${query}`;
+  const devURL = useMemo(
+    () => `https://tripli-api.inomjonov.site/motor?${query}`,
+    [query]
+  );
   const { data, loading } = useFetchData(devURL, []);
-  console.log("first");
 
   const products = data?.data || [];
 
@@ -82,17 +82,6 @@ const ProductListComponent = () => {
   );
   const [sidebar, setSidebar] = useState(false);
   const combinedData = useMemo(() => [...(products || [])], [products]);
-
-  // useEffect(() => {
-  //   setQuery(buildQuery());
-  // }, [
-  //   selectedCompanies,
-  //   selectedLicenses,
-  //   selectedPeople,
-  //   selectedLocations,
-  //   searchTerm,
-  //   page,
-  // ]);
 
   const horizontalMenuHandle = () => {
     setActive(true);
@@ -121,26 +110,25 @@ const ProductListComponent = () => {
 
   const isSmallScreen = useMediaQuery("(max-width:1600px)");
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 1600px)");
-    const handleMediaChange = (e) => setIsMobile(e.matches);
+  // useEffect(() => {
+  //   const mediaQuery = window.matchMedia("(max-width: 1600px)");
+  //   const handleMediaChange = (e) => setIsMobile(e.matches);
 
-    mediaQuery.addEventListener("change", handleMediaChange);
+  //   mediaQuery.addEventListener("change", handleMediaChange);
 
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaChange);
-    };
-  }, []);
+  //   return () => {
+  //     mediaQuery.removeEventListener("change", handleMediaChange);
+  //   };
+  // }, []);
 
   // Sync server results into filteredData so the header/show counts reflect server-side paging
   useEffect(() => {
-    setFilteredData((prev) => (prev !== products ? products : prev));
+    setFilteredData(products);
   }, [products]);
 
   useEffect(() => {
     setPage(1);
-    // setQuery(buildQuery());
-  }, [category]);
+  }, []);
 
   const handleOpen = () => {
     if (isMobile) {

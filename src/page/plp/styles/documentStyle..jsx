@@ -403,8 +403,8 @@ export const PaginationContainer = styled.div`
 export const PageButton = styled.button`
   padding: 8px 14px;
   border: 1px solid #ddd;
-  background: ${({ active }) => (active ? "#000" : "#fff")};
-  color: ${({ active }) => (active ? "#fff" : "#000")};
+  background: ${({ $active }) => ($active ? "#000" : "#fff")};
+  color: ${({ $active }) => ($active ? "#fff" : "#000")};
   cursor: pointer;
 
   &:hover {

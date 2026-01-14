@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Img from "assets/caravan-8.png";
 import { formatKRW } from "utils/currency";
 import { useCart } from "contextAPI/Context";
@@ -24,6 +24,7 @@ const ProductListMenuComponent = ({
 }) => {
   const { category } = useParams();
   const { handleAddToCart } = useCart();
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(total / limit);
 
@@ -39,7 +40,7 @@ const ProductListMenuComponent = ({
       <Container>
         {products.map((value) => {
           return (
-            <div key={value.id}>
+            <div key={value._id}>
               <SLink to={`/product/detail/${category}/${value._id}`}>
                 <img src={value.image || value.photo || Img} />
                 <FunctionButtons>
@@ -53,9 +54,15 @@ const ProductListMenuComponent = ({
                     {value.rate}
                   </Rating>
                   <div className="row">
-                    <Link to={`/cart/${value._id}`}>
-                      <Buttons>Order</Buttons>
-                    </Link>
+                    <Buttons
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navigate(`/cart/${value._id}`);
+                      }}
+                    >
+                      Order
+                    </Buttons>
                     <Buttons
                       onClick={(e) => {
                         e.preventDefault();
@@ -77,8 +84,8 @@ const ProductListMenuComponent = ({
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(
             (pageNumber) => (
               <PageButton
+                $active={page === pageNumber}
                 key={pageNumber}
-                active={page === pageNumber}
                 onClick={() => handlePageChange(pageNumber)}
               >
                 {pageNumber}

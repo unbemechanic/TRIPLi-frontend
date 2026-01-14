@@ -47,13 +47,16 @@ export default function BasicModal() {
     e.preventDefault();
     if (email !== "") {
       try {
-        const response = await fetch("tripli-api.inomjonov.site/log-in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const response = await fetch(
+          "https://tripli-api.inomjonov.site/log-in",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         const data = await response.json();
         const access = data.token;
         if (response.status === 201) {

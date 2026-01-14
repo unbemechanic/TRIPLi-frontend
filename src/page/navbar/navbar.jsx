@@ -138,7 +138,7 @@ const Navbar = () => {
             )}
 
             <NavDisSec>
-              <label for="lang">
+              <label htmlFor="lang">
                 <select id="lang" name="lang">
                   <option value="English">En</option>
                   <option value="Russian">Ru</option>

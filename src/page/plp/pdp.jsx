@@ -24,7 +24,6 @@ const DocumentsComponent = () => {
       console.log("failed to fetch data", error);
     }
   };
-  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);

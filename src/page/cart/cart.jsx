@@ -186,7 +186,7 @@ const CartMotorComponent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("tripli-api.inomjonov.site/motor");
+      const response = await fetch("https://tripli-api.inomjonov.site/motor");
       if (!response.ok) {
         throw new Error("Error fetching data 'frontend'");
       }

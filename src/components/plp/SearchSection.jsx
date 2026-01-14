@@ -1,11 +1,6 @@
 import React from "react";
-import { Menu as MenuIcon } from "@mui/icons-material"; // adjust import if different
-// import {
-//   FilterSec,
-//   InputSearch,
-//   WindowStyle,
-//   ListIconStyle,
-// } from "../../useState/useState"; // adjust path to your styled-components
+import { Menu as MenuIcon } from "@mui/icons-material";
+
 import {
   HorizontalFilter,
   VerticalFilterInput,

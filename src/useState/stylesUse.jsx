@@ -135,7 +135,7 @@ export const Buttons = styled.button`
     color: #fff;
   }
 `;
-export const Rating = styled.p`
+export const Rating = styled.div`
   display: flex;
   justify-content: space-between;
 `;

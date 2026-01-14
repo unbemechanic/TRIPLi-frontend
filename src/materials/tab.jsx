@@ -23,7 +23,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import { ContactUs } from "../email/email";
 import { useFetchData } from "components/custom hooks/useFetch";
-const DEV_URL = `tripli-api.inomjonov.site/products/recommended/list`;
+const DEV_URL = `https://tripli-api.inomjonov.site/products/recommended/list`;
 
 export default function UnstyledTabsIntroduction() {
   const { data } = useFetchData(DEV_URL, []);

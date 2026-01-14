@@ -16,7 +16,6 @@ const NavCart = () => {
   useEffect(() => {
     refreshCart();
   }, [userId]);
-  console.log(carts);
 
   return (
     <div style={{ marginBottom: "50px", minHeight: "50dvh" }}>

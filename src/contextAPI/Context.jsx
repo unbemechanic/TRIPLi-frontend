@@ -35,7 +35,6 @@ export const GeneralProvider = ({ children }) => {
       body: JSON.stringify({ productId, quantity: 1 }),
     });
     refreshCart();
-    console.log(userId);
   };
 
   const updateCart = async (url, options = {}) => {
@@ -69,9 +68,8 @@ export const GeneralProvider = ({ children }) => {
   useEffect(() => {
     if (userId) {
       refreshCart();
-      console.log("UserId updated:", userId);
     }
-  }, [userId]);
+  }, []);
 
   // Navigation menu context
   const [selectedNav, setSelectedNav] = useState("Motor");
@@ -79,7 +77,6 @@ export const GeneralProvider = ({ children }) => {
   const handleNavChange = (title) => {
     setSelectedNav(title.toLowerCase());
     navigate("/vehicles");
-    console.log("Selected Navigation:", title.toLowerCase());
   };
 
   const value = useMemo(

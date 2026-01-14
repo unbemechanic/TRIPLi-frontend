@@ -38,8 +38,8 @@ function SidebarFilters({
   handleLocationChange,
 }) {
   return (
-    <MainSidebarWrapper sidebar={sidebar} onClick={handleClose}>
-      <MainSideBar sidebar={sidebar} onClick={(e) => e.stopPropagation()}>
+    <MainSidebarWrapper $sidebar={sidebar} onClick={handleClose}>
+      <MainSideBar $sidebar={sidebar} onClick={(e) => e.stopPropagation()}>
         <NavBoxStyle>
           <div style={{ position: "relative" }}>
             {isSmallScreen && (
@@ -123,30 +123,6 @@ function SidebarFilters({
                       onChange={() => handlePeopleChange(people)}
                     />
                     {people}
-                  </FilterLabel>
-                ))}
-              </AccordionDetails>
-            </Accordion>
-
-            {/* === License === */}
-            <Accordion
-              defaultExpanded
-              sx={{ backgroundColor: "inherit", boxShadow: "none" }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>
-                  <b>Licence type</b>
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {uniqueLicenses.map((value) => (
-                  <FilterLabel key={value}>
-                    <FilterCheckbox
-                      type="checkbox"
-                      checked={selectedLicenses.includes(value)}
-                      onChange={() => handleLicenseChange(value)}
-                    />
-                    {value}
                   </FilterLabel>
                 ))}
               </AccordionDetails>

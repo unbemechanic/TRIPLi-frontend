@@ -21,7 +21,6 @@ const CampingComponent = () => {
 
       const res = await fetch(url);
       const data = await res.json();
-      console.log("camping data: ", data);
       // Camping items
       const items = data.response.body.items.item;
 

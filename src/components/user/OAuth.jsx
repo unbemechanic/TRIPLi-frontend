@@ -27,17 +27,20 @@ const OAuth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider); // this works as a popup sign in
 
-      const response = await fetch("tripli-api.inomjonov.site/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: result.user.displayName,
-          email: result.user.email,
-          avatar: result.user.photoURL,
-        }),
-      });
+      const response = await fetch(
+        "https://tripli-api.inomjonov.site/api/auth",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: result.user.displayName,
+            email: result.user.email,
+            avatar: result.user.photoURL,
+          }),
+        }
+      );
       const data = await response.json();
       const access = await data.token;
       if (response.ok) {
