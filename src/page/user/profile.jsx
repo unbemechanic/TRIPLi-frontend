@@ -49,7 +49,7 @@ const Profile = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setFormData({ ...formData, avatar: downloadURL });
         });
-      }
+      },
     );
   };
   const handleChange = (e) => {
@@ -60,14 +60,14 @@ const Profile = () => {
     try {
       dispatch(updateUserStart());
       const response = await fetch(
-        `https://tripli-api.inomjonov.site/api/update/${currentUser._id}`,
+        `https://tripli-backend.onrender.com/api/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
       const data = await response.json();
       if (data.success === false) {

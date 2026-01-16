@@ -23,7 +23,7 @@ const responsive = {
   },
 };
 
-const DEV_URL = `https://tripli-api.inomjonov.site/products/recommended/list`;
+const DEV_URL = `https://tripli-backend.onrender.com/products/recommended/list`;
 
 const RecommendedCard = ({ image, name }) => {
   return (

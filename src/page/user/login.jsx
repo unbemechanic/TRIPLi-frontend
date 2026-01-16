@@ -97,18 +97,17 @@ const Login = () => {
     if (email !== "") {
       try {
         const response = await fetch(
-          `https://tripli-api.inomjonov.site/api/login`,
+          `https://tripli-backend.onrender.com/api/login`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
-          }
+          },
         );
         const data = await response.json();
         const access = data.token;
-        console.log(data._id);
         if (response.status === 201) {
           alert(`Welcom ${data.name}`);
           navigate("/");
@@ -117,7 +116,6 @@ const Login = () => {
           dispatch(signInSuccess(data));
           // refreshCart();
           setUserId(data._id);
-          console.log(userId);
         } else {
           setError("Incorrect email or password.");
           alert("Incorrect email or password.");

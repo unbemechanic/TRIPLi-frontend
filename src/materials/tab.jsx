@@ -23,7 +23,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import { ContactUs } from "../email/email";
 import { useFetchData } from "components/custom hooks/useFetch";
-const DEV_URL = `https://tripli-api.inomjonov.site/products/recommended/list`;
+const DEV_URL = `https://tripli-backend.onrender.com/products/recommended/list`;
 
 export default function UnstyledTabsIntroduction() {
   const { data } = useFetchData(DEV_URL, []);
@@ -369,7 +369,7 @@ const TabPanel = styled(BaseTabPanel)(
   border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
   margin-inline: auto;
   opacity: 1;
-  `
+  `,
 );
 
 const TabsList = styled(BaseTabsList)(
@@ -393,5 +393,5 @@ const TabsList = styled(BaseTabsList)(
   @media (max-width: 400px){
     padding-left: 40px;
   }
-  `
+  `,
 );

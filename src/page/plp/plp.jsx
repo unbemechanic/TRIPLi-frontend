@@ -66,19 +66,19 @@ const ProductListComponent = () => {
       selectedLocations.join(","),
       searchTerm,
       page,
-    ]
+    ],
   );
   // const devURL = `https://tripli-api.inomjonov.site/motor?${query}`;
   const devURL = useMemo(
-    () => `https://tripli-api.inomjonov.site/motor?${query}`,
-    [query]
+    () => `https://tripli-backend.onrender.com/motor?${query}`,
+    [query],
   );
   const { data, loading } = useFetchData(devURL, []);
 
   const products = data?.data || [];
 
   const [isMobile, setIsMobile] = useState(
-    window.matchMedia("(max-width: 1600px)").matches
+    window.matchMedia("(max-width: 1600px)").matches,
   );
   const [sidebar, setSidebar] = useState(false);
   const combinedData = useMemo(() => [...(products || [])], [products]);

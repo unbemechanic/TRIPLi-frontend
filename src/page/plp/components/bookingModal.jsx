@@ -25,7 +25,7 @@ const BookingModal = ({ close, value }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`https://tripli-api.inomjonov.site/booking`, {
+      const res = await fetch(`https://tripli-backend.onrender.com/booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const BookingModal = ({ close, value }) => {
     if (id === "startPeriod" || id === "endDate") {
       updatedData.duration = calculationDuration(
         id === "startPeriod" ? value : bookData.startPeriod,
-        id === "endDate" ? value : bookData.endDate
+        id === "endDate" ? value : bookData.endDate,
       );
       setDuration(updatedData.duration);
     }
@@ -84,8 +84,8 @@ const BookingModal = ({ close, value }) => {
     setFormattedDate(
       `${year}-${month}-${day}T${String(now.getHours()).padStart(
         2,
-        "0"
-      )}:${String(now.getMinutes()).padStart(2, "0")}`
+        "0",
+      )}:${String(now.getMinutes()).padStart(2, "0")}`,
     );
   }, []);
 

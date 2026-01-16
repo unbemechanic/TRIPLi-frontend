@@ -28,7 +28,7 @@ const OAuth = () => {
       const result = await signInWithPopup(auth, provider); // this works as a popup sign in
 
       const response = await fetch(
-        "https://tripli-api.inomjonov.site/api/auth",
+        "https://tripli-backend.onrender.com/api/auth",
         {
           method: "POST",
           headers: {
@@ -39,7 +39,7 @@ const OAuth = () => {
             email: result.user.email,
             avatar: result.user.photoURL,
           }),
-        }
+        },
       );
       const data = await response.json();
       const access = await data.token;

@@ -48,14 +48,14 @@ export default function BasicModal() {
     if (email !== "") {
       try {
         const response = await fetch(
-          "https://tripli-api.inomjonov.site/log-in",
+          "https://tripli-backend.onrender.com/log-in",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
-          }
+          },
         );
         const data = await response.json();
         const access = data.token;

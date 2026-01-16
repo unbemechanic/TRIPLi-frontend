@@ -1,1 +1,1 @@
-export const API = "https://tripli-api.inomjonov.site";
+export const API = "https://tripli-backend.onrender.com";

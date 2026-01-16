@@ -23,14 +23,14 @@ const RegisterComponent = () => {
     if (name !== "") {
       try {
         const response = await fetch(
-          `https://tripli-api.inomjonov.site/api/sign-up`,
+          `https://tripli-backend.onrender.com/api/sign-up`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ name, email, password }),
-          }
+          },
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
